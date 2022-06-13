@@ -12,7 +12,7 @@ a Bitcoin Core PR Review Club meeting, a list of new software releases
 and release candidates, and descriptions of notable changes to popular
 Bitcoin infrastructure software.
 
-## News
+## News 
 
 *No significant news this week.*
 
