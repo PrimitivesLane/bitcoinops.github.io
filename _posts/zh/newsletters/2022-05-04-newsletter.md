@@ -16,11 +16,11 @@ lang: zh
 
     Osuntokun建议 BIP86 的实现同时返回原始密钥（内部密钥）和调整后的密钥（输出密钥），以便调用函数可以使用适合其上下文的任何一个。
 
-  - *与脚本路径支出的交互：* 与脚本路径支出一起使用的密钥有一个相关连的问题：为了使用脚本路径，支出者必须知道内部密钥。同样，这就需要实现者返回内部密钥，这样它就可以在其他需要它的代码中使用。
+  - *<!--interaction-with-scriptpath-spends-->与脚本路径支出的交互：* 与脚本路径支出一起使用的密钥有一个相关连的问题：为了使用脚本路径，支出者必须知道内部密钥。同样，这就需要实现者返回内部密钥，这样它就可以在其他需要它的代码中使用。
 
-  - *最终签名者的捷径：* Osuntokun 还希望澄清 BIP 中的一个部分，该部分描述了最终签名人（而且只有最终签名人）如何使用确定性随机性或质量较低的随机性来源来生成他们的签名随机数。Brandon Black [回答][black musig2]说，他们有一个签字人，他很难安全地管理一个常规的 MuSig2 签字会话，但他们却能一直将其作为最终签字人。
+  - *<!--shortcut-for-final-signer-->最终签名者的捷径：* Osuntokun 还希望澄清 BIP 中的一个部分，该部分描述了最终签名人（而且只有最终签名人）如何使用确定性随机性或质量较低的随机性来源来生成他们的签名随机数。Brandon Black [回答][black musig2]说，他们有一个签字人，他很难安全地管理一个常规的 MuSig2 签字会话，但他们却能一直将其作为最终签字人。
 
-- **衡量用户对共识变更的支持：** Keagan McClelland 在 Bitcoin-Dev 邮件列表中[发布][mcclelland measure]了一个提案，与之前的[提案][bishop signal]类似，通过交易发出信号，表明他们是否[支持][topic soft fork activation]对共识规则的特定改变。在该主题中，还讨论了几个相关的情绪测量想法，但似乎都有问题，如[技术][aronesty signal parse scripts]上的挑战，大大[降低][grant signal chainalysis]了用户的隐私，[有利于][tetrud signal favor]比特币经济的某些部分而不是其他，或[惩罚][ivgi signal hodl voting]早期投票者而不是那些等待参与共识形成的人。
+- **<!--measuring-user-support-for-consensus-changes-->衡量用户对共识变更的支持：** Keagan McClelland 在 Bitcoin-Dev 邮件列表中[发布][mcclelland measure]了一个提案，与之前的[提案][bishop signal]类似，通过交易发出信号，表明他们是否[支持][topic soft fork activation]对共识规则的特定改变。在该主题中，还讨论了几个相关的情绪测量想法，但似乎都有问题，如[技术][aronesty signal parse scripts]上的挑战，大大[降低][grant signal chainalysis]了用户的隐私，[有利于][tetrud signal favor]比特币经济的某些部分而不是其他，或[惩罚][ivgi signal hodl voting]早期投票者而不是那些等待参与共识形成的人。
 
     就像以前讨论这个话题时一样，当它涉及到改变比特币的共识规则的决定时，似乎任何建议的方法都不会产生一个足以被大多数讨论者赞同的结果。
 
