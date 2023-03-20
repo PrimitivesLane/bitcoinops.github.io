@@ -1,213 +1,96 @@
 ---
 title: 'Bitcoin Optech Newsletter #241'
-permalink: /en/newsletters/2023/03/08/
+permalink: /zh/newsletters/2023/03/08/
 name: 2023-03-08-newsletter
 slug: 2023-03-08-newsletter
 type: newsletter
 layout: newsletter
-lang: en
+lang: zh
 ---
-This week's newsletter describes a proposal for an alternative design
-for `OP_VAULT` with several benefits and announces a new weekly Optech
-podcast.  Also included are our regular sections with the summary of a
-Bitcoin Core PR Review Club meeting, announcements of new software
-releases and release candidates, and descriptions of notable changes to
-popular Bitcoin infrastructure software.
+本周的周报描述了一项针对 `OP_VAULT` 的替代设计的提案，该提案具有多项益处，并宣布了一个新的每周 Optech 播客。此外还有我们的常规部分，其中包括 Bitcoin Core PR 审核俱乐部会议的总结、新版本和候选版本的公告，以及对热门比特币基础设施项目的重大变更介绍。
 
-## News
+## 新闻
 
-- **Alternative design for OP_VAULT:** Greg Sanders [posted][sanders
-  vault] to the Bitcoin-Dev mailing list an alternative design for
-  providing the features of the `OP_VAULT`/`OP_UNVAULT` proposal (see
-  [Newsletter #234][news234 vault]).  His alternative would add three
-  opcodes instead of two.  To provide an example:
+- **OP_VAULT 的替代设设计：** Greg Sanders 向 Bitcoin-Dev 邮件列表 [发布了][sanders vault] 一个替代设计，用于提供 `OP_VAULT`/`OP_UNVAULT` 提案的功能 (详见[周报 #234][news234 vault])。他的替代方案是添加三个操作码而不是两个，举个例子：
 
-    - *Alice deposits funds in a vault* by paying a [P2TR output][topic
-      taproot] with a script tree that contains at least two [leafscripts][topic
-      tapscript], one which can trigger the time-delayed unvaulting
-      process and one which can instantly freeze her funds, e.g.
-      `tr(key,{trigger,freeze})`.
+    - Alice 通过使用花费 [P2TR 输出][topic taproot] 来将资金存入保险库，该输出包含至少两个 [leafscripts][topic tapscript]，一个可以触发延时解锁过程，另一个可以立即冻结她的资金，例如 `tr(key,{trigger,freeze})`。
 
-      - The *trigger leafscript* contains her less-trusted authorization
-        conditions (such as requiring a signature from her hot wallet)
-        and an `OP_TRIGGER_FORWARD` opcode.  At the time she creates
-        this leafscript, she provides the opcode a *spend delay*
-        parameter, e.g. a relative timelock of 1,000 blocks (about 1
-        week).
+      - *trigger leafscript* 包含她不太信任的授权条件（例如需要来自她的热钱包的签名）和一个 `OP_TRIGGER_FORWARD` 操作码。在她创建此 leafscript 时，她为操作码提供了一个 *花费延迟* 函数，例如 1000 个区块的相对时间锁定（大约 1 周）。
 
-      - The *freeze leafscript* contains any authorization conditions
-        Alice wants to specify (including none at all) and
-        an `OP_FORWARD_DESTINATION` opcode.  At the time she creates
-        this leafscript, she also chooses her more-trusted authorization
-        conditions (such as requiring multiple signatures from multiple
-        cold wallets and hardware signing devices).  She provides the
-        opcode a commitment to those conditions in the form of a hash
-        digest.
+      - *freeze leafscript* 包含 Alice 想要指定的任何授权条件（包括根本没有）和 `OP_FORWARD_DESTINATION` 操作码。在她创建这个 leafscript 时，她还选择了她更信任的授权条件（例如需要来自多个冷钱包和硬件签名设备的多个签名）。她以哈希摘要的形式向操作码提供对这些条件的承诺。
 
-    - *Alice triggers an unvaulting* by spending the output received to
-      the above script tree (using it as an input) and choosing the
-      trigger leafscript.  At this time, she provides two additional
-      parameters to the `OP_TRIGGER_FORWARD` opcode, the index of the
-      output which will receive this input's funds and a hash-based
-      commitment to how she wants to be able to spend the funds later.
-      The opcode verifies that the indicated output of this transaction
-      pays a P2TR output with a script tree similar to the one being spent except that the
-      trigger leafscript is replaced with a script using an
-      `OP_CHECKSEQUENCEVERIFY` (CSV) relative delay equal to the delay
-      specified previously (e.g., 1000 blocks) and an
-      `OP_FORWARD_OUTPUTS` opcode which includes Alice's commitment
-      hash.  The method of reconstructing the script tree is similar to
-      an earlier [covenant][topic covenants] proposal,
-      `OP_TAPLEAF_UPDATE_VERIFY` (see [Newsletter #166][news166 tluv]).
+    - *Alice触发了一个解锁* 是通过将接收到的输出花费到上面的脚本树（将其用作输入）并选择 the trigger leafscript 达成。此时，她向 `OP_TRIGGER_FORWARD` 操作码提供了两个附加参数，将接收此输入资金的输出索引以及她希望以后如何使用资金的基于哈希的承诺。操作码验证此交易的指定输出花费 P2TR 输出，此输出脚本树类似于被花费的脚本树，除了 the trigger leafscript 被使用 `OP_CHECKSEQUENCEVERIFY` (CSV) 相对延迟等于先前指定的延迟的脚本替换（例如，1000 个区块）和一个 `OP_FORWARD_OUTPUTS` 操作码，其中包含 Alice 的哈希承诺。重建脚本树的方法类似于更早的 [covenant][topic covenants] 提案，`OP_TAPLEAF_UPDATE_VERIFY` (详见[周报 #166][news166 tluv])。
 
-    - *Alice completes the unvaulting* by waiting until the relative
-      timelock has expired and then spending the unvaulting output,
-      choosing the tapleaf with the `OP_FORWARD_OUTPUTS` opcode.  The
-      opcode verifies that the spending transaction's output amounts and
-      script’s hash to the same commitment Alice made in the previous
-      transaction.  In this case, Alice has successfully deposited funds
-      to a vault, begun an unvaulting, been forced to wait at least
-      1,000 blocks to allow her monitoring programs to verify she really
-      did want to spend the funds to the specified outputs, and
-      completed the spend.
+    - *Alice 完成这个解锁* 是通过等到相对时间锁过期然后花费这个解锁的输出，该过程选择带有 `OP_FORWARD_OUTPUTS` 操作码的 tapleaf。操作码验证支出交易的输出金额和脚本的哈希值是否与爱丽丝在之前交易中做出的承诺相同。在这种情况下，Alice 已经成功地将资金存入保险库，也就是开始了一个解锁，并被迫等待至少 1,000 个区块以允许她的监控程序验证她确实想要将资金花费到指定的输出，并完成了花费。
 
-    - If something goes wrong, *Alice freezes the funds*.  She can do
-      this at any time from the moment she deposits funds in the vault
-      up until an unvaulting is completed.  To freeze funds, she simply
-      chooses to spend the freeze leafscript from the output of
-      either the vaulting or trigger transactions.  Recall
-      that Alice explicitly placed the freeze leafscript in the vaulting
-      transaction, and note that it was implicitly carried over by the
-      trigger transaction which initiated the unvaulting.
+    - 如果出现问题，*Alice 会冻结资金*。从她将资金存入保险库的那一刻起，直到完成解锁，她可以随时执行此操作。要冻结资金，她只需选择从入库交易或触发交易的输出中花费关于冻结的 leafscript。回想一下，Alice 明确地将 freeze leafscript 放在了入库交易中，并注意，它被启动解锁的触发交易隐式地保留了。
 
-  One of the advantages to users of this approach over the original
-  `OP_VAULT` design is that the freeze leafscript can contain any
-  authorization conditions Alice wants to specify.  In the `OP_VAULT`
-  proposal, anyone knowing the parameters chosen by Alice could spend
-  her funds to the freeze script.  That wasn't a security problem but it
-  could be annoying.  In Sanders's design, Alice could (for example)
-  require a signature from a very lightly protected wallet in order to
-  initiate a freeze---this would perhaps be enough of a burden to
-  prevent most griefing attacks but not enough of a barrier to prevent
-  Alice from quickly freezing her funds in an emergency.
+  与原始的 `OP_VAULT` 设计相比，这种方法的用户优势之一是 freeze leafscript 可以包含 Alice 想要指定的任何授权条件。在 `OP_VAULT`
+  提案中，任何知道 Alice 选择的参数的人都可以将她的资金用于冻结脚本。那不是安全问题，但可能很烦人。在 Sanders 的设计中，Alice 可能（例如）需要来自保护力非常轻微的钱包的签名才能启动冻结——这可能足以防止大多数破坏性攻击的负担，但不足以阻止 Alice 快速在紧急情况下冻结她的资金。
 
-  Several other advantages are aimed at making the consensus-enforced
-  [vaulting protocol][topic vaults] easier to understand and verify as
-  safe.  Subsequent to our writing the above, the author of the
-  `OP_VAULT` proposal, James O'Beirne, replied favorably to Sanders's
-  ideas.  O'Beirne also had ideas for additional changes which we'll
-  describe in a future newsletter. {% include functions/podcast-callout.md url="pod241 op_vault" %}
+  其他几个优势旨在使共识强制的
+  [保管协议][topic vaults] 更容易理解和验证是否安全。在我们写完上面的内容之后，`OP_VAULT` 提案的作者 James O'Beirne 对 Sanders 的想法做出了积极的回应。O'Beirne 还对我们将在未来的周报中描述的其他更改有想法。{% include functions/podcast-callout.md url="pod241 op_vault" %}
 
-- **New Optech Podcast:** the weekly Optech Audio Recap hosted on
-  Twitter Spaces is now available as a podcast.  Each episode will be
-  available on all popular podcast platforms and on the Optech website
-  as a transcript.  For more details, including why we think this is a
-  major step forward in Optech's mission to improve Bitcoin technical
-  communication, please see our [blog post][podcast post]. {% include functions/podcast-callout.md url="pod241 podcast" %}
+- **New Optech 播客：** Twitter Spaces 上每周一次的 Optech Audio Recap 现已作为播客提供。每一集都将在所有流行的播客平台和 Optech 网站上作为文字记录提供。有关更多详细信息，包括为什么我们认为这是 Optech 改善比特币技术交流的使命的重要一步，请参阅我们的 [博客文章][podcast post]。{% include functions/podcast-callout.md url="pod241 podcast" %}
 
-## Bitcoin Core PR Review Club
+## Bitcoin Core PR 审核俱乐部
 
-*In this monthly section, we summarize a recent [Bitcoin Core PR Review Club][]
-meeting, highlighting some of the important questions and answers.  Click on a
-question below to see a summary of the answer from the meeting.*
+*在这个月度部分，我们总结了最近的 [Bitcoin Core PR 审核俱乐部][]
+会议，强调了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
 
 [Bitcoin-inquisition: Activation logic for testing consensus changes][review club bi-16]
-is a PR by Anthony Towns that adds a new method for activating and deactivating
-soft forks in the [Bitcoin Inquisition][] project, designed to be run on [signet][topic signet]
-and used for testing.
-This project was covered in [Newsletter #219][newsletter #219 bi].
+是 Anthony Towns 的 PR，它在 [Bitcoin Inquisition][] 项目中添加了一种激活和停用软分叉的新方法，旨在在 [signet][topic signet]
+上运行并用于测试。该项目在 [周报 #219][newsletter #219 bi]中有介绍。
 
-Specifically, this PR replaces [BIP9][] block version bit semantics with what
-are called [Heretical Deployments][].
-In contrast to consensus and relay changes on mainnet -- which are difficult
-and time-consuming to activate, requiring the careful building of (human)
-consensus and an elaborate [soft fork activation][topic soft fork activation]
-mechanism -- on a test network activating these changes can be streamlined.
-The PR also implements a way to deactivate changes that turn out to be buggy
-or undesired, which is a major departure from mainnet. {% include
+具体来说，这个 PR 替换了 [BIP9][] 的区块版本位语义，取而代之的称为 [Heretical Deployments][]。与主网上的共识和中继更改相比——激活起来既困难又耗时，需要仔细建立（人类）共识和精心设计的 [soft fork activation][topic soft fork activation] 机制 -- 在测试网络上激活这些更改可以简化。PR 还实现了一种方法来停用被证明是有问题或不需要的更改，这是与主网的主要背离。{% include
 functions/podcast-callout.md url="pod241 pr review" %}
 
 {% include functions/details-list.md
-  q0="Why do we want to deploy consensus changes that aren’t merged
-      into Bitcoin Core? What problems (if any) are there with merging the
-      code into Bitcoin Core, and then testing it on signet afterward?"
-  a0="Several reasons were discussed. We can't require mainnet users to upgrade
-      the version of Core they're
-      running, so even after a bug has been fixed, some users may continue
-      running the buggy version. Depending only on regtest makes
-      integration testing third-party software more difficult.
-      Merging consensus changes to a separate repository is much less risky than merging to Core;
-      adding soft fork logic, even if not activated, may introduce bugs that affect existing behavior."
+  q0="为什么我们要部署未合并到 Bitcoin Core 的共识更改？将代码合并到 Bitcoin Core 中，然后在 signet 上测试它有什么问题（如果有的话）？
+  a0="讨论了几个原因。我们不能要求主网用户升级他们正在运行的 Core 版本，因此即使在修复错误后，一些用户可能会继续运行有错误的版本。仅依赖于 regtest 使得集成测试第三方软件变得更加困难。将共识更改合并到单独的存储库比合并到 Core 的风险要小得多；添加软分叉逻辑，即使没有激活，也可能会引入影响现有行为的错误。"
   a0link="https://bitcoincore.reviews/bitcoin-inquisition-16#l-37"
 
-  q1="Heretical Deployments move through a sequence of finite-state
-      machine states similar to the BIP9 states
+  q1="Heretical Deployments 通过一系列类似于 BIP9 状态
       (`DEFINED`, `STARTED`, `LOCKED_IN`, `ACTIVE`, and `FAILED`),
-      but with one additional state after `ACTIVE` called `DEACTIVATING`
-      (following which is the final state, `ABANDONED`).
-      What is the purpose of the `DEACTIVATING` state?"
-  a1="It gives users a chance to withdraw funds they might have locked
-      into the soft fork. Once the fork is deactivated or replaced, they
-      might not be able to spend the funds at all -- even if they're
-      anyone-can-spend; that doesn't work if your tx is rejected for
-      being non-standard.
-      The concern isn't so much the permanent
-      loss of the limited signet funds, but rather that the UTXO set
-      may become bloated."
+      的有限状态机状态移动，但在`ACTIVE` 之后有一个额外的状态称为 `DEACTIVATING`
+      (接下来是最终状态，`ABANDONED`)。`DEACTIVATING` 状态的目的是什么？"
+  a1="它让用户有机会提取他们可能锁定在软分叉中的资金。一旦分叉被停用或更换，他们可能根本无法使用这些资金——即使他们是任何人都可以花的；如果您的交易因非标准而被拒绝，那将不起作用。与其说担心的是永久损失有限的 signet 资金，不如说是担心 UTXO 集可能会膨胀。"
   a1link="https://bitcoincore.reviews/bitcoin-inquisition-16#l-92"
 
-  q2="Why does the PR remove `min_activation_height`?"
-  a2="We don't need a configurable interval between lock-in and activation
-      in the new state model -- with Heretical Deployments, it activates
-      automatically at the start of the next 432-block (3 days) state
-      machine period (this period is fixed for Heretical Deployments)."
+  q2="为什么 PR 删除了 `min_activation_height`?"
+  a2="我们不需要在新状态模型中锁定和激活之间的可配置间隔——使用 Heretical Deployments，它会在下一个 432块（3天）状态机周期开始时自动激活 (这个周期对 Heretical Deployments 是固定的)。"
   a2link="https://bitcoincore.reviews/bitcoin-inquisition-16#l-126"
 
-  q3="Why is Taproot buried in this PR?"
-  a3="If you didn't bury it, you'd have to make it a Heretical Deployment,
-      which requires some coding effort; also that would mean that it
-      would timeout eventually, but we want Taproot never to timeout."
+  q3="为什么 Taproot 被埋没在这个 PR 中?"
+  a3="如果你不掩埋它，你就必须把它变成一个 Heretical Deployment,
+      这需要一些编码工作；这也意味着它最终会超时，但我们希望 Taproot 永远不会超时。"
   a3link="https://bitcoincore.reviews/bitcoin-inquisition-16#l-147"
 %}
 
-## Releases and release candidates
+## 版本和候选版本
 
-*New releases and release candidates for popular Bitcoin infrastructure
-projects.  Please consider upgrading to new releases or helping to test
-release candidates.*
+*热门的比特币基础设施项目的新版本与候选版本。请考虑升级到新版本或帮助测试候选版本。*
 
-- [Core Lightning 23.02][] is a release for a new
-  version of this popular LN implementation.  It includes experimental
-  support for peer storage of backup data (see [Newsletter
-  #238][news238 peer storage]) and updates experimental support for [dual
-  funding][topic dual funding] and [offers][topic offers].  Also
-  included are several other improvements and bug fixes. {% include functions/podcast-callout.md url="pod241 cln" %}
+- [Core Lightning 23.02][] 是这个流行的 LN 实现的新版本。它包括对备份数据的对等存储的实验性支持 (详见 [周报 #238][news238 peer storage]) 并更新对 [双重出资][topic dual funding] 和 [BOLT12 发票][topic offers] 的实验性支持。还包括其他一些改进和错误修复。{% include functions/podcast-callout.md url="pod241 cln" %}
 
-- [LDK v0.0.114][] is a release for a new version of this library for
-  building LN-enabled wallets and applications.  It fixes several
-  security-related bugs and includes the ability to parse [offers][topic
-  offers]. {% include functions/podcast-callout.md url="pod241 ldk" %}
+- [LDK v0.0.114][] 是该库的新版本，用于构建支持 LN 的钱包和应用程序。它修复了几个与安全相关的错误，并包括解析 [BOLT12 发票][topic
+  offers]的能力。{% include functions/podcast-callout.md url="pod241 ldk" %}
 
-- [BTCPay 1.8.2][] is the latest release for this popular self-hosted
-  payment processing software for Bitcoin.  The release notes for
-  version 1.8.0 say, "this version brings custom checkout forms, store
-  branding options, a redesigned Point of Sale keypad view, new
-  notification icons and address labeling." {% include functions/podcast-callout.md url="pod241 btcpay" %}
+- [BTCPay 1.8.2][] 是这款流行的比特币自托管支付处理软件的最新版本。1.8.0 版的发行说明说，“这个版本带来了自定义结账表格、商店品牌选项、重新设计的销售点键盘视图、新的通知图标和地址标签。” {% include functions/podcast-callout.md url="pod241 btcpay" %}
 
-- [LND v0.16.0-beta.rc2][] is a release candidate for a new major
-  version of this popular LN implementation. {% include functions/podcast-callout.md url="pod241 lnd" %}
+- [LND v0.16.0-beta.rc2][] 是这个流行的 LN 实现的新主要版本的候选版本。{% include functions/podcast-callout.md url="pod241 lnd" %}
 
-## Notable code and documentation changes
+## 重大的文档和代码变更
 
-*Notable changes this week in [Bitcoin Core][bitcoin core repo], [Core
+
+*本周出现的周大变更有：[Bitcoin Core][bitcoin core repo], [Core
 Lightning][core lightning repo], [Eclair][eclair repo], [LDK][ldk repo],
 [LND][lnd repo], [libsecp256k1][libsecp256k1 repo], [Hardware Wallet
 Interface (HWI)][hwi repo], [Rust Bitcoin][rust bitcoin repo], [BTCPay
 Server][btcpay server repo], [BDK][bdk repo], [Bitcoin Improvement
-Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
+Proposals (BIPs)][bips repo], 和 [Lightning BOLTs][bolts repo]。*
 
-- [LND #7462][] allows the creation of watch-only wallets with remote
-  signing and the use of the stateless init feature. {% include functions/podcast-callout.md url="pod241 lnd7462" %}
+- [LND #7462][] 允许创建具有远程签名和使用无状态初始化功能的只监视钱包。{% include functions/podcast-callout.md url="pod241 lnd7462" %}
 
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="7462" %}
@@ -217,9 +100,9 @@ Proposals (BIPs)][bips repo], and [Lightning BOLTs][bolts repo].*
 [BTCPay 1.8.2]: https://github.com/btcpayserver/btcpayserver/releases/tag/v1.8.2
 [podcast post]: /en/podcast-announcement/
 [sanders vault]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-March/021510.html
-[news234 vault]: /en/newsletters/2023/01/18/#proposal-for-new-vault-specific-opcodes
+[news234 vault]: /zh/newsletters/2023/01/18/#proposal-for-new-vault-specific-opcodes
 [news166 tluv]: /en/newsletters/2021/09/15/#covenant-opcode-proposal
-[news238 peer storage]: /en/newsletters/2023/02/15/#core-lightning-5361
+[news238 peer storage]: /zh/newsletters/2023/02/15/#core-lightning-5361
 [newsletter #219 bi]: /en/newsletters/2022/09/28/#bitcoin-implementation-designed-for-testing-soft-forks-on-signet
 [review club bi-16]: https://bitcoincore.reviews/bitcoin-inquisition-16
 [bitcoin inquisition]: https://github.com/bitcoin-inquisition/bitcoin
