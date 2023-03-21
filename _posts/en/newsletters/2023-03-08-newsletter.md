@@ -11,7 +11,7 @@ lang: zh
 
 ## 新闻
 
-- **OP_VAULT 的替代设设计：** Greg Sanders 向 Bitcoin-Dev 邮件列表 [发布了][sanders vault] 一个替代设计，用于提供 `OP_VAULT`/`OP_UNVAULT` 提案的功能 (详见[周报 #234][news234 vault])。他的替代方案是添加三个操作码而不是两个，举个例子：
+- **OP_VAULT 的替代设计：** Greg Sanders 向 Bitcoin-Dev 邮件列表 [发布了][sanders vault] 一个替代设计，用于提供 `OP_VAULT`/`OP_UNVAULT` 提案的功能 (详见[周报 #234][news234 vault])。他的替代方案是添加三个操作码而不是两个，举个例子：
 
     - Alice 通过使用花费 [P2TR 输出][topic taproot] 来将资金存入保险库，该输出包含至少两个 [leafscripts][topic tapscript]，一个可以触发延时解锁过程，另一个可以立即冻结她的资金，例如 `tr(key,{trigger,freeze})`。
 
@@ -35,8 +35,7 @@ lang: zh
 
 ## Bitcoin Core PR 审核俱乐部
 
-*在这个月度部分，我们总结了最近的 [Bitcoin Core PR 审核俱乐部][]
-会议，强调了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
+*在这个月度部分，我们总结了最近的 [Bitcoin Core PR 审核俱乐部][]会议，强调了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
 
 [Bitcoin-inquisition: Activation logic for testing consensus changes][review club bi-16]
 是 Anthony Towns 的 PR，它在 [Bitcoin Inquisition][] 项目中添加了一种激活和停用软分叉的新方法，旨在在 [signet][topic signet]
