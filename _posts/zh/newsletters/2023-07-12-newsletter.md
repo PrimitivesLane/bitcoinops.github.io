@@ -19,7 +19,7 @@ lang: zh
 
   - *<!--data-loss-protection-->数据丢失保护：* 在2017年成为规范的一部分(见 [BOLTs #240][])。使用此功能的节点在重新连接时发送有关其最新通道状态的信息。这可能允许节点检测到它已丢失数据，并鼓励未丢失数据的节点以最新状态关闭通道。有关更多详细信息，请参见[周报 #31][news31 data loss]。
 
-  - *<!--static-remote-party-keys-->静态远端方密钥：* 在2019年成为规范的一部分(见[周报 #67][news67 bolts642])，这使节点可以请求每个通道更新都将非 [HTLC][topic htlc] 资金发送到该节点指定的同一地址。以前，每次通道更新都会使用不同的地址。更改之后，选择加入此协议并丢失数据的节点将最终至少将部分资金接收到节点选择的地址，例如节点的[层级式确定性钱包（HD wallet）][topic bip32]地址。
+  - *<!--static-remote-party-keys-->静态远端方密钥：* 在2019年成为规范的一部分(见[周报 #67][news67 bolts642])，这使节点可以请求每个通道更新都将非 [HTLC][topic htlc] 资金发送到该节点指定的同一地址。以前，每次通道更新都会使用不同的地址。更改之后，选择加入此协议并丢失数据的节点最终将至少能在所选地址回收部分资金，例如节点的[层级式确定性钱包（HD wallet）][topic bip32]地址。
 
   对整理提案 PR 的初步回复都是积极的。
 
@@ -33,7 +33,7 @@ _关于交易转发、交易池接纳和挖矿交易选择的限定[周刊][poli
 
 *在这个月度部分，我们总结了最近的 [Bitcoin Core PR 审核俱乐部][Bitcoin Core PR Review Club]会议，重点介绍了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
 
-[停止中继非交易池交易][review club 27625]是 Marco Falke（MarcoFalke）提出的 PR，它通过删除 `mapRelay` 这种内存数据结构来简化 Bitcoin Core 客户端，该数据结构可能导致高内存消耗且不再被需要，或者说益处微不足道。此数据结构包含可能处于或者不处于交易池中的交易，并有时被用于回复对等节点的 [`getdata`][wiki getdata] 请求。
+[停止中继非交易池交易][review club 27625]是 Marco Falke（MarcoFalke）提出的 PR，它通过删除 `mapRelay` 这种内存数据结构来简化 Bitcoin Core 客户端，该数据结构可能导致高内存消耗，且不再被需要，或者说益处微不足道。此数据结构包含可能处于或者不处于交易池中的交易，有时也被用于回复对等节点的 [`getdata`][wiki getdata] 请求。
 {% include functions/details-list.md
   q0="<!--what-are-the-reasons-to-remove-maprelay-->移除 `mapRelay` 有哪些原因？"
   a0="此数据结构的内存消耗是没有限制的。虽然通常它不会使用太多内存，但当任何数据结构的大小由外部实体（对等节点）的行为决定并且没有最大值限制时，这就会成为一个问题，因为这可能会导致 DoS 漏洞。"
@@ -47,15 +47,15 @@ _关于交易转发、交易池接纳和挖矿交易选择的限定[周刊][poli
   a2="没有它，由于 `mapRelay` 已不再可用，我们将无法向请求它们的对等节点提供最新区块中刚刚挖出的交易，因为我们已将这些交易从交易池中删除。"
   a2link="https://bitcoincore.reviews/27625#l-45"
 
-  q3="<!--do-you-think-it-is-necessary-to-introduce-m-most-recent-block-txs-as-opposed-to-just-removing-maprelay-without-any-replacement-->你是否认为引入 `m_most_recent_block_txs` 是必要的，而不是仅仅删除 `mapRelay` 而没有进行任何替代措施？"
-  a3="在该问题上，审查俱乐部的参与者存在一些不确定性。有人建议使用 `m_most_recent_block_txs` 来提高区块传播速度，因为如果我们的对等节点还没有接收到我们刚刚接收到的区块，我们节点提供其交易的能力可以帮助对等节点完成[致密区块][topic compact block relay]下载。另一个建议是，在出现链分叉的情况下可能会有所帮助；如果我们的对等节点与我们处于不同的提示的情况下，则该交易可能不会通过作为区块的一部分来传播。"
+  q3="<!--do-you-think-it-is-necessary-to-introduce-m-most-recent-block-txs-as-opposed-to-just-removing-maprelay-without-any-replacement-->你是否认为引入 `m_most_recent_block_txs` 是必要的，而不能仅删除 `mapRelay` 而不提供任何替代措施？"
+  a3="在该问题上，审查俱乐部的参与者有不同意见。有人认为，使用 `m_most_recent_block_txs` 可以提高区块传播速度，因为如果我们的对等节点还没有接收到我们刚刚接收到的区块，我们节点提供其交易的能力可以帮助对等节点完成[致密区块][topic compact block relay]下载。另一个意见是，在出现链分叉的情况下可能会有所帮助；如果我们的对等节点所认定的链顶端与我们所认为的不同，则该交易可能不会作为区块的一部分得到传播。"
   a3link="https://bitcoincore.reviews/27625#l-54"
 
   q4="<!--what-are-the-memory-requirements-for-m-most-recent-block-txs-compared-to-maprelay-->`m_most_recent_block_txs` 相对于 `mapRelay` 而言，对内存的要求是多少？"
   a4="`m_most_recent_block_txs` 中的条目数受限于区块中的交易数。但是，其内存需求甚至比该交易数更少，因为 `m_most_recent_block_txs` 条目是共享指针（指向交易），它们也已经被 `m_most_recent_block` 指向。"
   a4link="https://bitcoincore.reviews/27625#l-65"
 
-  q5="<!--are-there-scenarios-in-which-transactions-would-be-made-available-for-a-shorter-or-longer-time-than-before-as-a-result-of-this-change-->由于这次变化，交易时间是否可能比以前更短或更长？"
+  q5="<!--are-there-scenarios-in-which-transactions-would-be-made-available-for-a-shorter-or-longer-time-than-before-as-a-result-of-this-change-->由于这次变化，交易留存在交易池中的时间是否可能比以前更短或更长？"
   a5="当距离上一块区块的时间超过15分钟时，时间更长 (这是条目保留在 `mapRelay` 中的时间)，否则更短。鉴于选择15分钟的时间相对任意，这种方式似乎是可以接受的。但是，这种更改可能会在链分叉超过一个区块深度（这种情况非常罕见）时减少交易的可用性，因为我们不再保留那些非最佳链上独有的交易。"
   a5link="https://bitcoincore.reviews/27625#l-70"
 %}
