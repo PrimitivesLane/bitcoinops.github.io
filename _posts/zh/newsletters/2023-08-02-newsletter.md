@@ -15,7 +15,7 @@ lang: zh
 
 - **MuSig2 盲签名的安全性：** Tom Trevethan 在 Bitcoin-Dev 邮件列表中[发帖][trevethan blind]，请求对计划成为 [statechains][topic statechains] 部署一部分的加密协议进行评审。目标是部署一项服务，该服务将使用自己的私钥创建 [MuSig2][topic musig] 部分签名，而不需要获得有关签名内容或者其部分签名使用方式的任何知识。盲签名者只需报告它用特定私钥创建了多少个签名。
 
-    邮件组里的讨论检查了与特定问题相关的各种构造以及[更为普遍的 Schnorr 盲签名][generalized blind schnorr]的陷阱。还提到了 Ruben Somsen 一年前提及的有关1996年的盲化 [Diffie-Hellman (DH) 密钥交换][dhke]协议的[要点][somsen gist]，该协议可用于 ecash 的盲签名。[Lucre][] 和 [Minicash][] 是此方案之前与比特币无关的实现，而 [Cashu][] 是 Minicash 相关的实现，并集成了比特币和 LN 的支持。任何对密码学感兴趣的人可能会发现该线程对密码学技术的讨论很有趣。{% assign timestamp="5:07" %}
+    邮件组里的讨论检查了与特定问题相关的各种构造以及[更为普遍的 Schnorr 盲签名][generalized blind schnorr]的陷阱。还提到了 Ruben Somsen 一年前提及的有关 1996 年的盲化 [Diffie-Hellman (DH) 密钥交换][dhke]协议的[要点][somsen gist]，该协议可用于盲化的 ecash。[Lucre][] 和 [Minicash][] 是此方案之前与比特币无关的实现，而 [Cashu][] 是 Minicash 相关的实现，并集成了比特币和 LN 的支持。任何对密码学感兴趣的人可能会发现该主题对密码学技术的讨论很有趣。{% assign timestamp="5:07" %}
 
 ## 版本和候选版本
 
@@ -35,15 +35,15 @@ Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和
 
 - [Bitcoin Core #26467][]允许用户指定交易的哪个输出是在 `bumpfee` 中的找零输出。在创建[替换交易][topic rbf]时，钱包会从此输出中扣除价值以增加费用。默认情况下，钱包会尝试自动检测找零输出，如果失败则创建一个新的输出。{% assign timestamp="25:31" %}
 
-- [Core Lightning #6378][]和[#6449][core lightning #6449]将会把一个链下转发来的 [HTLC][topic htlc]标记为失败，如果当节点无法（或由于费用成本而不愿意）使相应的链上 HTLC 超时时。例如，Alice 的节点将一个有效期为20个区块的 HTLC 转发到 Bob 的节点，Bob 的节点将具有相同支付哈希的 HTLC 转发到 Carol 的节点，有效期为10个区块。随后，Bob 和 Carol 之间的通道在链上被强制关闭。
+- [Core Lightning #6378][]和[#6449][core lightning #6449]将会把一个链下转发来的 [HTLC][topic htlc]标记为失败，如果当节点无法（或由于费用成本而不愿意）使相应的链上 HTLC 超时时。例如，Alice 的节点将一个有效期为 20 个区块的 HTLC 转发到 Bob 的节点，Bob 的节点将具有相同支付哈希的 HTLC 转发到 Carol 的节点，有效期为 10 个区块。随后，Bob 和 Carol 之间的通道在链上被强制关闭。
 
-    10个区块到期后，会出现一种不常见的情况：Bob 的节点要么使用退款条件进行花费，但交易未确认；要么他决定，由于要求退款所产生的费用高于交易价值而不会进行花费。在此 PR 之前，Bob 的节点不会在链下取消从 Alice 收到的 HTLC，因为这可以让 Alice 保留她转发给 Bob 的钱，并让 Carol 领取 Bob 转发给自己的钱，从而使 Bob 来承担此 HTLC 的损失。
+    10 个区块到期后，会出现一种不常见的情况：Bob 的节点要么使用退款条件进行花费，但交易未确认；要么他决定，由于要求退款所产生的费用高于交易价值而不会进行花费。在此 PR 之前，Bob 的节点不会在链下取消从 Alice 收到的 HTLC，因为这可以让 Alice 保留她转发给 Bob 的钱，并让 Carol 领取 Bob 转发给自己的钱，从而使 Bob 来承担此 HTLC 的损失。
 
-    然而，在 Alice 向 Bob 提供的 HTLC 的20个区块到期后，Alice 可以强制关闭通道以尝试接收她转发给 Bob 金额的退款，并且 Alice 的软件可能会自动执行此操作以防止她可能损失其上游的节点转发的钱。但是，如果她强行关闭通道，她最终可能会陷入与 Bob 相同的境地：她要么无法申请退款，要么不尝试退款，因为经济上不可行。这意味着 Alice 和 Bob 之间的有用通道被关闭，对他们任何一个都没有好处。对于 Alice 上游的任何一方，此问题可能会重复多次，从而导致一连串不必要的通道关闭。  
+    然而，在 Alice 向 Bob 提供的 HTLC 的 20 个区块到期后，Alice 可以强制关闭通道以尝试接收她转发给 Bob 金额的退款，并且 Alice 的软件可能会自动执行此操作以防止她可能损失其上游的节点转发的钱。但是，如果她强行关闭通道，她最终可能会陷入与 Bob 相同的境地：她要么无法申请退款，要么不尝试退款，因为经济上不可行。这意味着 Alice 和 Bob 之间的有用通道被关闭，对他们任何一个都没有好处。对于 Alice 上游的任何一方，此问题可能会重复多次，从而导致一连串不必要的通道关闭。  
 
     此 PR 中实施的解决方案是：Bob 在合理的时间内等待申请退款，如果没有发生，则他在链下取消从 Alice 收到的 HTLC以允许他们的通道继续运行，即使意味着他可能会损失 HTLC 的金额。{% assign timestamp="27:19" %}
 
-- [Core Lightning #6399][]添加了对 `pay` 命令的支持，用于支付本地节点创建的发票。这可以简化在后台调用 CLN 的软件的帐户管理代码，正如最近的[邮件列表线程][fiatjaf custodial]中所讨论的那样。{% assign timestamp="33:03" %}
+- [Core Lightning #6399][]添加了对 `pay` 命令的支持，用于支付本地节点创建的发票。这可以简化在后台调用 CLN 的软件的帐户管理代码，正如最近的[邮件列表主题][fiatjaf custodial]中所讨论的那样。{% assign timestamp="33:03" %}
 
 - [Core Lightning #6389][]添加了一个可选的 CLNRest 服务，“一个基于 Python 的轻量级 Core Lightning 插件，可将 RPC 调用转换为 REST 服务。通过生成 REST API 端点，它可以在幕后执行 Core Lightning 的 RPC 方法并提供 JSON 格式的响应”。有关详细信息，请参阅[文档][clnrest doc]。{% assign timestamp="35:48" %}
 
@@ -51,7 +51,7 @@ Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和
 
 - [Core Lightning #6398][]使用新的 `ignorefeelimits` 选项扩展了 `setchannel` RPC，该选项将忽略通道的最低链上费用限制，允许远程通道对手方将费用设置为低于本地节点允许的最低费用。这可以帮助解决另一个 LN 节点实现中的潜在错误，或者可以被用来消除部分可信通道作为问题根源的费用争用问题。{% assign timestamp="39:52" %}
 
-- [Core Lightning #5492][]添加了“用户级静态定义跟踪点(USDT)”以及使用它们的方法。这些允许用户探测其节点的内部操作以进行调试，而在不使用跟踪点时不会引入任何显着的开销。有关之前将 USDT 支持纳入 Bitcoin Core 的信息，见[周报#133][news133 usdt]。{% assign timestamp="45:52" %}
+- [Core Lightning #5492][]添加了“用户级静态定义跟踪点(USDT)”以及使用它们的方法。这些允许用户探测其节点的内部操作以进行调试，而在不使用跟踪点时不会引入任何显著的开销。有关之前将 USDT 支持纳入 Bitcoin Core 的信息，见[周报#133][news133 usdt]。{% assign timestamp="45:52" %}
 
 - [Eclair #2680][]添加了对[BOLTs #863][]中提出的[通道拼接协议][topic splicing]所需的静止协商协议的支持。静止协议防止共享通道的两个节点相互发送任何新的[HTLCs][topic htlc]，直到某个操作完成为止，例如就拼接参数达成一致并合作签署链上拼接输入或拼接输出的交易。在拼接协商和签名期间收到的 HTLC 可能会使之前的协商和签名无效，因此更简单的是，只需暂停 HTLC 中继以完成拼接交易所必需的共同签名的几次网络往返通信。Eclair 已经支持通道拼接，但这一变化使其更易于支持其他节点软件可能使用的通道拼接协议。{% assign timestamp="51:42" %}
 
