@@ -11,7 +11,7 @@ lang: zh
 
 ## 新闻
 
-- **定期的 LN 规范会议记录：** Carla Kirk-Cohen 在 Lightning-Dev 邮件列表上[发布了][kc scripts]通知，宣布最近几次视频会议讨论 LN 规范变更的会议已经被记录下来。这些记录现在可在 Bitcoin Transcripts 上[获得][btcscripts spec]。在相关新闻中，正如在面对面 LN 开发者会议中几周前讨论的那样，[Libera.chat][] 网络上的 `#lightning-dev` IRC 聊天室已经看到了与 LN 相关的讨论的大量新活动。{% assign timestamp="1:13" %}
+- **定期的 LN 规范会议记录：** Carla Kirk-Cohen 在 Lightning-Dev 邮件列表上[发布了][kc scripts]通知，宣布最近几次讨论 LN 规范变更的视频会议已经被记录下来。这些记录现在可在 Bitcoin Transcripts 上[获得][btcscripts spec]。在相关新闻中，正如在面对面 LN 开发者会议中几周前讨论的那样，[Libera.chat][] 网络上的 `#lightning-dev` IRC 聊天室已经看到了与 LN 相关的讨论的大量新活动。{% assign timestamp="1:13" %}
 
 - **MuSig2 盲签名的安全性：** Tom Trevethan 在 Bitcoin-Dev 邮件列表中[发帖][trevethan blind]，请求对计划成为 [statechains][topic statechains] 部署一部分的加密协议进行评审。目标是部署一项服务，该服务将使用自己的私钥创建 [MuSig2][topic musig] 部分签名，而不需要获得有关签名内容或者其部分签名使用方式的任何知识。盲签名者只需报告它用特定私钥创建了多少个签名。
 
