@@ -55,7 +55,7 @@ Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和
 
 - [Eclair #2680][]添加了对[BOLTs #863][]中提出的[通道拼接协议][topic splicing]所需的静止协商协议的支持。静止协议防止共享通道的两个节点相互发送任何新的[HTLCs][topic htlc]，直到某个操作完成为止，例如就拼接参数达成一致并合作签署链上拼接输入或拼接输出的交易。在拼接协商和签名期间收到的 HTLC 可能会使之前的协商和签名无效，因此更简单的是，只需暂停 HTLC 中继以完成拼接交易所必需的共同签名的几次网络往返通信。Eclair 已经支持通道拼接，但这一变化使其更易于支持其他节点软件可能使用的通道拼接协议。{% assign timestamp="51:42" %}
 
-- [LND #7820][]将非批处理 `OpenChannel` 可用的所有字段添加到 `BatchOpenChannel` RPC 中，但除了 `funding_shim` (批量打开不需要)和 `fundmax` (打开多个通道时不能为一个通道提供所有余额)。{% assign timestamp="53:57" %}
+- [LND #7820][]将 `BatchOpenChannel` RPC 可用的所有字段添加到非批处理的 `OpenChannel` RPC 中，但除了 `funding_shim` (批量打开不需要)和 `fundmax` (打开多个通道时不能为一个通道提供所有余额)。{% assign timestamp="53:57" %}
 
 - [LND #7516][]使用新的 `utxo` 参数扩展了 `OpenChannel` RPC，该参数允许从钱包中指定一个或多个 UTXO，这些 UTXO 用于为新通道提供资金。{% assign timestamp="54:57" %}
 
