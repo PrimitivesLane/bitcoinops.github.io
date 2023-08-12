@@ -33,7 +33,7 @@ Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement
 Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和
 [Bitcoin Inquisition][bitcoin inquisition repo]。*
 
-- [Bitcoin Core #26467][]允许用户指定交易的哪个输出是在 `bumpfee` 中的找零输出。在创建[替换交易][topic rbf]时，钱包会从此输出中扣除价值以用来增加费用。默认情况下，钱包会尝试自动检测找零输出，如果失败则创建一个新的输出。{% assign timestamp="25:31" %}
+- [Bitcoin Core #26467][]允许用户指定交易的哪个输出是在 `bumpfee` 中的找零输出。在创建[替换交易][topic rbf]时，钱包会从此输出中扣除价值以增加费用。默认情况下，钱包会尝试自动检测找零输出，如果失败则创建一个新的输出。{% assign timestamp="25:31" %}
 
 - [Core Lightning #6378][]和[#6449][core lightning #6449]将会把一个链下转发来的 [HTLC][topic htlc]标记为失败，如果当节点无法（或由于费用成本而不愿意）使相应的链上 HTLC 超时时。例如，Alice 的节点将一个有效期为20个区块的 HTLC 转发到 Bob 的节点，Bob 的节点将具有相同支付哈希的 HTLC 转发到 Carol 的节点，有效期为10个区块。随后，Bob 和 Carol 之间的通道在链上被强制关闭。
 
