@@ -51,7 +51,7 @@ Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和
 
 - [Core Lightning #6398][]使用新的 `ignorefeelimits` 选项扩展了 `setchannel` RPC，该选项将忽略通道的最低链上费用限制，允许远程通道对手方将费用设置为低于本地节点允许的最低费用。这可以帮助解决另一个 LN 节点实现中的潜在错误，或者可以被用来消除部分可信通道作为问题根源的费用争用问题。{% assign timestamp="39:52" %}
 
-- [Core Lightning #5492][]添加了用户级静态定义跟踪点(USDT)以及使用它们的方法。这些允许用户探测其节点的内部操作以进行调试，而在不使用跟踪点时不会引入任何显着的开销。有关之前将 USDT 支持纳入 Bitcoin Core 的信息，见[周报#133][news133 usdt]。{% assign timestamp="45:52" %}
+- [Core Lightning #5492][]添加了“用户级静态定义跟踪点(USDT)”以及使用它们的方法。这些允许用户探测其节点的内部操作以进行调试，而在不使用跟踪点时不会引入任何显着的开销。有关之前将 USDT 支持纳入 Bitcoin Core 的信息，见[周报#133][news133 usdt]。{% assign timestamp="45:52" %}
 
 - [Eclair #2680][]添加了对[BOLTs #863][]中提出的[通道拼接协议][topic splicing]所需的静止协商协议的支持。静止协议防止共享通道的两个节点相互发送任何新的[HTLCs][topic htlc]，直到某个操作完成为止，例如就拼接参数达成一致并合作签署链上拼接输入或拼接输出的交易。在拼接协商和签名期间收到的 HTLC 可能会使之前的协商和签名无效，因此更简单的是，只需暂停 HTLC 中继以完成拼接交易所必需的共同签名的几次网络往返通信。Eclair 已经支持通道拼接，但这一变化使其更易于支持其他节点软件可能使用的通道拼接协议。{% assign timestamp="51:42" %}
 
