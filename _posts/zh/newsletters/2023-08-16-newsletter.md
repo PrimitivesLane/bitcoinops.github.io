@@ -21,7 +21,7 @@ lang: zh
 - **<!--serverless-payjoin-->免服务器的 payjoin**：Dan Gould 在邮件组中[发帖][gould spj]出示了 *免服务器 pajoin*（详见[周报 #236][news236 spj]）的一份 [BIP 草案][spj bip]。就其自身而言，由 [BIP78][] 定义的 [payjoin][topic payjoin] 预期收款方会运行一个服务器，以安全地接收由支付方提供的 [LDK][ldk repo]。Gould 提出了一种异步中继模式，一开始，收款方使用一个 [BIP21][] URI 来指明转发服务器和自己希望用来接收 payjoin 支付的对称加密密钥。支付方会使用这个密钥来加密自己的交易的一个 PSBT，然后发送给接收者指定的中继。接收者会下载这个 PSBT、解密它，然后给它添加签好名的输入，再发回给中继。支付者下载回传的 PSBT、解密它、确保它是正确的，然后签名并广播到比特币网络中。
 
     在一个[回复][gibson spj]中，Adam Gibson 警告了在 BIP21 URI 中包含加密密钥的危险性，以及用户的隐私性风险：中继可以把收款方和发送方的 IP 地址，跟会话结束时相邻时间段内广播到网络中的交易的集合关联起来。Gould [随后修改了][gould spj2]这份提案，以尝试解决 Gibson 对加密密钥的顾虑。
-    
+
     我们期待看到关于这份协议的进一步讨论。{% assign timestamp="14:28" %}
 
 ## 田野调查：实现 MuSig2
@@ -39,7 +39,7 @@ lang: zh
 *本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和 [Bitcoin Inquisition][bitcoin inquisition repo]*。
 
 - [Bitcoin Core #27213][] 帮助 Bitcoin Core 创建和维护通往更多样的网络中的对等节点的连接，从而减低某些情况下遭遇 “[日蚀攻击][topic eclipse attacks]” 的风险。日蚀攻击指的是，一个节点被不诚实的对等节点包围、完全无法连接到任何一个诚实的对等节点，不诚实的对等节点给他的区块可以跟网络上的其他人看到的都不一样。这种攻击可以用来让受害者节点相信某一笔交易已经得到确认（即使网络上的其他人都不同意），从而欺骗节点运营者已经完成了支付（实际上这些钱他永远花不出去）。提高连接的多样性，可以帮助阻止意外的网络分割 —— 一小部分节点被隔离在网络主流之外，因此无法收到最新区块。
-  
+
     这个已经合并的 PR 尝试在每一种可以触达的网络中开启至少一个对等连接，而且会防止任意网络上的唯一对等节点被自动断开。{% assign timestamp="45:46" %}
 
 - [Bitcoin Core #28008][] 添加了加密和解密的惯例，计划用于实现由 [BIP324][] 说明的 “[v2 transport protocol][topic v2 P2P transport]”。添加了下列加密算法和类（引用自 PR）：
