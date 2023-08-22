@@ -1,7 +1,7 @@
 {:.post-meta}
 *作者：[Brandon Black][]，来自 [BitGo][]*
 
-第一篇[MuSig 论文][MuSig paper]出版于 2018 年，而且 [MuSig][topic musig] 在比特币上的潜能，正是用来让 taproot 软分叉获得支持的卖点之一。对 MuSig 的开发延续了下来，[MuSig-DN][] 和 [MuSig2][] 的论文在 2020 年出版。到 2021 年， taproot 在比特币主网上临近激活的时候，对 MuSig 签名即将到了的兴奋之情是真实可感的。在 BitGo，我们期待能趁着 taproot 的激活发布一款 MuSig taproot 钱包；但是当时的规范、测试节点和参考实现都是不完整的。于是，BitGo 只能先[发布][bitgo blog taproot]第一款基于 tapscript 的多签名钱包，并在主网上发起了[第一笔 tapscript 多签名交易][first tapscript multisig transaction]。接近两年以后，MuSig2 在 [BIP327][] 中得到规范，我们就[发布][bitgo blog musig2]了第一款 MuSig taproot 多签名钱包。
+第一篇[MuSig 论文][MuSig paper]出版于 2018 年，而且 [MuSig][topic musig] 在比特币上的潜能，正是用来让 taproot 软分叉获得支持的卖点之一。对 MuSig 的开发延续了下来，[MuSig-DN][] 和 [MuSig2][] 的论文在 2020 年出版。到 2021 年， taproot 在比特币主网上临近激活的时候，对 MuSig 签名即将到来的兴奋之情是真实可感的。在 BitGo，我们期待能趁着 taproot 的激活发布一款 MuSig taproot 钱包；但是当时的规范、测试节点和参考实现都是不完整的。于是，BitGo 只能先[发布][bitgo blog taproot]第一款基于 tapscript 的多签名钱包，并在主网上发起了[第一笔 tapscript 多签名交易][first tapscript multisig transaction]。接近两年以后，MuSig2 在 [BIP327][] 中得到规范，我们就[发布][bitgo blog musig2]了第一款 MuSig taproot 多签名钱包。
 
 {{include.extrah}}## 为什么要使用 MuSig2？
 
@@ -13,7 +13,7 @@
 
 {{include.extrah}}### 与其它 MPC 协议相比
 
-因为上面提到的手续费和隐私性上的好处，“MPC（多方计算）” 签名协议越来越受欢迎。MuSig 是一种 *简单* 的多签名协议（只支持 n-of-n 模式），是因为 schnorr 签名的线性可加特性而成为可能的。MuSig2 可以用一场 30 分钟的演讲解释清楚，而完整的参考实现是 461 行的 Python 代码。[门限签名][topic threshold signature]（t-of-n）协议，例如 [FROST][]，会复杂很多；甚至基于 ECDSA 的[两方的多签名][2-party multi-signatures]，也要依赖于 Paillier 加密法和其它技术。
+因为上面提到的手续费和隐私性上的好处，“MPC（多方计算）” 签名协议越来越受欢迎。MuSig 是一种 *简单* 的多签名协议（只支持 n-of-n 模式），是因为 schnorr 签名的线性可加特性而成为可能的。MuSig2 可以用一场 30 分钟的演讲解释清楚，而完整的参考实现是 461 行的 Python 代码。[门限签名][topic threshold signature]（t-of-n）协议，例如 [FROST][]，会复杂很多；甚至基于 ECDSA 的[两方的多签名][2-party multi-signatures]，也要依赖于 Paillier 加密算法和其它技术。
 
 {{include.extrah}}## 脚本类型的选择
 
@@ -36,7 +36,7 @@
 
 为了在 MuSig 中安全地使用确定性 nonce 值，在 MuSig-DN 这样的技术中，必须证明所有的参与者都正确地生成了确定性 nonce 值。没有这样的证据，恶意的签名人就可以为同一条消息发起两个签名会话，然后提供不一样的 nonce 值。另一个生成确定性 nonce 值的签名会使用相同的 nonce 值为两条实质上不同的信息生成两个碎片签名，最终导致私钥泄露给恶意签名人。
 
-在 MuSig2 规范的开发期间，[Dawid][] 和我意识到，*最后一个* 贡献 nonce 值的签名人可以确定性地生成自己的 nonce 值。我跟 [Jonas Nick][] 讨论了这一点，他于是将此形式化、成为规范。在 BitGo 的 MuSig2 实现中，这种确定性的签名模式用在了我们 HSM（硬件签名模块）中，以使这些硬件可以无状态地（statelessly）执行MuSig2 签名。
+在 MuSig2 规范的开发期间，[Dawid][] 和我意识到，*最后一个* 贡献 nonce 值的签名人可以确定性地生成自己的 nonce 值。我跟 [Jonas Nick][] 讨论了这一点，他于是将此形式化、成为规范。在 BitGo 的 MuSig2 实现中，这种确定性的签名模式用在了我们 HSM（硬件签名模块）中，以使这些硬件可以无状态地（statelessly）执行 MuSig2 签名。
 
 在多轮签名协议中使用随机 nonce 值时，签名人必须考虑这些 nonce 秘密值在轮次之间如何存储。在单签名中，nonce 秘密值在创建它的同一个执行步骤中就可以删除。如果一个攻击者可以在 nonce 值创建之后、来自其它签名器的 nonce 值到来之前立即克隆一个签名器的状态，这个签名器就可以被诱骗为实质上不同的多条消息使用同一个 nonce 值生成多个签名。因此，我们建议签名人仔细考虑自己的初始状态是否可被访问、nonce 秘密值具体在什么时候会被删除。在 BitGo 用户使用 BitGo SDK 运行 MuSig2 流程时，nonce 秘密值是使用 [MuSig-JS][] 库来保存的，并且，一旦为了签名而访问它们，就会导致它们被删除。
 
@@ -50,7 +50,7 @@
 
 {{include.extrah}}## MuSig 与 PSBT
 
-[PSBT（部分签名的比特币交易）][topic psbt] 格式意在携带让各方（比如：签名人和协调人）可以签名一笔交易所需的所有信息。签名所需的信息越多，这种格式的价值就越大。我们试验了 使用额外的字段扩展我们现有的 API 格式以协助 MuSig2 签名 vs. 转化成 PSBT 的成本和好处。最终我们将需要交换的交易数据转化成 PSBT 格式，而且获得了巨大的成功。尚不为许多人所知的是，BitGo 钱包现在可以跟支持 PSBT 的硬件签名设备集成（除了使用 MuSig2 的 BitGo 钱包，详见下一段）。
+[PSBT（部分签名的比特币交易）][topic psbt] 格式意在携带让各方（比如：签名人和协调人）可以签名一笔交易所需的所有信息。签名所需的信息越多，这种格式的价值就越大。我们试验了使用额外的字段扩展我们现有的 API 格式以协助 MuSig2 签名 vs. 转化成 PSBT 的成本和好处。最终我们将需要交换的交易数据转化成 PSBT 格式，而且获得了巨大的成功。尚不为许多人所知的是，BitGo 钱包现在可以跟支持 PSBT 的硬件签名设备集成（除了使用 MuSig2 的 BitGo 钱包，详见下一段）。
 
 但现在还没有公开为 MuSig2 签名而设的 PSBT 字段。在我们的实现中，我们基于 [Sanket][] 分享给我们的一份草案，用上了专门的字段。这是一个很少被提起的 PSBT 格式的好处 —— 你可以在同一种二进制格式中额外加入定制化的交易构造或者签名协议所需的 *无论什么* 数据；因为全局的、每个输入、每个输出的部分已经得到定义。PSBT 规范将未签名的交易跟脚本、签名以及其它最终形成一笔完整的交易所需的数据分离开来。这种分离可以在签名流程中提升通信的效率。举个例子，我们的 HSM 拿仅包含自己的 nonce 值和签名的最小 PSBT 作为响应，而这个 PSBT 可以很容易地组合成预签名的 PSBT。
 
