@@ -11,7 +11,7 @@ lang: zh
 
 ## 新闻
 
-- **过期备份状态的欺诈证明：** Thomas Voegtlin 在 Lightning-Dev 邮件列表中[发布了][voegtlin backups]一个想法，是一种可能因向用户提供除最新版本外的任何备份状态版本而受到惩罚的服务。基本机制很简单：
+- **<!--fraud-proofs-for-outdated-backup-state-->过期备份状态的欺诈证明：** Thomas Voegtlin 在 Lightning-Dev 邮件列表中[发布了][voegtlin backups]一个想法，是一种可能因向用户提供除最新版本外的任何备份状态版本而受到惩罚的服务。基本机制很简单：
 
     - Alice 有一些她想备份的数据。她在数据中包含一个版本号，为数据创建一个签名，并将数据和她的签名都给了Bob。
 
@@ -36,9 +36,9 @@ lang: zh
   <!-- I've previously confirmed that "ghost43" (all lowercase) is how
   they'd like to be attributed -->
 
-  - Peter Todd [指出][todd backups1]，该基本机制具有普适性。它不特定于闪电网络，可能在各种协议中都很有用。他[还指出][todd backups2]，更简单的机制是每次 Alice 有机会重新连接 Bob 时，她只需从 Bob 那里下载最新状态，而不需要任何欺诈证明。如果他向她提供旧状态，她就关闭通道，拒绝他从她未来的支付中获得任何转发费。这听起来很类似于 [BOLTs #881][] 中描述的[对等存储][topic peer storage]版本，Core Lightning 今年早些时候(见[周报 #238][news238 peer storage])实验性实现的版本，以及(根据 Bastien Teinturier 的[消息][teinturier backups])，Phoenix 钱包为闪电网络实现的该方案版本。
+  - *<!--noted-->* Peter Todd [指出][todd backups1]，该基本机制具有普适性。它不特定于闪电网络，可能在各种协议中都很有用。他[还指出][todd backups2]，更简单的机制是每次 Alice 有机会重新连接 Bob 时，她只需从 Bob 那里下载最新状态，而不需要任何欺诈证明。如果他向她提供旧状态，她就关闭通道，拒绝他从她未来的支付中获得任何转发费。这听起来很类似于 [BOLTs #881][] 中描述的[对等存储][topic peer storage]版本，Core Lightning 今年早些时候(见[周报 #238][news238 peer storage])实验性实现的版本，以及(根据 Bastien Teinturier 的[消息][teinturier backups])，Phoenix 钱包为闪电网络实现的该方案版本。
 
-  - ghost43 的[回复][ghost43 backups]解释说，导致经济处罚的欺诈证明对于将数据存储在匿名对等节点上的客户来说是一个强大的工具。一个大型流行服务可能会关心其声誉，足以避免对其客户撒谎，但匿名对等节点没有任何声誉可失。ghost43 还建议修改该协议，使其对称化，因此除了 Alice 将她的状态存储在 Bob 处(Bob 因撒谎而受到惩罚)之外，Bob 还可以将他的状态存储在 Alice 那里，如果她撒谎也会受到惩罚。
+  - *<!--reply-->* ghost43 的[回复][ghost43 backups]解释说，导致经济处罚的欺诈证明对于将数据存储在匿名对等节点上的客户来说是一个强大的工具。一个大型流行服务可能会关心其声誉，足以避免对其客户撒谎，但匿名对等节点没有任何声誉可失。ghost43 还建议修改该协议，使其对称化，因此除了 Alice 将她的状态存储在 Bob 处(Bob 因撒谎而受到惩罚)之外，Bob 还可以将他的状态存储在 Alice 那里，如果她撒谎也会受到惩罚。
 
       Voegtlin 进一步提出[警告][voegtlin backups2]，认为钱包软件提供商需要高度声誉，当用户损失资金时，即使软件功能尽可能完善，他们的声誉也会受损。作为钱包软件的开发者，尽可能减少匿名对等节点能够从使用类似对等备份机制的 Electrum 用户身上偷钱的风险对他来说非常重要。
 
@@ -81,7 +81,7 @@ lang: zh
 - [HWI 2.3.1][] 是此用于处理硬件签名设备的工具包的次要版本。
 
 
-## 重大的代码和文档变更 
+## 重大的代码和文档变更
 
 *本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core
 Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、
@@ -91,7 +91,7 @@ Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement
 Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和
 [Bitcoin Inquisition][bitcoin inquisition repo]。*
 
-- [Bitcoin Core #27981][] 修复了一个错误，该错误可能导致两个节点无法相互接收数据。如果 Alice 的节点有大量数据排队发送到 Bob 的节点，她会先尝试发送那些数据，而不接受来自 Bob 的数据。如果 Bob 也有大量数据排队发送到 Alice 的节点，他也不会接受来自 Alice 的数据。这可能导致两者无限期都不尝试从对方那里接收数据。这个问题最初是在[Elements 项目][]中发现的。
+- [Bitcoin Core #27981][] 修复了一个错误，该错误可能导致两个节点无法相互接收数据。如果 Alice 的节点有大量数据排队发送到 Bob 的节点，她会先尝试发送那些数据，而不接受来自 Bob 的数据。如果 Bob 也有大量数据排队发送到 Alice 的节点，他也不会接受来自 Alice 的数据。这可能导致两者无限期都不尝试从对方那里接收数据。这个问题最初是在[Elements 项目][elements project]中发现的。
 
 - [BOLTs #919][] 更新了 LN 规范，建议节点停止接受超过某个值的额外修剪 HTLC。修剪 HTLC 是可以转发的支付，不会作为输出添加到通道承诺交易中。相反，等同于修剪 HTLC 价值的金额会分配给交易费用。这使得使用 LN 转发在链上[不经济][topic uneconomical outputs]的支付成为可能。但是，如果通道在修剪 HTLC 待处理时需要关闭，节点无从找回那些资金，所以限制节点遭受那种损失的风险是有意义的。另见我们对各种实现添加此限制的描述：LDK 见[周报 #162][news162 trim]，Eclair 见[周报 #171][news171 trim]，Core Lightning 见[周报 #173][news173 trim]和[周报 #170][news170 trim]对一个相关的安全问题。
 
