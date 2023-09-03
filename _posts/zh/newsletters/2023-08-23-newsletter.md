@@ -47,7 +47,7 @@ lang: zh
 
 *在这个月度栏目中，我们会重点介绍比特币钱包和服务的有趣更新。*
 
-- **Scaling Lightning 调用反馈：**
+- **Scaling Lightning 请求反馈：**
   [Scaling Lightning][] 是一个在 regtest 和 signet 上对闪电网络进行测试的工具包。该项目旨在提供工具，以在各种配置和场景中测试不同的闪电网络实现。该项目最近为社区提供了一个[视频更新][sl twitter update]。鼓励闪电网络开发人员、研究人员和基础设施运营商[提供反馈][sl tg]。
 
 - **Torq v1.0 发布：**
