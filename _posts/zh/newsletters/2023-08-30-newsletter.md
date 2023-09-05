@@ -11,7 +11,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--disclosure-of-past-ln-vulnerability-related-to-fake-funding-->此前与假充值相关的闪电网络漏洞的信息披露：** Matt Morehouse [发布][morehouse dos]到 Lighting-Dev 邮件列表中，总结了他之前[尽责披露][topic responsible disclosures]的漏洞。该漏洞现在在所有流行的闪电网络实现的最新版本中都已经解决。为理解该漏洞，我们假设 Bob 运行了一个闪电网络节点。他收到 Mallory 节点的请求，要求打开一个新的通道。他们会经历通道开启的过程，直到 Mallory 该广播通道充值交易的时候。为了以后使用该通道，Bob 需要存储与之相关的一些状态，并开始扫描能让交易得到足够多确认的新区块。如果 Mallory 再也不广播该交易，就会浪费掉 Bob 的存储和扫描资源。而如果 Mallory 重复这个过程数千次或数百万次，可能会浪费 Bob 的资源，以至于他的闪电网络节点无法执行任何其他操作，包括需要及时执行的防止资金损失的操作。
+- **<!--disclosure-of-past-ln-vulnerability-related-to-fake-funding-->此前与假充值相关的闪电网络漏洞的信息披露：** Matt Morehouse [发布][morehouse dos]到 Lighting-Dev 邮件列表中，总结了他之前[尽责披露][topic responsible disclosures]的漏洞。该漏洞现在在所有流行的闪电网络实现的最新版本中都已经解决。为理解该漏洞，我们假设 Bob 运行了一个闪电网络节点。他收到 Mallory 节点的请求，要求打开一个新的通道。他们会经历通道开启的过程，但停在需要 Mallory 广播通道充值交易的阶段。为了以后使用该通道，Bob 需要存储与之相关的一些状态，并开始扫描能让交易得到足够多确认的新区块。如果 Mallory 再也不广播该交易，就会浪费掉 Bob 的存储和扫描资源。而如果 Mallory 重复这个过程数千次或数百万次，可能会浪费 Bob 的资源，以至于他的闪电网络节点无法执行任何其他操作，包括需要及时执行的防止资金损失的操作。
 
     在 Morehouse 对自己的节点进行测试时，他成功地对 Core Lightning、Eclair、LDK 和 LND 造成了重大问题，其中包括（在我们看来）可能导致许多节点损失资金的两种情况。Morehouse 的[完整描述][morehouse post]给出了解决该问题的 PR 的链接（其中包括在周报 [#237][news237 dos] 和 [#240][news240 dos] 中介绍过的 PR），并列出了解决该漏洞的闪电网络版本：
 
@@ -78,9 +78,9 @@ lang: zh
 
 - [LDK #2507][] 添加了对另一个实现中长期存在并会导致通道非必要的强制关闭问题的变通解决方法。{% assign timestamp="1:04:46" %}
 
-- [LDK #2478][] 添加了一个此前转发过的 [HTLC][topic htlc] 在当前被结算时的事件。该事件可提供这个 HTLC 的相关信息，包括它来自哪个通道、HTLC 的金额以及从中收取的手续费金额。{% assign timestamp="1:07:22" %}
+- [LDK #2478][] 添加了一个事件，用于在结算此前转发过的 [HTLC][topic htlc] 时提供信息。该事件可提供这个 HTLC 的相关信息，包括它来自哪个通道、HTLC 的金额以及从中收取的手续费金额。{% assign timestamp="1:07:22" %}
 
-- [LND #7904][] 添加了对“简单 taproot 通道”的实验性支持，允许闪电网络的充值和承诺交易使用 [P2TR][topic taproot]，并支持当双方合作时使用无脚本[多签][topic multisignature]签署的 [MuSig2][topic musig]。这减少了交易的权重空间，并在通道合作关闭时提高了隐私。LND 继续专门使用 [HTLCs][topic htlc]，允许从 taproot 通道开始的支付继续通过其他不支持 taproot 通道的闪电网络节点进行转发。{% assign timestamp="1:09:07" %}
+- [LND #7904][] 添加了对“简单 taproot 通道”的实验性支持，允许闪电网络的充值和承诺交易使用 [P2TR][topic taproot]，并支持当双方合作时使用无脚本[多签][topic multisignature]签署的 [MuSig2][topic musig]。这减少了交易的重量，并在通道合作关闭时提高了隐私。LND 继续只使用 [HTLCs][topic htlc]，允许从 taproot 通道开始的支付继续通过其他不支持 taproot 通道的闪电网络节点进行转发。{% assign timestamp="1:09:07" %}
 
     <!-- The following linked PRs have titles "1/x", "2/x", etc.  I've
     listed them in that order rather than by PR number -->
