@@ -11,7 +11,7 @@ lang: zh
 
 ## 新闻
 
-- **taproot assets 规范：** Olaoluwa Osuntokun 分别在 Bitcoin-Dev 和 Lightning-Dev 邮件列表上发布了有关 _Taproot Assets_ [客户端验证协议][topic client-side validation]。在 Bitcoin-Dev 邮件列表中，他[宣布了][osuntokun bips]七个 BIP 草案————比最初公布的_Taro_协议(见[周报 #195][news195 taro])的初始公告多一个。在 Lightning-Dev 邮件列表中，他[宣布了][osuntokun blip post]一份使用 LN 花费和接收 taproot 资产的 [BLIP 草案][osuntokun blip]，该协议计划在 LND 0.17.0-beta 版本中发布的“简单的 taproot 通道” 的实验性功能。 
+- **taproot assets 规范：** Olaoluwa Osuntokun 分别在 Bitcoin-Dev 和 Lightning-Dev 邮件列表上发布了有关 _Taproot Assets_ [客户端验证协议][topic client-side validation]。在 Bitcoin-Dev 邮件列表中，他[宣布了][osuntokun bips]七个 BIP 草案————比最初公布的_Taro_协议(见[周报 #195][news195 taro])的初始公告多一个。在 Lightning-Dev 邮件列表中，他[宣布了][osuntokun blip post]一份使用 LN 花费和接收 taproot 资产的 [BLIP 草案][osuntokun blip]，该协议计划在 LND 0.17.0-beta 版本中发布的“简单的 taproot 通道” 的实验性功能。
 
     请注意，尽管其名称为 Taproot Assets，但它不是比特币协议的一部分，也不会以任何方式更改共识协议。它利用现有功能为选择使用其客户端协议的用户提供新功能。
 
@@ -23,50 +23,50 @@ lang: zh
 
 ## Bitcoin Core PR 审核俱乐部
 
-*在这个月度部分，我们总结了 [Bitcoin Core PR 审核俱乐部][]会议，重点介绍了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
+*在这个月度部分，我们总结了 [Bitcoin Core PR 审核俱乐部][Bitcoin Core PR Review Club]会议，重点介绍了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
 
 [Transport abstraction][review club 28165] 是 Pieter Wuille（sipa）最近合并的PR，它引入了_传输_抽象（接口类）。此类的具体派生将（每个对等节点）连接（已序列化的）的发送和接收消息转换为有线格式。这可以被认为是实现更深层次的序列化和反序列化。这些类不执行实际的发送和接收。
 
 PR 从 `Transport` 类派生出两个具体类：`V1Transport` (我们现在拥有的)和 `V2Transport` (线路上加密的)。这个 PR 是 [BIP324][topic v2 p2p transport]_版本 2 P2P 加密传输协议_[项目][v2 p2p tracking pr]的一部分。
 
 {% include functions/details-list.md
-  q0=“[*net*][net] 和 [*net_processing*][net_processing] 之间有什么区别？”
-  a0=“*Net* 位于网络堆栈的底部，处理对等节点之间的低级通信，而 *net_processing* 构建在 *net* 层之上，处理来自 *net* 层的消息的处理和验证。”
+  q0="[*net*][net] 和 [*net_processing*][net_processing] 之间有什么区别？"
+  a0="*Net* 位于网络堆栈的底部，处理对等节点之间的低级通信，而 *net_processing* 构建在 *net* 层之上，处理来自 *net* 层的消息的处理和验证。"
   a0link="https://bitcoincore.reviews/28165#l-22"
 
-  q1=“更具体地说，列出我们与 *net_processing* 相关联的类或函数的示例，相比之下，也列出与 *net* 相关联的？”
-  a1=“*net_processing*: `PeerManager`，`ProcessMessage`。
-      *net*: `CNode`，`ReceiveMsgBytes`， `CConnMan`。”
+  q1="更具体地说，列出我们与 *net_processing* 相关联的类或函数的示例，相比之下，也列出与 *net* 相关联的？"
+  a1="*net_processing*: `PeerManager`，`ProcessMessage`。
+      *net*: `CNode`，`ReceiveMsgBytes`， `CConnMan`。"
   a1link="https://bitcoincore.reviews/28165#l-25"
 
-  q2=“BIP324 是否需要更改 *net* 层，*net_processing* 层，或是两者都需要？它会影响规则或共识吗？”
-  a2=“这些变化只会发生在 *net* 层；它们不影响共识。”
+  q2="BIP324 是否需要更改 *net* 层，*net_processing* 层，或是两者都需要？它会影响规则或共识吗？"
+  a2="这些变化只会发生在 *net* 层；它们不影响共识。"
   a2link="https://bitcoincore.reviews/28165#l-37"
 
-  q3=“有哪些实现漏洞可能导致此 PR 成为（意外）共识更改的例子？”
-  a3=“将最大消息大小限制为小于 4MB 的漏洞，会导致节点拒绝其他节点认为有效的块；区块反序列化中的漏洞，会导致节点拒绝经过共识验证的区块。”
+  q3="有哪些实现漏洞可能导致此 PR 成为（意外）共识更改的例子？"
+  a3="将最大消息大小限制为小于 4MB 的漏洞，会导致节点拒绝其他节点认为有效的块；区块反序列化中的漏洞，会导致节点拒绝经过共识验证的区块。"
   a3link="https://bitcoincore.reviews/28165#l-45"
 
-  q4=“`CNetMsgMaker` 和 `Transport` 都“序列化”消息。他们所做的有什么区别？”
-  a4=“`CNetMsgMaker` 将数据结构序列化为字节；`Transport` 接收这些字节，添加（序列化）区块头，然后实际发送它。”
+  q4="`CNetMsgMaker` 和 `Transport` 都“序列化”消息。他们所做的有什么区别？"
+  a4="`CNetMsgMaker` 将数据结构序列化为字节；`Transport` 接收这些字节，添加（序列化）区块头，然后实际发送它。"
   a4link="https://bitcoincore.reviews/28165#l-60"
 
-  q5=“在将应用程序对象如 `CTransactionRef` (transaction) 转换为字节/网络数据包的过程中，会发生什么？在此过程中，它会变成哪些数据结构？”
-  a5=“`msgMaker.Make()` 通过调用 `SerializeTransaction()` 来序列化 `CTransactionRef` 消息，然后 `PushMessage()` 将序列化的消息放入 `vSendMsg` 队列中，然后 `SocketSendData()` 添加一个区块头/checksum(在此 PR 更改之后)，并要求传输以发送下一个数据包，最后调用 `m_sock->Send()`。”
+  q5="在将应用程序对象如 `CTransactionRef` (transaction) 转换为字节/网络数据包的过程中，会发生什么？在此过程中，它会变成哪些数据结构？"
+  a5="`msgMaker.Make()` 通过调用 `SerializeTransaction()` 来序列化 `CTransactionRef` 消息，然后 `PushMessage()` 将序列化的消息放入 `vSendMsg` 队列中，然后 `SocketSendData()` 添加一个区块头/checksum(在此 PR 更改之后)，并要求传输以发送下一个数据包，最后调用 `m_sock->Send()`。"
   a5link="https://bitcoincore.reviews/28165#l-83"
 
-  q6=“通过线路发送的 `sendtxrcncl` 消息有多少字节(以 [Erlay][topic erlay] 中使用的该消息为简单示例)?”
-  a6=“36 字节：区块头为 24 字节（magic 4 字节，command 12 字节，消息大小 4 字节，checksum 4 字节），然后 12 字节用于负载（version 4 字节，salt 8 字节）。”
+  q6="通过线路发送的 `sendtxrcncl` 消息有多少字节(以 [Erlay][topic erlay] 中使用的该消息为简单示例)?"
+  a6="36 字节：区块头为 24 字节（magic 4 字节，command 12 字节，消息大小 4 字节，checksum 4 字节），然后 12 字节用于负载（version 4 字节，salt 8 字节）。"
   a6link="https://bitcoincore.reviews/28165#l-86"
 
-  q7=“在 `PushMessage()` 返回后，我们是否已经将与此消息对应的字节发送给对等方（是/否/也许）？为什么？”
-  a7=“一切皆有可能。**是的**：我们(*net_processing*)无需执行任何其他操作即可发送消息。
+  q7="在 `PushMessage()` 返回后，我们是否已经将与此消息对应的字节发送给对等方（是/否/也许）？为什么？"
+  a7="一切皆有可能。**是的**：我们(*net_processing*)无需执行任何其他操作即可发送消息。
       **否**：在函数返回时，接收方极不可能收到它。
-      **也许**：如果所有队列都是空的，它将进入内核套接字层，但如果某些队列不是，那么它仍将等待这些队列在到达操作系统之前进一步排出。” 
+      **也许**：如果所有队列都是空的，它将进入内核套接字层，但如果某些队列不是，那么它仍将等待这些队列在到达操作系统之前进一步排出。"
   a7link="https://bitcoincore.reviews/28165#l-112"
 
-  q8=“哪些线程访问 `CNode::vSendMsg`？”
-  a8=“`ThreadMessageHandler`，如果消息是同步发送的（“乐观地”）；`ThreadSocketHandler`，如果消息被排队并稍后提取和发送。”
+  q8="哪些线程访问 `CNode::vSendMsg`？"
+  a8="`ThreadMessageHandler`，如果消息是同步发送的（“乐观地”）；`ThreadSocketHandler`，如果消息被排队并稍后提取和发送。"
   a8link="https://bitcoincore.reviews/28165#l-120"
 %}
 
