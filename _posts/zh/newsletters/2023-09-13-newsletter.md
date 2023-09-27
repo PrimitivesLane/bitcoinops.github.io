@@ -7,17 +7,17 @@ type: newsletter
 layout: newsletter
 lang: zh
 ---
-本周的周报链接到了 taproot assets 相关的草案规范，并总结了 LN 的几种另类消息协议，这些协议可以帮助实现 PTLC 的使用。此外还有我们的常规部分：其中包括 Bitcoin Core PR 审核俱乐部会议的总结、新版本和候选版本的公告，以及对热门比特币基础设施项目的重大变更介绍。
+本周的周报链接到了 taproot assets 相关的草案规范，并总结了 LN 的几种另类消息协议，这些协议可以帮助启用 PTLC。此外还有我们的常规部分：其中包括 Bitcoin Core PR 审核俱乐部会议的总结、新版本和候选版本的公告，以及对热门比特币基础设施项目的重大变更介绍。
 
 ## 新闻
 
-- **taproot assets 规范：** Olaoluwa Osuntokun 分别在 Bitcoin-Dev 和 Lightning-Dev 邮件列表上发布了有关 _Taproot Assets_ [客户端验证协议][topic client-side validation]。在 Bitcoin-Dev 邮件列表中，他[宣布了][osuntokun bips]七个 BIP 草案————比最初公布的_Taro_协议(见[周报 #195][news195 taro])的初始公告多一个。在 Lightning-Dev 邮件列表中，他[宣布了][osuntokun blip post]一份使用 LN 花费和接收 taproot 资产的 [BLIP 草案][osuntokun blip]，该协议计划在 LND 0.17.0-beta 版本中发布的“简单的 taproot 通道” 的实验性功能。
+- **taproot assets 规范：** Olaoluwa Osuntokun 分别在 Bitcoin-Dev 和 Lightning-Dev 邮件列表上发布了 _Taproot Assets_ 相关的[客户端验证协议][topic client-side validation]。在 Bitcoin-Dev 邮件列表中，他[宣布了][osuntokun bips]七个 BIP 草案————比使用 _Taro_ 这个名称的初始公告(见[周报 #195][news195 taro])所预期的多一个。在 Lightning-Dev 邮件列表中，他[宣布了][osuntokun blip post]一份使用 LN 花费和接收 taproot 资产的 [BLIP 草案][osuntokun blip]，该协议将基于计划在 LND 0.17.0-beta 版本中发布的“简单的 taproot 通道” 的实验性功能。
 
     请注意，尽管其名称为 Taproot Assets，但它不是比特币协议的一部分，也不会以任何方式更改共识协议。它利用现有功能为选择使用其客户端协议的用户提供新功能。
 
     截至撰写本文时，这些规范在邮件列表上还没有收到任何讨论。
 
-- **支持 PTLC 的 LN 消息变更：** 随着第一个实验性支持使用 [P2TR][topic taproot] 和 [MuSig2][topic musig] 通道的 LN 实现即将发布，Greg anders 在 Lightning-Dev 邮件列表上[发布了][sanders post]以前讨论过的几种 LN 消息变更的[总结][sanders ptlc]，以允许它们支持使用 [PTLCs][topic ptlc] 来代替 [HTLCs][topic htlc] 发送支付。对于大多数方法，消息的变更似乎都不大且不具侵入性，但我们注意到，大多数实现可能会继续使用一组消息来处理传统的 HTLC 转发，同时还提供升级的消息来支持 PTLC 转发，从而创建两个不同的路径，需要并发地进行维护，直到淘汰HTLC。如果一些实现在消息标准化之前添加了实验性 PTLC 支持，那么实现甚至可能需要同时支持三种或更多不同的协议，这对所有人都很不利。
+- **支持 PTLC 的 LN 消息变更：** 随着第一个实验性支持使用 [P2TR][topic taproot] 和 [MuSig2][topic musig] 通道的 LN 实现即将发布，Greg anders 在 Lightning-Dev 邮件列表上[发布了][sanders post]以前讨论过的几种 LN 消息变更的[总结][sanders ptlc]，这些消息旨在支持使用 [PTLCs][topic ptlc] 来代替 [HTLCs][topic htlc] 发送支付。对于大多数方法，消息的变更似乎都不大且不具侵入性，但我们注意到，大多数实现可能会继续使用一组消息来处理传统的 HTLC 转发，同时还提供升级的消息来支持 PTLC 转发，从而创建两个不同的路径，需要并发地进行维护，直到淘汰HTLC。如果一些实现在消息标准化之前添加了实验性 PTLC 支持，那么实现甚至可能需要同时支持三种或更多不同的协议，这对所有人都很不利。
 
     截止本文撰写时，Sanders 的总结尚未收到任何评论。
 
