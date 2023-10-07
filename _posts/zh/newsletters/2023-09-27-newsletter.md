@@ -63,7 +63,7 @@ lang: zh
 
 *本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo] 和 [Bitcoin Inquisition][bitcoin inquisition repo]。*
 
-- [Bitcoin Core #28492][] 升级了  `descriptorprocesspsbt` RPC，以包含完全序列化的交易，如果 [PSBT][topic psbt] 的处理结果是一笔可以广播的交易的话。。见[上周的周报][news269 psbt]对一个类似的 PR 的介绍。
+- [Bitcoin Core #28492][] 升级了  `descriptorprocesspsbt` RPC，以包含完全序列化的交易，如果 [PSBT][topic psbt] 的处理结果是一笔可以广播的交易的话。见[上周的周报][news269 psbt]对一个类似的 PR 的介绍。
 
 - [Bitcoin Core GUI #119][] 升级了图形用户界面中的交易列表，不再为 “给你自己的支付” 提供一个特殊的分类。现在，输入和输出都会影响本钱包的交易会显示在单独的行中，用于花费和接受。这可能会让 [coinjoins][topic coinjoin] 和 [payjoins][topic payjoin] 显得更清楚，虽然当前的 Bitcoin Core 自身并不支持这两种交易。
 
