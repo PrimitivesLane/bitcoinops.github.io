@@ -46,7 +46,7 @@ lang: zh
 - [<!--are-blocks-containing-nonstandard-transactions-relayed-through-the-network-or-not-as-in-the-case-of-nonstandard-transactions-->包含非标准交易的区块也会得到网络转发吗？]({{bse}}119693)
   用户 fiatjaf 回应道，虽然根据[交易池规则][policy series]，这样的非标准交易默认无法在 P2P 网络中转发，但包含非标准交易的区块依然会被转发，只要区块遵守共识规则。
 
-- [交易池规则][policy series]
+- [<!--when-does-bitcoin-core-allow-you-to-abandon-transaction-->Bitcoin Core 在什么时候会允许你“抛弃”一笔交易？]({{bse}}119771)
   Murch 详细列举了在 Bitcoin Core 中[抛弃][rpc abandontransaction]一笔交易所需满足的 3 个条件：
 
   - 该交易之前未被抛弃过
