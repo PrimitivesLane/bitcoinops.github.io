@@ -1,6 +1,6 @@
 ---
 title: 'Bitcoin Optech Newsletter #271'
-permalink: /en/newsletters/2023/10/04/
+permalink: /zh/newsletters/2023/10/04/
 name: 2023-10-04-newsletter-zh
 slug: 2023-10-04-newsletter-zh
 type: newsletter
@@ -13,13 +13,13 @@ lang: zh
 
 - **LN 节点的安全远程控制：** Bastien Teinturier 在 Lightning-Dev 邮件列表中[发帖][teinturier remote post]，提出了一个 [BLIP 提议][blips #28]，该提议将指定用户如何从硬件签名设备（或任何其他钱包）向他们的 LN 节点发送签名命令。签名设备只需要实现 BLIP 加上 [BOLT8][] 对等通信，而 LN 节点只需要实现 BLIP。这类似于 Core Lightning 的 _commando_ 插件(见[周报 #210][news210 commando])，该插件允许对 LN 节点进行几乎所有的远程控制。但 Teinturier 设想他提议的功能主要是用于控制最敏感的节点操作，例如授权支付——可以假设用户愿意不厌其烦地连接和解锁硬件安全设备并授权操作的那种操作。这将使终端用户更容易使用保护其链上余额的硬件签名设备来保护他们的 LN 余额。{% assign timestamp="1:48" %}
 
-- **支付拆分和切换：** Gijs van Dam 在 Lightning-Dev 邮件列表中[发帖][van dam pss post]，介绍了他为 Core Lightning 编写的一个[插件][pss plugin]，以及与之相关的一些[研究][pss research]。该插件允许转发节点告诉它们的对等节点，它们支持 _支付拆分和切换_ (PSS)。如果 Alice 和 Bob 共享一个通道，而且他们都支持 PSS，那么当 Alice 收到要转发给 Bob 的支付时，该插件可能会将其拆分为两个或多个[支付部分][topic multipath payments]。其中一个支付可能像正常一样转发给 Bob，但其他支付可能遵循替代路径（例如，从 Alice 到 Carol 再到 Bob）。Bob 等待接收所有部分，然后像正常一样继续将支付转发给下一跳。
+- **<!--payment-splitting-and-switching-->支付拆分和切换：** Gijs van Dam 在 Lightning-Dev 邮件列表中[发帖][van dam pss post]，介绍了他为 Core Lightning 编写的一个[插件][pss plugin]，以及与之相关的一些[研究][pss research]。该插件允许转发节点告诉它们的对等节点，它们支持 _支付拆分和切换_ (PSS)。如果 Alice 和 Bob 共享一个通道，而且他们都支持 PSS，那么当 Alice 收到要转发给 Bob 的支付时，该插件可能会将其拆分为两个或多个[支付部分][topic multipath payments]。其中一个支付可能像正常一样转发给 Bob，但其他支付可能遵循替代路径（例如，从 Alice 到 Carol 再到 Bob）。Bob 等待接收所有部分，然后像正常一样继续将支付转发给下一跳。
 
     这种方法的主要优点是，它更难执行 _余额发现攻击_ (BDAs)，在这种攻击中，第三方反复[探测][topic payment probes]通道以跟踪其余额。如果频繁执行，BDA 可以跟踪通过通道的支付金额。如果在许多通道上执行，它可能能够跟踪该支付在整个网络上的路径。当使用 PSS 时，攻击者不仅需要跟踪 Alice 和 Bob 通道的余额，还需要跟踪 Alice 和 Carol 以及 Carol 和 Bob 通道，才能跟踪支付。即使攻击者确实跟踪了所有这些通道的余额，跟踪支付的计算难度也会增加，因为通过这些通道同时传输的其他用户支付的部分可能会与被追踪的原始支付的部分混淆。van Dam 的[论文][pss research]显示，部署PSS时，攻击者获得的信息量减少了62%。
 
     van Dam 关于 PSS 的论文中提到，增加 LN 吞吐量以及作为缓解[通道阻塞攻击][topic channel jamming attacks]的一部分，这两点也是 PSS 的额外好处。截至本文写作时，关于 PSS 的想法在邮件列表中得到了少量讨论。{% assign timestamp="12:23" %}
 
-- **LN 的池化流动性：** ZmnSCPxj 在 Lightning-Dev 邮件列表中[发帖][zmnscpxj sidepools1]，提出了他称之为 _sidepools_ 的建议。这将涉及转发节点小组共同将资金存入多方状态合同——这是一种链下合同（类似于 LN 通道，带有链上的锚），该合同将允许通过更新链下合同状态在参与者之间移动资金。例如，最初将 Alice、Bob 和 Carol 分别给予 1 BTC 的状态可以更新为一个新的状态，其中 Alice 有 2 BTC，Bob 有 0 BTC，Carol 有 1 BTC。
+- **<!--pooled-liquidity-for-ln-->LN 的池化流动性：** ZmnSCPxj 在 Lightning-Dev 邮件列表中[发帖][zmnscpxj sidepools1]，提出了他称之为 _sidepools_ 的建议。这将涉及转发节点小组共同将资金存入多方状态合同——这是一种链下合同（类似于 LN 通道，带有链上的锚），该合同将允许通过更新链下合同状态在参与者之间移动资金。例如，最初将 Alice、Bob 和 Carol 分别给予 1 BTC 的状态可以更新为一个新的状态，其中 Alice 有 2 BTC，Bob 有 0 BTC，Carol 有 1 BTC。
 
     转发节点也将继续使用并公布节点对之间的普通 LN 通道；例如，前面描述的三个用户可以有三个独立的通道：Alice 和 Bob、Bob 和 Carol 以及 Alice 和 Carol。他们将完全按照现有的方式在这些通道上转发支付。
 
@@ -27,7 +27,7 @@ lang: zh
 
     这种方法的一个优点是，除了每个特定合同中的参与者之外，没有人需要知道状态合同的存在。对于所有普通的 LN 用户和所有不参与特定合同的转发节点来说，LN 将继续使用当前协议运行。与现有的通道再平衡操作相比，另一个优点是，状态合同方法允许大量转发节点以很小的链上空间维护直接的对等关系，可能消除了这些对等节点之间的任何离线再平衡费用。将再平衡费用保持在最低有助于转发节点保持通道平衡，从而提高其收入潜力并使得通过 LN 的支付更可靠。
 
-    该方法的一个缺点是，它需要一个多方状态合同，而这在我们所知的范围内，从未在产品化中实现过。ZmnSCPxj 提到了两个可能有用的合同协议，可以用作基础，即 [LN-Symmetry][topic eltoo] 和 [duplex 支付通道][]。LN-Symmetry 将需要共识更改，这在近期似乎不太可能发生，因此 ZmnSCPxj 的[后续贴文][zmnscpxj sidepools2]似乎正在关注 duplex 支付通道(ZmnSCPxj 根据最早提出它们的研究人员将其称为“Decker-Wattenhofer”)。一个关于 duplex 支付通道的缺点是，它们无法无限期地保持打开状态，尽管 ZmnSCPxj 的分析表明，它们可能可以保持打开足够长的时间，并在足够多的状态更改中摊销它们的成本。
+    该方法的一个缺点是，它需要一个多方状态合同，而这在我们所知的范围内，从未在产品化中实现过。ZmnSCPxj 提到了两个可能有用的合同协议，可以用作基础，即 [LN-Symmetry][topic eltoo] 和 [duplex 支付通道][duplex payment channels]。LN-Symmetry 将需要共识更改，这在近期似乎不太可能发生，因此 ZmnSCPxj 的[后续贴文][zmnscpxj sidepools2]似乎正在关注 duplex 支付通道(ZmnSCPxj 根据最早提出它们的研究人员将其称为“Decker-Wattenhofer”)。一个关于 duplex 支付通道的缺点是，它们无法无限期地保持打开状态，尽管 ZmnSCPxj 的分析表明，它们可能可以保持打开足够长的时间，并在足够多的状态更改中摊销它们的成本。
 
     在撰写本文时，对这些帖子还没有公开回复，尽管我们从与 ZmnSCPxj 的私人通信中了解到，他正在进一步开发该想法。{% assign timestamp="34:31" %}
 
