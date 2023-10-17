@@ -35,7 +35,7 @@ lang: zh
 
 *热门的比特币基础设施项目的新版本和候选版本。请考虑升级到新版本或帮助测试候选版本。*
 
-- [LND v0.17.0-beta][] 是此热门 LN 节点实现的下一主要版本。此版本包括一项重大的实验性功能，即支持“简单 [taproot][topic taproot] 通道”，以允许使用 P2TR 输出在链上注资[未公开通道][topic unannounced channels]。这是向 LND 通道添加其他功能的第一步，例如支持 [Taproot Assets][topic client-side validation] 和 [PTLCs][topic ptlc]。此版本还包括对 Neutrino 后端用户的显着性能提升，包括支持[致密区块过滤器][topic compact block filters]，以及对 LND 内置[瞭望塔][topic watchtowers]功能的改进。有关更多信息，请见[版本说明][lnd rn]和[版本博客贴文][lnd 17 blog]。{% assign timestamp="55:26" %}
+- [LND v0.17.0-beta][] 是此热门 LN 节点实现的下一主要版本。此版本包括一项重大的实验性功能，即支持“简单 [taproot][topic taproot] 通道”，以允许使用 P2TR 输出在链上注资[未公开通道][topic unannounced channels]。这是向 LND 通道添加其他功能的第一步，例如支持 [Taproot Assets][topic client-side validation] 和 [PTLCs][topic ptlc]。此版本还包括对 Neutrino 后端用户的显著性能提升，包括支持[致密区块过滤器][topic compact block filters]，以及对 LND 内置[瞭望塔][topic watchtowers]功能的改进。有关更多信息，请见[版本说明][lnd rn]和[版本博客贴文][lnd 17 blog]。{% assign timestamp="55:26" %}
 
 ## 重大的代码和文档变更
 
