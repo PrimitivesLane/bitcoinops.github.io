@@ -21,14 +21,14 @@ lang: zh
 
 [util: 类型安全的交易标识符][review club 28107] 是由 Niklas Gögge (dergoegge) 提交的一个 PR，通过为 `txid` 和 `wtxid` 引入独立的类型来提高类型安全性，而不是两者都由 `uint256`（一个 256 位的整数，可以包含 SHA256 哈希）表示。其中 `txid` 表示交易标识符或哈希但不包括隔离见证数据，`wtxid` 与前者相同并包含见证数据。这个 PR 不应该产生任何操作效果；它的目的是防止将一种类型的交易 ID 用于本应使用另一种类型的编程错误。这类错误应在编译期检测出来。
 
-为了将干扰最小化并方便审查，这些新类型最初将仅在代码的一个区域（交易“孤儿院”）中使用；将来的 PR 将在代码库的其他区域使用这些新类型。{% assign timestamp="18:36" %}
+为了将干扰最小化并方便审查，这些新类型最初将仅在代码的一个区域（交易“孤儿院”）中使用；将来的 PR 会把这些新类型使用在代码库的其他区域。{% assign timestamp="18:36" %}
 
 {% include functions/details-list.md
-  q0="一个交易的标识符是类型安全的意思是什么？为什么这个会很重要或有帮助？这是否有缺点？"
+  q0="一个交易的标识符是类型安全的意思是什么？为什么这个会很重要或有帮助？有什么缺点吗？"
   a0="一个交易标识符有两种含义（`txid` 或 `wtxid`），类型安全是指标识符不能以错误的含义使用的属性。也就是说，`txid` 不能在期望 `wtxid` 的地方使用，反之亦然，并且这是由编译器的标准类型检查强制执行的。"
   a0link="https://bitcoincore.reviews/28107#l-38"
 
-  q1="与其让新的类的类型 `Txid` 和 `Wtxid` 从 `uint256` _继承_，它们是否应该包含如何 _包含_ （封装） `uint256`？有什么权衡之处吗？"
+  q1="是否应该让新的类类型 `Txid` 和 `Wtxid`  _包含_ （封装） `uint256`，而非从 `uint256` _继承_？有哪些权衡？"
   a1="这些类可以这样做，但会导致更多的代码变动（需要修改更多行的源代码）。"
   a1link="https://bitcoincore.reviews/28107#l-39"
 
@@ -36,8 +36,8 @@ lang: zh
   a2="开发人员在编码过程中就可以快速发现错误，而不是依赖于编写大量的测试套件来捕捉运行时错误（这些测试可能仍然会漏掉一些错误）。然而，测试仍然是有用的，因为类型安全无法阻止一开始就用错了交易 ID 的类型。"
   a2link="https://bitcoincore.reviews/28107#l-67"
 
-  q3="概念上，在编写需要引用交易的新代码时，何时应该使用 `txid`，何时应该使用 `wtxid`？您能指出代码中使用其中一个而不是另一个的示例吗？另一个可能会很糟糕吗？"
-  a3="一般来说，更倾向于使用 `wtxid`，因为它承诺整个交易。一个重要的例外是每个输入对应输出（UTXO）的 `prevout` 引用，必须通过 `txid` 指定交易。一个需要使用其中一个而不是另一个的示例在[这里][wtxid example]给出（有关更多信息，请参见[周报#104][news104 wtxid]）。"
+  q3="概念上，在编写需要引用交易的新代码时，何时应该使用 `txid`，何时应该使用 `wtxid`？你能指出代码中使用其中一个而非可能非常糟糕的另一个的示例吗？"
+  a3="一般来说，更倾向于使用 `wtxid`，因为它承诺整个交易。一个重要的例外是每个输入对应输出（UTXO）的 `prevout` 引用，必须通过 `txid` 指定交易。需要使用其中一个而不是另一个的示例在[这里][wtxid example]给出（有关更多信息，请参见[周报#104][news104 wtxid]）。"
   a3link="https://bitcoincore.reviews/28107#l-85"
 
   q4="<!--in-which-concrete-way-s-could-using-transaction-identifier-instead-of-uint256-help-find-existing-bugs-or-prevent-the-introduction-of-new-ones-on-the-other-hand-could-this-change-introduce-new-bugs-->使用 `transaction_identifier` 而不是 `uint256` 有哪些具体方式可以帮助找到现有的错误或防止引入新错误？另一方面，这个改变会引发新故障吗？"
@@ -45,7 +45,7 @@ lang: zh
   a4link="https://bitcoincore.reviews/28107#l-128"
 
   q5="[`GenTxid`][GenTxid] 类已经存在。它目前是如何强制保证类型正确性的，以及它与此 PR 中的方法有何不同？"
-  a5="这个类包括一个哈希和一个指示该哈希是 `wtxid` 还是 `txid` 的标志，所以它仍然是一个单一类型而不是两个不同的类型。这允许类型检查，但必须显示地编写程序。更重要的是，这只能在运行时而不是编译时完成。它满足了希望接受可以是任何类型标识符的输入的常见用例。因此，这个 PR 不会移除 `GenTxid`。一个未来更好的替代类型可能会是 `std::variant<Txid, Wtxid>`。"
+  a5="这个类包括一个哈希和一个指示该哈希是 `wtxid` 还是 `txid` 的标志，所以它仍然是一个单一类型而不是两个不同的类型。这允许类型检查，但必须显式编程。更重要的是，这只能在运行时而不是编译时完成。它符合以下常见用例的需要，即输入可以是这两种标识符的任一种。因此，这个 PR 不会移除 `GenTxid`。一个未来更好的替代类型可能会是 `std::variant<Txid, Wtxid>`。"
   a5link="https://bitcoincore.reviews/28107#l-161"
 
   q6="<!--how-is-transaction-identifier-able-to-subclass-uint256-given-that-in-c-integers-are-types-and-not-classes-->`transaction_identifier` 是如何成为 `uint256` 的子类的？在 C++ 中，整数是一个类型而不是类吗"
