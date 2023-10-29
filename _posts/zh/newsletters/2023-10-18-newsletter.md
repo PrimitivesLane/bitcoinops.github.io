@@ -38,7 +38,7 @@ lang: zh
 
 - **<!--bip329-python-library-released-->BIP-329 Python 库发布**：[BIP-329 Python 库][BIP-329 Python Library] 是一组工具，可以阅读、撰写、加密和解密兼容 [BIP329][] 的钱包标签文件。{% assign timestamp="29:10" %}
 
-- **<!--ln-testing-tool-doppler-announced-->闪电网络措施工具 Doppler 推出**：刚刚[宣布][doppler announced]，[Doppler][] 支持使用一种 “域名专属语言（DSL）” 来定义比特币和闪电节点的网络拓扑以及 链上/链下 的支付活动，以同时测试 LND、CLN 和 Eclair 实现。{% assign timestamp="30:19" %}
+- **<!--ln-testing-tool-doppler-announced-->闪电网络测试工具 Doppler 推出**：刚刚[宣布][doppler announced]，[Doppler][] 支持使用一种 “域名专属语言（DSL）” 来定义比特币和闪电节点的网络拓扑以及 链上/链下 的支付活动，以同时测试 LND、CLN 和 Eclair 实现。{% assign timestamp="30:19" %}
 
 - **<!--coldcard-mk4-v520-released-->Coldcard Mk4 v5.2.0 发布**：这个固件[升级][coldcard blog]包含对 [BIP370][] 版本 2 [PSBTs][topic psbt] 的支持，对 [BIP39][] 的额外支持，以及多项有关种子词的功能。{% assign timestamp="31:54" %}
 
