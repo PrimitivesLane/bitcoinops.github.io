@@ -8,6 +8,7 @@ layout: newsletter
 lang: zh
 ---
 本周的周报描述了针对 LN 和其他系统中使用的 HTLCs 的替代交易循环攻击，检视了为攻击部署的缓解措施，并总结了其他几项缓解措施提议。此外，还描述了一个影响 Bitcoin Core RPC 的显著漏洞，对比特币脚本进行最小更改的限制条款的研究，以及针对 `OP_CAT` 操作码的拟提议 BIP。周报还包括我们的月度栏目，其中包含来自 Bitcoin Stack Exchange 的热门问题和答案的总结。
+本周的周报描述了针对 LN 和其他系统中使用的 HTLCs 的替代交易循环攻击，检视了为攻击部署的缓解措施，并总结了其他几项缓解措施提议。此外，还描述了一个影响 Bitcoin Core RPC 的显著漏洞，对比特币脚本进行最小更改的限制条款的研究，以及针对 `OP_CAT` 操作码的拟提议 BIP。周报还包括我们的月度栏目，其中包含来自 Bitcoin Stack Exchange 的热门问题和答案的总结。
 
 {% assign bse = "https://bitcoin.stackexchange.com/a/" %}
 
@@ -212,4 +213,4 @@ _由于本周新闻量较大，以及我们主要撰稿人时间上的限制，�
 [branch and bound paper]: https://murch.one/erhardt2016coinselection.pdf
 [github disable opcodes]: https://github.com/bitcoin/bitcoin/commit/4bd188c4383d6e614e18f79dc337fbabe8464c82#diff-27496895958ca30c47bbb873299a2ad7a7ea1003a9faa96b317250e3b7aa1fefR94
 [CVE-2010-5137]: https://en.bitcoin.it/wiki/Common_Vulnerabilities_and_Exposures#CVE-2010-5137
-[waiting for confirmation 2]: /en/blog/waiting-for-confirmation/#incentives
+[waiting for confirmation 2]: /zh/blog/waiting-for-confirmation/#激励兼容
