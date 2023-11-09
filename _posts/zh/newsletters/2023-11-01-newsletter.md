@@ -1,6 +1,6 @@
 ---
 title: 'Bitcoin Optech Newsletter #275'
-permalink: /en/newsletters/2023/11/01/
+permalink: /zh/newsletters/2023/11/01/
 name: 2023-11-01-newsletter-zh
 slug: 2023-11-01-newsletter-zh
 type: newsletter
@@ -71,16 +71,16 @@ _注意：_ 在我们上一期的周报中提到的 Bitcoin Core 26.0rc1 已经�
 [russell cov2]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-October/022103.html
 [news191 lisp]: /en/newsletters/2022/03/16/#using-chia-lisp
 [heilman cat]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-October/022049.html
-[news274 cat]: /zh/newsletters/2023/10/25/#proposed-bip-for-op-cat
+[news274 cat]: /zh/newsletters/2023/10/25/#proposed-bip-for-op-cat-op-cat-bip
 [todd 520]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-October/022094.html
 [o'beirne vault]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2023-October/022092.html
 [Bitcoin Core 26.0rc1]: https://bitcoincore.org/bin/bitcoin-core-26.0/
 [bitcoin core developer wiki]: https://github.com/bitcoin-core/bitcoin-devwiki/wiki
 [bitcoin core pr review club]: https://bitcoincore.reviews/#upcoming-meetings
-[news274 cycling]: /zh/newsletters/2023/10/25/#replacement-cycling-vulnerability-against-htlcs
+[news274 cycling]: /zh/newsletters/2023/10/25/#replacement-cycling-vulnerability-against-htlcs-htlcs
 [ldk 0.0.118]: https://github.com/lightningdevkit/rust-lightning/releases/tag/v0.0.118
 [rust bitcoin 0.31.1]: https://github.com/rust-bitcoin/rust-bitcoin/releases/tag/bitcoin-0.31.0
 [rb rn]: https://github.com/rust-bitcoin/rust-bitcoin/blob/master/bitcoin/CHANGELOG.md#0311---2023-10-18
-[news274 hash bug]: /zh/newsletters/2023/10/25/#bitcoin-utxo-set-summary-hash-replacement
+[news274 hash bug]: /zh/newsletters/2023/10/25/#bitcoin-utxo-set-summary-hash-replacement-bitcoin-utxo-set-summary-hash-replacement
 [news237 pr review]: /zh/newsletters/2023/02/08/#bitcoin-core-pr-审核俱乐部
 [pod237 pr review]: /en/podcast/2023/02/09/#bitcoin-core-pr-review-club-transcript
