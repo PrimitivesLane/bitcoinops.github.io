@@ -13,11 +13,11 @@ lang: zh
 
 - **<!--continued-discussion-about-scripting-changes-->脚本语言变更的持续讨论：**Bitcoin-Dev 邮件组里有一些针对我们此前报道过的讨论的回复。
 
-    - *<!--covenants-research-->限制条款研究：* Anthony Towns [回复][towns cov]了一个由 Rusty Russell 撰写的、我们在[上周][news274 cov]提到过的[帖子][Russell Cov]。Towns 将 Russell 的方法与其他方法进行了比较，特别是基于[限制条款][topic covenants]的保管库，发现新方法并不吸引人。在之后的[回复][russell cov2]中，Russell 指出保险库有不同的设计，并且保险库在根本上不比其他交易类型更理想，意思是对于保险库用户来说，优化并不是关键。他认为 [BIP345][] 的保险库方法更适合于一个地址格式，而不是一组操作码。相较于为单一功能设计了一组操作码但以后可能会以意想不到方式来交互，我们认为 BIP345 作为一个只为单一功能所设计的模板（例如 P2WPKH）更合理。
+    - *<!--covenants-research-->限制条款研究：* Anthony Towns [回复][towns cov]了一个由 Rusty Russell 撰写的、我们在[上周][news274 cov]提到过的[帖子][Russell Cov]。Towns 将 Russell 的方法与其他方法进行了比较，特别是基于[限制条款][topic covenants]的保管库，发现新方法并不吸引人。在之后的[回复][russell cov2]中，Russell 指出保险库有不同的设计，并且保险库在根本上不比其他交易类型更理想，意思是对于保险库用户来说，优化并不是关键。他认为 [BIP345][] 的保险库方法更适合于一个地址格式，而不是一组操作码；按照我们的理解，这意思是 BIP345 作为一个只为单一功能所设计的模板（就像 P2WPKH）更合理，如果设计了一组操作码但只实现了单一功能，则以后其它脚本可能会以意想不到方式跟它交互 。
 
-      Towns 也考虑将 Russell 的方法用于普遍意义下的实验，并发现它在这种情况下“更有趣 [...] 但仍然相当受限”。他提醒读者他此前提议过的一种 Lisp 风格的替代比特币脚本的方法（参见[周报 ＃191][news191 lisp]），并且展示了它如何在见证评估期间的交易内省方面带来更大的灵活性与能力。他提供了他的测试代码链接，并指出了一些他编写的玩具级样例。Russell 回答说：“我仍然认为在有替代方案前，这个方案还有很大的改进空间。因为大部分有意思的例子都是不可能的，所以很难将我们当前受限的脚本与替代方案进行比较。”
+      Towns 也考虑将 Russell 的方法用于普遍意义下的实验，并发现它在这种情况下“更有趣 [...] 但仍然相当受限”。他提醒读者他此前提议过的一种 Lisp 风格的替代比特币脚本的方法（参见[周报 ＃191][news191 lisp]），并且展示了它如何在见证数据求值期间的交易内省方面带来更大的灵活性与能力。他提供了他的测试代码链接，并指出了一些他编写的玩具级样例。Russell 回答说：“我仍然认为还需要大量的优化才能真正替代 Bitcoin Script。因为大部分有意思的例子都是当前不可能实现的，所以很难将我们当前受限的脚本与替代方案进行比较。”
 
-      Towns 和 Russell 还简要讨论了以下内容：[OP_CHECKSIGFROMSTACK][topic op_checksigfromstack]，具体来说，它能允许来自预言机的经过认证的数据直接放置在评估堆栈上。
+      Towns 和 Russell 还简要讨论了以下内容：[OP_CHECKSIGFROMSTACK][topic op_checksigfromstack]，具体来说，它能允许来自预言机的经过认证的数据直接放置在求值堆栈上。
 
     - *OP_CAT 提案：* 一些人回复了 Ethan Heilman 的有关公告 [OP_CAT][] 提议 BIP 的[帖子][heilman cat]。我们在上周的周报里也[提到过][news274 cat]该提议。
 
@@ -53,7 +53,7 @@ _注意：_ 在我们上一期的周报中提到的 Bitcoin Core 26.0rc1 已经�
 
 - [LDK #2660][] 给予调用者更多灵活性，可为链上交易选择的不同费率。这些选项包括绝对最低费用、需要超过一天时间确认的低费率、普通优先级和高优先级。 {% assign timestamp="33:14" %}
 
-- [BOLTs #1086][] 规定：如果创建一个转发 [HTLC][topic htlc] 请求的指令需要本地节点等待超过 2,016个区块才能申请退款，应该拒绝（退款） HTLC 并返回一个 `expiry_too_far` 错误。降低此设置的数值可以减少节点在任何形式的[通道钉死攻击][topic channel jamming attacks]或长时间的[暂缓兑付发票][topic hold invoices]的最坏情况下而损失的资金。提高设置数值，可实现付款在相同的最大 HTLC 过期时间差设定（HTLC delta setting）下在更多通道上进行转发（或者更高的最大 HTLC 过期时间差设定但相同数量的跳数），可以提高对一些特定攻击的抗性，例如[上周的周报][news274 cycling]中描述的替换循环攻击。 {% assign timestamp="35:02" %}
+- [BOLTs #1086][] 规定：如果创建一个转发 [HTLC][topic htlc] 请求的指令需要本地节点等待超过 2,016个区块才能申请退款，应该拒绝（退款） HTLC 并返回一个 `expiry_too_far` 错误。降低此设置的数值可以减少节点在任何形式的[通道钉死攻击][topic channel jamming attacks]或长时间的[暂缓兑付发票][topic hold invoices]的最坏情况下而损失的资金。提高设置数值，可实现付款在相同的最大 HTLC 过期时间差设定（HTLC delta setting）下在更多通道上进行转发（或者在相同数量的跳数时允许更高的最大 HTLC 过期时间差设定），可以提高对一些特定攻击的抗性，例如[上周的周报][news274 cycling]中描述的替换循环攻击。 {% assign timestamp="35:02" %}
 
 <div markdown="1" class="callout">
 ## 想了解更多？
