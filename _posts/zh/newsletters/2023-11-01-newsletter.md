@@ -21,7 +21,7 @@ lang: zh
 
     - *OP_CAT 提案：* 一些人回复了 Ethan Heilman 的有关公告 [OP_CAT][] 提议 BIP 的[帖子][heilman cat]。我们在上周的周报里也[提到过][news274 cat]该提议。
 
-      几则回复提到了对 `OP_CAT` 是否将会受到对栈元素大小的 520 字节的过度限制的担忧。此后，Peter Todd [描述了][todd 520]一种在未来的软分叉中提升限额而无需任何额外 `OP_SUCESSx` 操作码的方法。不足之处是在提升前，脚本中所有使用 `OP_CAT` 的地方需要在其中包含一小部分额外的现存操作码。
+      几则回复提到了对 `OP_CAT` 是否将会受到堆栈元素大小的 520 字节的过度限制的担忧。此后，Peter Todd [描述了][todd 520]一种在未来的软分叉中提升限额而无需任何额外 `OP_SUCESSx` 操作码的方法。不足之处是在提升前，脚本中所有使用 `OP_CAT` 的地方需要在其中包含一小部分额外的现存操作码。
 
       在 Anthony Towns 对 Russell 的限制条款研究的回复之前，James O'Beirne 在一篇类似的[帖子][o'beirne vault]中指出过使用 `OP_CAT` 来实现保险库的明显局限。他特别指出了 `OP_CAT` 与 BIP345 风格的保险库相比缺少了一些功能。
 
@@ -53,7 +53,7 @@ _注意：_ 在我们上一期的周报中提到的 Bitcoin Core 26.0rc1 已经�
 
 - [LDK #2660][] 给予调用者更多灵活性，可为链上交易选择的不同费率。这些选项包括绝对最低费用、需要超过一天时间确认的低费率、普通优先级和高优先级。 {% assign timestamp="33:14" %}
 
-- [BOLTs #1086][] 规定：如果创建一个转发 [HTLC][topic htlc] 请求的指令需要本地节点等待超过 2,016个区块才能申请退款，应该拒绝（退款） HTLC 并返回一个 `expiry_too_far` 错误。降低此设置的数值可以减少节点在任何形式的[通道钉死攻击][topic channel jamming attacks]或长时间的[暂缓兑付发票][topic hold invoices]的最坏情况下而损失的资金。提高设置数值，可实现付款在相同的最大 HTLC 过期时间差设定（HTLC delta setting）下在更多通道上进行转发（或者在相同数量的跳数时允许更高的最大 HTLC 过期时间差设定），可以提高对一些特定攻击的抗性，例如[上周的周报][news274 cycling]中描述的替换循环攻击。 {% assign timestamp="35:02" %}
+- [BOLTs #1086][] 规定：如果创建一个转发 [HTLC][topic htlc] 请求的指令需要本地节点等待超过 2,016 个区块才能申请退款，应该拒绝（退款） HTLC 并返回一个 `expiry_too_far` 错误。降低此设置的数值可以减少节点在任何形式的[通道钉死攻击][topic channel jamming attacks]或长时间的[暂缓兑付发票][topic hold invoices]的最坏情况下而损失的资金。提高设置数值，可实现付款在相同的最大 HTLC 过期时间差设定（HTLC delta setting）下在更多通道上进行转发（或者在相同数量的跳数时允许更高的最大 HTLC 过期时间差设定），可以提高对一些特定攻击的抗性，例如[上周的周报][news274 cycling]中描述的替换循环攻击。 {% assign timestamp="35:02" %}
 
 <div markdown="1" class="callout">
 ## 想了解更多？
