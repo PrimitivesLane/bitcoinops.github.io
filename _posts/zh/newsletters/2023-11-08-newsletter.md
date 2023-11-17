@@ -26,11 +26,11 @@ lang: zh
 
 “[从  Validation Interface/CScheduler 线程更新手续费估算器][review club 28368]” 是一项由 Abubakar Sadiq Ismail (ismaelsadeeq) 提出的 PR，修改了交易手续费估算器的数据更新方式。（当一个节点的主人要发起一笔交易的时候，就会使用手续费估算。）它将手续费估算在交易池更新（添加或移除交易）时同步更新改成了异步更新。虽然这在整体上加入了更多的处理复杂性，但它提升了关键路径的性能（下文的讨论会证明这一点）。
 
-在发现一个区块时，交易池内的任何交易，无论与区块所包含的交易重复还是冲突，都会从交易池中移除。因为区块处理和转发是性能关键型（performance-critical）任务，减少处理一个新区块所需的工作量（比如更新手续费估算器）是很有好处的。{% assign timestamp="16:47" %}
+在发现一个新区块时，交易池内的任何交易，无论与区块所包含的交易重复还是冲突，都会从交易池中移除。因为区块处理和转发是性能关键型（performance-critical）任务，减少处理一个新区块所需的工作量（比如更新手续费估算器）是很有好处的。{% assign timestamp="16:47" %}
 
 {% include functions/details-list.md
   q0="<!--why-is-it-beneficial-to-remove-ctxmempool-s-dependency-on-cblockpolicyestimator-->移除 `CTxMempool` 对 `CBlockPolicyEstimator` 的依赖有什么好处？"
-  a0="当前，在收到一个新区块时，`CTxMempool` 的处理会被阻断，同时更新手续费估算器。这会拖慢新区块的处理，因此约会拖延区块的转发。移除 `CTxMempool` 对 `CBlockPolicyEstimator` 的依赖将允许手续费估算异步（在另一个线程中）更新，从而区块验证和转发都可以更快地完成。这项更新也让 `CTxMempool` 的测试变得更加容易。最后，它还允许在未来引入更加复杂的手续费估计算法，而无需担心影响区块验证和转发的性能。"
+  a0="当前，在收到一个新区块时，`CTxMempool` 的处理会被阻断，同时更新手续费估算器。这会拖慢新区块的处理，因此也会拖延区块的转发。移除 `CTxMempool` 对 `CBlockPolicyEstimator` 的依赖将允许手续费估算异步（在另一个线程中）更新，从而区块验证和转发都可以更快地完成。这项更新也让 `CTxMempool` 的测试变得更加容易。最后，它还允许在未来引入更加复杂的手续费估计算法，而无需担心影响区块验证和转发的性能。"
   a0link="https://bitcoincore.reviews/28368#l-30"
 
   q1="<!--isn-t-fee-estimation-currently-updated-synchronously-when-transactions-are-added-to-or-removed-from-the-mempool-even-without-a-new-block-arriving-->现在的手续费估算更新跟交易池添加或移除交易（即使没有新区块到达）不是同步的吗？"
@@ -38,7 +38,7 @@ lang: zh
   a1link="https://bitcoincore.reviews/28368#l-41"
 
   q2="<!--are-there-any-benefits-of-the-cblockpolicyestimator-being-a-member-of-ctxmempool-and-updating-it-synchronously-the-current-arrangement-are-there-downsides-to-removing-it-->`CBlockPolicyEstimator` 称为 `CTxMempool` 的一个成员并同步地更新（即当前的安排）有什么好处的吗？移除它又会有什么坏处？"
-  a2="同步模式的代码会更加简单，也更易于分析。此外，手续费估算器也对整个交易池有更充分的视野；一个缺点是需要将手续费估算器所需的所有信息都封装到一个新的 `NewMempoolTransactionInfo` 结构中。不过，手续费估算器并不需要太多信息。"
+  a2="同步模式的代码会更加简单，也更易于分析。此外，手续费估算器也对整个交易池了解更充分；一个缺点是需要将手续费估算器所需的所有信息都封装到一个新的 `NewMempoolTransactionInfo` 结构中。不过，手续费估算器并不需要太多信息。"
   a2link="https://bitcoincore.reviews/28368#l-43"
 
   q3="<!--what-do-you-think-are-the-advantages-and-disadvantages-of-the-approach-taken-in-this-pr-compared-with-the-one-taken-in-pr-11775-that-splits-cvalidationinterface-->你认为这项 PR 所采取的方法，与 [PR 11775][] 所采取的分拆 `CValidationInterface` 的方法相比，有何 优点/缺点？"
@@ -54,16 +54,16 @@ lang: zh
   a5link="https://bitcoincore.reviews/28368#l-105"
 
   q6="<!--in-commit-4986edb-why-are-we-adding-a-new-callback-mempooltransactionsremovedforconnectedblock-instead-of-using-blockconnected-which-also-indicates-a-transaction-being-removed-from-the-mempool-->为什么我们要在 [commit 4986edb][] 中增加一种新的回调 `MempoolTransactionsRemovedForConnectedBlock`，而不是使用
-`BlockConnected` 呢（后者也会暗示一笔交易正曾交易池中移除）？"
+`BlockConnected` 呢（后者也会暗示一笔交易正从交易池中移除）？"
   a6="手续费估算器需要在任何交易从交易池中移除时知晓（不论出于什么理由），而不能仅仅是在连接着一个区块时才能知晓。此外，手续费估算器还需要一笔交易的基本手续费（base fee），而 `BlockConneted` 是无法提供的（它只能提供一个 `CBlock`）。我们可以将基本手续费添加到 `block.vtx`（交易列表）条目中，但仅仅是为了支持手续费估算就改变这样一个重要而且无处不在的数据结构，是不可取的。"
   a6link="https://bitcoincore.reviews/28368#l-130"
 
-  q7="<!--why-don-t-we-use-a-std-vector-ctxmempoolentry-as-a-parameter-of-mempooltransactionsremovedforblock-callback-this-would-eliminate-the-requirement-for-a-new-struct-type-to-hold-the-per-transaction-information-needed-for-fee-estimation-->为什么不使用 `std::vector<CTxMempoolEntry>` 作为 `MempoolTransactionsRemovedForBlock` 回调的一个参数？这就不需要一种新的结构体类型来保存手续费估算算徐的每一笔交易的信息了。"
+  q7="<!--why-don-t-we-use-a-std-vector-ctxmempoolentry-as-a-parameter-of-mempooltransactionsremovedforblock-callback-this-would-eliminate-the-requirement-for-a-new-struct-type-to-hold-the-per-transaction-information-needed-for-fee-estimation-->为什么不使用 `std::vector<CTxMempoolEntry>` 作为 `MempoolTransactionsRemovedForBlock` 回调的一个参数？这就不需要一种新的结构体类型来保存手续费估算所需的每一笔交易的信息了。"
   a7="手续费估算不需要来自 `CTxMempoolEntry` 的所有字段。"
   a7link="https://bitcoincore.reviews/28368#l-159"
 
   q8="<!--how-is-the-base-fee-of-a-ctransactionref-computed-->一个 `CTransactionRef` 的基本手续费是如何计算的？"
-  a8="所有输入的价值的和减去所有输出的价值的和。但是，回调无法读取输入的价值，因为这是存储在前序交易的输出中的。这就是 `TransactionInfo` 结构体要包含基本手续费。"
+  a8="所有输入的价值的和减去所有输出的价值的和。但是，回调无法读取输入的价值，因为这是存储在前序交易的输出中的。这就是 `TransactionInfo` 结构体要包含基本手续费的原因。"
   a8link="https://bitcoincore.reviews/28368#l-166"
 %}
 
@@ -87,7 +87,7 @@ lang: zh
 
 - [Core Lightning #6780][] 提升了对使用 “锚点输出（[anchor outputs][topic anchor outputs]）” 的链上交易手续费追加手段的支持。{% assign timestamp="36:29" %}
 
-- [Core Lightning #6773][] 允许 `decode` RPC 验证一个备份未见得内容是有效的、并包含了执行一次完整的复原所需的最新信息。{% assign timestamp="39:06" %}
+- [Core Lightning #6773][] 允许 `decode` RPC 验证一个备份文件的内容是有效的、并包含了执行一次完整的复原所需的最新信息。{% assign timestamp="39:06" %}
 
 - [Core Lightning #6734][] 更新了 `listfunds` RPC，以在用户想要运用 “子为父偿（[CPFP][topic cpfp]）” 为合作关闭交易追加手续费时提供所需的信息。{% assign timestamp="39:58" %}
 
