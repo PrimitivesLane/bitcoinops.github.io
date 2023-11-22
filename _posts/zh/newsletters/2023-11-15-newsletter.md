@@ -1,6 +1,6 @@
 ---
 title: 'Bitcoin Optech Newsletter #277'
-permalink: /en/newsletters/2023/11/15/
+permalink: /zh/newsletters/2023/11/15/
 name: 2023-11-15-newsletter-zh
 slug: 2023-11-15-newsletter-zh
 type: newsletter
@@ -11,11 +11,11 @@ lang: zh
 
 ## 新闻
 
-- **从临时锚点花费中消除熔融性：** Gregory Sanders 在 Delving Bitcoin 论坛上[发表了][sanders mal]一个对[临时锚点][topic ephemeral anchors]提案的微调。该提案将允许交易包括一个零价值输出,其输出脚本为任何人都可以花费。由于任何人都可以花费输出，因此任何人都可以使用 [CPFP][topic cpfp] 来对创建这个输出的交易进行费用提升。这对于诸如 LN 等多方合同协议非常方便，因为交易通常会在能够准确预测应支付的费率之前签署。临时锚定点允许合约任何一方添加他们认为必要的费用。如果任何其他一方，或者任何其他用户出于任何原因，想要添加更高费用，则他们可以用自己更高费率的 CPFP 费用提升来[替代][topic rbf]之前的 CPFP 费用提升。
+- **<!--eliminating-malleability-from-ephemeral-anchor-spends-->从临时锚点花费中消除熔融性：** Gregory Sanders 在 Delving Bitcoin 论坛上[发表了][sanders mal]一个对[临时锚点][topic ephemeral anchors]提案的微调。该提案将允许交易包括一个零价值输出，其输出脚本为任何人都可以花费。由于任何人都可以花费输出，因此任何人都可以使用 [CPFP][topic cpfp] 来对创建这个输出的交易进行费用提升。这对于诸如 LN 等多方合同协议非常方便，因为交易通常会在能够准确预测应支付的费率之前签署。临时锚定点允许合约任何一方添加他们认为必要的费用。如果任何其他一方，或者任何其他用户出于任何原因，想要添加更高费用，则他们可以用自己更高费率的 CPFP 费用提升来[替代][topic rbf]之前的 CPFP 费用提升。
 
     提议使用的任何人都可以花费的脚本类型是一个输出脚本，它由等效的 `OP_TRUE` 组成，可以通过具有空输入脚本的输入进行花费。正如Sanders 本周发布的那样，使用传统输出脚本意味着花费它的子交易具有可熔铸变型的交易索引号（txid），例如，任何矿工都可以向输入脚本添加数据以更改子交易的 txid。这可以使得除了用于费用增加之外，将该子交易用于任何其他用途都是不明智的，因为即使子交易得到确认，也可能以不同的 txid 确认，从而使任何孙交易无效。
 
-    Sanders 建议改用原先为后来隔离见证（Segwit）升级所保留的输出脚本之一。这会使用略微更多的区块空间————SegWit 使用四个字节，而裸的 `OP_TRUE` 仅使用一个字节，但可以消除关于交易熔融性的任何顾虑。在该主题上进行了一些讨论后，Sanders 随后提出同时提供两种版本：一个 `OP_TRUE` 版本，适用于不关心熔融性且希望尽量减小交易大小的人，以及一个 SegWit 版本，略微更大但不允许子交易被变异。此讨论主题的进一步探讨侧重于为 SegWit 版本选择额外字节以创建一个易于记忆的[bech32m 地址][topic bech32]。{% assign timestamp="1:54" %}
+    Sanders 建议改用原先为后来隔离见证（Segwit）升级所保留的输出脚本之一。这会使用略微更多的区块空间————SegWit 使用四个字节，而裸的 `OP_TRUE` 仅使用一个字节，但可以消除关于交易熔融性的任何顾虑。在该主题上进行了一些讨论后，Sanders 随后提出同时提供两种版本：一个 `OP_TRUE` 版本，适用于不关心熔融性且希望尽量减小交易大小的人，以及一个 SegWit 版本，略微更大但不允许子交易被变异。此讨论主题的进一步探讨侧重于为 SegWit 版本选择额外字节以创建一个易于记忆的 [bech32m 地址][topic bech32]。{% assign timestamp="1:54" %}
 
 ## 田野调查：一段 Miniscript 旅程
 
@@ -27,7 +27,7 @@ lang: zh
 
 - [LND 0.17.1-beta][] 是一个维护版本，用于修复该 LN 节点实现中的几个错误和进行小幅改进。{% assign timestamp="37:27" %}
 
-- [Bitcoin Core 26.0rc2][] 是占主导地位的全节点实现的下一个主要版本的候选版本。包含一个[测试指南][26.0 testing]和[Bitcoin Core PR 审核俱乐部][]专门针对此测试在2023年11月15日进行的预定会议。{% assign timestamp="40:05" %}
+- [Bitcoin Core 26.0rc2][] 是占主导地位的全节点实现的下一个主要版本的候选版本。包含一个[测试指南][26.0 testing]和 [Bitcoin Core PR 审核俱乐部][Bitcoin Core PR Review Club]专门针对此测试在2023年11月15日进行的预定会议。{% assign timestamp="40:05" %}
 
 - [Core Lightning 23.11rc1][] 是该 LN 节点实现的下一个主要版本的候选版本。{% assign timestamp="53:24" %}
 
