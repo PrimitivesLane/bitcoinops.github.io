@@ -21,11 +21,11 @@ lang: zh
 
   Teinturier 基于要约提出了三种设计方案：
 
-    * _将域名链接到节点：_ DNS 记录将域名（如 example.com）映射到 LN 节点标识符。花费者向该节点发送[洋葱信息][topic onion messages]到该节点，请求为最终接收者提供要约给最终接收方（如 alice@example.com）。该域节点回复了一个由其节点密钥签名的要约，这样如果花费者收到的要约不是来自 Alice，花费者以后就可以证明存在欺诈情况了。现在，花费者可以使用要约协议向 Alice 索取发票。花费者还可以将 alice@example.com 与要约关联起来，这样它就不需要为此后向 Alice 付款而联系域节点了。Teinturier 指出，这种设计非常简单。
+    * _将域名链接到节点：_ DNS 记录将域名（如 example.com）映射到 LN 节点标识符。花费者发送[洋葱信息][topic onion messages]到该节点，请求来自最终接收方（如 alice@example.com）的要约。该域节点回复一个由其节点密钥签名的要约，这样如果花费者收到的要约不是来自 Alice，花费者以后就可以证明存在欺诈情况了。现在，花费者可以使用要约协议向 Alice 索取发票。花费者还可以将 alice@example.com 与要约关联起来，这样它就不需要为此后向 Alice 付款而联系域节点了。Teinturier 指出，这种设计非常简单。
 
     * _节点公告中的证书：_ 对闪电网络节点用于向网络公告自身的现有机制进行修改，允许公告包含 SSL 证书链，以证明（根据证书颁发机构）example.com 的所有者声称此特定节点由 alice@example.com 控制。Teinturier 指出，这将要求闪电网络实现 SSL 兼容的密码学技术。
 
-    * _直接在 DNS 中存储要约：_ 一个域名可能有多个 DNS 记录，直接存储特定地址的要约。例如，一条名为 `alice._lnaddress.domain.com` 的 DNS `TXT` 记录包含一个针对 Alice 的要约。另一条 `bob._lnaddress.domain.com` 的记录包含了对 Bob 的要约。Teinturier 指出，这就要求域名所有者为每个用户创建一个 DNS 记录（如果用户需要更改默认要约，还需要更新该记录）。
+    * _直接在 DNS 中存储要约：_ 一个域名可能有多个 DNS 记录，直接存储特定地址的要约。例如，一条名为 `alice._lnaddress.domain.com` 的 DNS `TXT` 记录包含了 Alice 的要约。另一条 `bob._lnaddress.domain.com` 的记录包含了 Bob 的要约。Teinturier 指出，这就要求域名所有者为每个用户创建一个 DNS 记录（如果用户需要更改默认要约，还需要更新该记录）。
 
   这封邮件引发了热烈的讨论。其中一个值得注意的建议是可能可以同时使用第一和第三个建议（将域名链接到节点和直接在 DNS 中存储要约）。{% assign timestamp="1:20" %}
 
