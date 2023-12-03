@@ -55,7 +55,7 @@ lang: zh
   两个基于 [BitVM][news273 bitvm] 的概念证明已发布，其中一个[实现][bitvm tweet blake3]了 [BLAKE3][] 哈希函数，[另一个][bitvm techmix poc] [实现了][bitvm sha256] SHA256。 {% assign timestamp="42:33" %}
 
 - **Bitkit 增加了 taproot 发送支持：**
-  移动比特币和闪电钱包 [Bitkit][bitkit website] 在 [v1.0.0-beta.86][bitkit v1.0.0-beta.86] 版本中添加了对 [taproot][topic taproot] 付款的支持。 {% assign timestamp="55:17" %}
+  比特币和闪电移动端钱包 [Bitkit][bitkit website] 在 [v1.0.0-beta.86][bitkit v1.0.0-beta.86] 版本中添加了对 [taproot][topic taproot] 付款的支持。 {% assign timestamp="55:17" %}
 
 ## 新版本和候选版本
 
