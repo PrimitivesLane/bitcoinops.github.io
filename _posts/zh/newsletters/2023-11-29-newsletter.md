@@ -28,19 +28,19 @@ lang: zh
 
 - [<!--is-it-advisable-to-operate-a-release-candidate-full-node-on-mainnet-->是否建议在主网络上运行一个使用候选版本软件的全节点呢？]({{bse}}120375)
   Vojtěch Strnad 和 Murch 指出，在主网络运行 Bitcoin Core 的候选版本对比特币 *网络* 的威胁很小，但 Bitcoin Core 的 API、钱包以及其它特性的用户应该谨慎操作，并测试自己的节点配置。
-  
+
 - [<!--what-is-the-relation-between-nlocktime-and-nsequence-->nLockTime 和 nSequence 有何关联？]({{bse}}120256)
   Antoine Poinsot 以及 Pieter Wuille 回答了一系列关于 `nLockTime` 和 `nSequence` 的 Stack Exchange 问题，包括[两者之间的关系]({{bse}}120273)、[`nLockTime` 的设计初衷]({{bse}}120276)、[`nSequence` 的可能数值]({{bse}}120254) 以及这跟 [BIP68]({{bse}}120320) 和 [`OP_CHECKLOCKTIMEVERIFY`]({{bse}}120259) 的关系。
-  
+
 - [<!--what-would-happen-if-we-provide-to-opcheckmultisig-more-than-threshold-number-m-of-signatures-->如果我给 OP_CHECKMULTISIG 提供超过阈值数量（m）的签名，会发生什么事？]({{bse}}120604)
   Pieter Wuille 解释道，虽然以前这是可以做到的，但 [BIP147][] 假堆栈元素熔融性软分叉不再允许 OP_CHECKMULTISIG 和 OP_CHECKMULTISIGVERIFY 中的额外堆栈元素是任意数值。
-  
+
 - [<!--what-is-mempool-policy-->什么是 “（交易池）策略”？]({{bse}}120269)
   Antoine Poinsot 在 Bitcoin Core 的语境下定义了术语 *交易池策略（policy）* 和 *标准交易（standardness）*，并提供一些例子。他也链接了 Bitcoin Opteck 关于 policy 的 “[等待确认][policy series]” 系列。
 
 - [<!--what-does-pay-to-contract-p2c-mean-->“支付给合约（P2C）” 是什么意思？]({{bse}}120362)
   Vojtěch Strnad 介绍了 [Pay-to-Contract (P2C)][topic p2c] 并链接到了其 [最初提议][p2c paper]。
-  
+
 - [<!--can-a-nonsegwit-transaction-be-serialized-in-the-segwit-format-->非隔离见证交易可以用隔离见证的格式序列化吗？]({{bse}}120317)
   Pieter Wuille 指出，虽然许多较老版本的 Bitcoin Core 无意中允许非隔离见证交易的延展序列化格式（extended serialization format），[BIP144][] 指明非隔离见证的交易必须使用旧的序列化格式。
 
@@ -49,6 +49,7 @@ lang: zh
 *热门的比特币基础设施项目的新版本和候选版本。请考虑升级到新版本或帮助测试候选版本。*
 
 - [Core Lightning 23.11][] 是这个闪电节点实现的下一个大版本的候选版本。它为 *rune* 身份验证机制提供了额外的灵活性，还提供了优化后的备份验证，以及插件可用的新特性。
+
 - [Bitcoin Core 26.0rc3][] 是这个主流全节点实现的下一个大版本的候选版本。这里有一份[测试指南][26.0 testing]。
 
 ## 重要的代码和文档变更
@@ -68,7 +69,7 @@ lang: zh
 [26.0 testing]: https://github.com/bitcoin-core/bitcoin-devwiki/wiki/26.0-Release-Candidate-Testing-Guide
 [core lightning 23.11]: https://github.com/ElementsProject/lightning/releases/tag/v23.11
 [neigut liqad]: https://lists.linuxfoundation.org/pipermail/lightning-dev/2023-November/004217.html
-[policy series]: /zj/blog/waiting-for-confirmation/
+[policy series]: /zh/blog/waiting-for-confirmation/
 [p2c paper]: https://arxiv.org/abs/1212.3257
 [bcc 0.11.1]: https://bitcoin.org/en/release/v0.11.1#test-for-lows-signatures-before-relaying
 [bcc 0.10.3]: https://bitcoin.org/en/release/v0.10.3#test-for-lows-signatures-before-relaying
