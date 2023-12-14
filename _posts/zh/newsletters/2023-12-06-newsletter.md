@@ -21,7 +21,7 @@ lang: zh
 
     - [集群交易池定义和理论][clusterdef]定义了设计集群交易池所使用的术语。它还描述了少量用来展示了这种设计的一些有用属性的定理。该主题中目前唯一的帖子（截至写作时）对于理解工作组的其他讨论非常有用，尽管其作者（Pieter Wuille）[警告][wuille incomplete]说它仍然“非常不完整”。
 
-    - [合并不可比较的线性化][cluster merge]着眼于如何为同一组交易合并两组不同的块（“组块”），尤其是_不可比较的_组块。通过比较不同的块列表（“组块”），我们可以确定哪个对矿工更有利。如果其中一个分块总是在任意数值的 vbytes 内累积相同或更大的费用（与块的大小离散），则可以比较组块。例如：
+    - [合并不可比较的线性化][cluster merge]着眼于如何为同一组交易合并两组不同的块（“分块”），尤其是_不可比较的_分块。通过比较不同的块（“分块”）列表，我们可以确定哪个对矿工更有利。可以通过检查其中一个分块是否总是在任意数值的 vbytes 内累积相同或更大的费用（与块的大小离散）来比较这些分块。例如：
 
       ![可比较的分块](/img/posts/2023-12-comparable-chunkings.png)
 
@@ -38,9 +38,9 @@ lang: zh
       在完成了两种不同类型的更新之后，通过比较可能会发现其中一个严格优于另一个，这种情况下就可以使用它。但是，如果这些更新是无法比较的，那么可以使用一种合并方法来产生一个等同或更好的结果，从而产生一个第三个分块，该分块将捕获到两种方法的最佳方面————在新的分块更好时使用它们，但在旧的分块更接近最佳状态时保留它们。
 
 
-    - [集群后的 RBF 包][cluster rbf]讨论了一种替代当前用于[手续费替换][topic rbf]规则的方法。当接收到一个或多个交易的有效替换时，可以生成所有受其影响的集群的临时版本，并导出集群更新的分块。这可以与当前在交易池中的原始集群（不包括替换集群）的分块进行比较。如果包含替换的分块对于任何数值的 vbytes，总是赚取相等或更多的费用，并且如果它足以支付中继费用而增加交易池中的总费用，则应将其包含在交易池中。
+    - [集群后的交易包 RBF][cluster rbf]讨论了一种替代当前用于[手续费替换][topic rbf]规则的方法。当接收到一个或多个交易的有效替换时，可以生成所有受其影响的集群的临时版本，并导出集群更新的分块。这可以与当前在交易池中的原始集群（不包括替换交易）的分块进行比较。如果包含替换的分块对于任何数值的 vbytes，总是赚取相等或更多的费用，并且如果它足以支付中继费用而增加交易池中的总费用，则应将其包含在交易池中。
 
-        这种基于证据的评估可以替代当前在 Bitcoin Core 中用于确定是否应替换交易的几个[启发式][mempool replacements]方法，有潜力在几个方面改进手续费替换（RBF）规则，包括拟议的用来替换的[包中继][topic package relay]。几个[其他][cluster rbf-old1]主题[也][cluster rbf-old2]讨论了[这个][cluster rbf-old3]话题。
+        这种基于证据的评估可以替代当前在 Bitcoin Core 中用于确定是否应替换交易的几个[启发式][mempool replacements]方法，有潜力在几个方面改进手续费替换（RBF）规则，包括拟议的[替换交易包中继][topic package relay]。几个[其他][cluster rbf-old1]主题[也][cluster rbf-old2]讨论了[这个][cluster rbf-old3]话题。
 
 - **使用 warnet 进行测试：** Matthew Zipkin 在 Delving Bitcoin 上[发帖][zipkin warnet]，介绍了他使用 [warnet][] 运行的一些模拟结果，warnet 是一个启动大量 Bitcoin 节点并在它们之间定义一组连接（通常在测试网上）的程序。Zipkin 的结果显示，如果合并几个对等节点管理代码的拟议更改（独立或一起更改），将使用多少额外内存。他还指出，他很高兴使用仿真来测试其他拟议更改，并定量分析拟议攻击的影响。{% assign timestamp="32:42" %}
 
@@ -48,17 +48,17 @@ lang: zh
 
 *在这个月度部分，我们总结了 [Bitcoin Core PR 审核俱乐部][]会议，重点介绍了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
 
-[测试 Bitcoin Core 26.0 候选版本][review club v26-rc-testing]是一个审核俱乐部会议，并没有审核特定的PR，而是一个群体测试的努力。
+[测试 Bitcoin Core 26.0 候选版本][review club v26-rc-testing]是一个审核俱乐部会议，并没有审核特定的PR，而是一个集体测试活动。
 
 在每次[主要的 Bitcoin Core 版本][]发布之前，社区的广泛测试被认为是至关重要的。因此，一个志愿者会为一个[候选版本][]编写测试指南，以便尽可能多的人可以进行有效的测试，而无需独自确定版本中的新内容或更改，并重新设计各种设置步骤来测试这些功能或更改。
 
-测试可能会很困难，因为当遇到意外行为时，往往不清楚是由于实际的错误还是测试人员犯了错误。向开发人员报告并非真正错误的错误会浪费他们的时间。为了缓解这些问题并促进测试工作，特定发布候选版本（在此例中为26.0rc2）会举行一次审核会议。
+测试可能会很困难，因为当遇到意外行为时，往往不清楚是由于实际的错误还是测试人员犯了错误。向开发人员报告并非真正错误的错误会浪费他们的时间。为了缓解这些问题并促进测试工作，我们的审核俱乐部会为特定发布候选版本（在此例中为26.0rc2）举行一次审核会议。
 
 [26.0 候选版本测试指南][26.0 testing]是由 Max Edwards 撰写的，他还在 Stéphan（stickies-v）的帮助下主持了审核会议。
 
 与会者也被鼓励通过阅读[26.0 版本说明][]来获得测试想法。
 
-本次审核俱乐部会议涉及两个 RPC，即 [`getprioritisedtransactions`][PR getprioritisedtransactions](也在[之前的审核俱乐部会议][news250 pr review]中讨论过，尽管该 RPC 的名称在那次审核俱乐部会议后被更改了)，以及 [`importmempool`][PR importmempool]。版本说明中，[新 RPCs][]的部分描述了这些以及其他新增的 RPC。会议还覆盖了 [V2 传输(BIP324)][topic v2 p2p transport]，并打算涵盖 [TapMiniscript][PR TapMiniscript]，但由于时间限制，这个话题没有讨论。
+本次审核俱乐部会议涉及两个 RPC，即 [`getprioritisedtransactions`][PR getprioritisedtransactions](也在[之前的审核俱乐部会议][news250 pr review]中讨论过，尽管该 RPC 的名称在那次审核俱乐部会议后被更改了)，以及 [`importmempool`][PR importmempool]。版本说明中，“[新 RPCs][]” 的部分描述了这些以及其他新增的 RPC。会议还覆盖了 [V2 传输(BIP324)][topic v2 p2p transport]，并打算涵盖 [TapMiniscript][PR TapMiniscript]，但由于时间限制，这个话题没有讨论。
 
 {% assign timestamp="43:18" %}
 
@@ -80,7 +80,7 @@ lang: zh
   a3link="https://bitcoincore.reviews/v26-rc-testing#l-91"
 
   q4=“你运行 V2 传输的结果如何？”
-  a4=“与会者无法连接到已知的启用了主网 V2 的节点；它似乎没有接受连接请求。有人建议，其所有入站槽可能都在使用中。因此，会议期间无法进行 P2P 测试。”
+  a4=“与会者无法连接到已知的启用了主网 V2 的节点；它似乎没有接受连接请求。有人提出，也许该节点所有的入站槽都已在使用（因此无法接受新的连接请求）。因此，会议期间无法进行 P2P 测试。”
   a4link="https://bitcoincore.reviews/v26-rc-testing#l-115"
 %}
 
@@ -96,9 +96,9 @@ lang: zh
 
 *本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和 [Bitcoin Inquisition][bitcoin inquisition repo]。*
 
-- [Bitcoin Core #28848][] 更新了 `submitpackage` RPC，使得在任何交易失败时更加有帮助。与其抛出带有第一个失败信息的 `JSONRPCError`，它会在可能的情况下返回每个交易的结果。{% assign timestamp="58:49" %}
+- [Bitcoin Core #28848][] 更新了 `submitpackage` RPC，使得在任何交易失败时更加有帮助。它不是只抛出带有第一个失败信息的 `JSONRPCError`，而会在可能的情况下返回每个交易的结果。{% assign timestamp="58:49" %}
 
-- [LDK #2540][] 建立在 LDK 最近的[盲路径][topic rv routing]工作(见周报 [#257][news257 ldk2120]和[#266][news266 ldk2411])的基础上，它通过支持在盲路径中作为引入节点进行转发，并且是 LDK 的 BOLT12 [offers][topnd is part ofic offers] 关于跟踪[问题][LDK #1970]的一部分。 {% assign timestamp="59:49" %}
+- [LDK #2540][] 建立在 LDK 最近的[盲路径][topic rv routing]工作(见周报 [#257][news257 ldk2120]和[#266][news266 ldk2411])的基础上，它通过支持在盲路径中作为引路节点（intro node）进行转发，并且是 LDK 的 BOLT12 [offers][topnd is part ofic offers] 关于跟踪[问题][LDK #1970]的一部分。 {% assign timestamp="59:49" %}
 
 {% assign day_after_posting = page.date | date: "%s" | plus: 86400 | date: "%Y-%m-%d 15:00" %}
 {% include snippets/recap-ad.md when=day_after_posting %}
