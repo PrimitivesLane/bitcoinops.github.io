@@ -32,7 +32,7 @@ lang: zh
   [payjoin-cli][] 是一个 rust 项目，它为 Bitcoin Core 添加了在命令行中进行 [payjoin][topic payjoin] 发送和接收的功能。
 
 - **<!--call-for-community-block-arrival-timestamps-->向社区征集区块到达时间戳：**
-  [比特币区块到达时间数据集][block arrival github]资源库的一位贡献者[呼吁][b10c tweet]节点操作员提交他们的区块到达时间戳，以供研究。此外还有一个类似的资源库用于收集[过期区块数据][stale block github]。
+  “[比特币区块到达时间数据集][block arrival github]” 资源库的一位贡献者[呼吁][b10c tweet]节点操作员提交他们的区块到达时间戳，以供研究。此外还有一个类似的资源库用于收集[旁支区块数据][stale block github]。
 
 - **Envoy 1.4 发布：**
   比特币钱包 Envoy 的 [1.4 版本][envoy v1.4.0]增加了[钱币控制][topic coin selection]和[钱包标签][topic wallet labels]（[BIP329][] 即将推出）等功能。
@@ -82,7 +82,7 @@ nswer -->{% endcomment %}
 
 - [BTCPay Server #5389][] 添加了对 [BIP129][] 安全多重签名钱包设置的支持（参见[第 136 期周报][news136 bip129]）。这允许 BTCPay 服务器与多个软件钱包和硬件签名设备进行交互，作为简单协调的多签设置程序的一部分。
 
-- [BTCPay Server #5490][] 默认开始使用来自 mempool.space 的[费用估算][ms fee api]，并回退使用来自本地 Bitcoin Core 节点的费用估算。在 PR 上发表评论的开发者指出，他们认为 Bitcoin Core 的手续费估算无法快速响应本地 mempool 的变化。之前关于提高费用估算准确性所面临挑战的相关讨论，请参阅 [Bitcoin Core #27995][]。
+- [BTCPay Server #5490][] 默认开始使用来自 mempool.space 的[费用估算][ms fee api]，并将来自本地 Bitcoin Core 节点的费用估算作为后备选择。在 PR 上发表评论的开发者指出，他们认为 Bitcoin Core 的手续费估算无法快速响应本地 mempool 的变化。之前关于提高费用估算准确性所面临挑战的相关讨论，请参阅 [Bitcoin Core #27995][]。
 
 ## 节日快乐！
 
