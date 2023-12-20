@@ -55,7 +55,7 @@ nswer -->{% endcomment %}
   Pieter Wuille 指出，[RBF][topic rbf] 费用调整技术有一系列相关的政策规则，而 [CPFP][topic cpfp] 费用调整技术则没有额外的政策规则。
 
 - [RBF 替换掉的交易总数是如何计算出来的？]({{bse}}120823)
-  Murch 和 Pieter Wuille 结合 [BIP125][] 第 5 条规则：“将被替换的原始交易及其将被驱逐出交易池的后代交易总数不得超过 100 个”，举例说明了 RBF 替换。读者可能还会对“[添加 BIP-125 第 5 条规则的测试案例与默认交易池][review club 25228] PR 回顾俱乐部会议”感兴趣。
+  Murch 和 Pieter Wuille 结合 [BIP125][] 第 5 条规则：“将被替换的原始交易及其将被驱逐出交易池的后代交易总数不得超过 100 个”，举例说明了 RBF 替换。读者可能还会对“[添加 BIP-125 第 5 条规则的测试案例与默认交易池][review club 25228] PR 审核俱乐部会议”感兴趣。
 
 - [存在哪些类型的 RBF，Bitcoin Core 默认支持并使用哪一种？]({{bse}}120749)
   Murch 提供了一些 Bitcoin Core 的交易替换历史，也提供了在一个[相关问题]({{bse}}120773)中关于 RBF 替换规则的总结，并链接到 Bitcoin Core 的[交易池替换][bitcoin core mempool replacements]文档和一位开发者对 [RBF 的改进意见][glozow rbf improvements]。
