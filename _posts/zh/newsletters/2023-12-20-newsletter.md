@@ -1,5 +1,5 @@
 ---
-title: 'Bitcoin Optech Newsletter #282: 2023 Year-in-Review Special'
+title: 'Bitcoin Optech Newsletter #282：2023 年度回顾特刊'
 permalink: /zh/newsletters/2023/12/20/
 name: 2023-12-20-newsletter-zh
 slug: 2023-12-20-newsletter-zh
@@ -8,714 +8,277 @@ layout: newsletter
 lang: zh
 
 excerpt: >
-  This special edition of the Optech Newsletter summarizes notable
-  developments in Bitcoin during all of 2023.
+  本期为 Optech Newsletter 的特刊， 总结了 2023 年全年比特币开发中的重要进展。
 ---
-{{page.excerpt}}  It’s the sequel to our summaries from [2018][yirs
-2018], [2019][yirs 2019], [2020][yirs 2020], [2021][yirs 2021], and
-[2022][yirs 2022].
+{{page.excerpt}}  它接续了我们的年度总结传统：[2018][yirs
+2018]、[2019][yirs 2019]、[2020][yirs 2020]、[2021][yirs 2021]，以及
+[2022][yirs 2022]。
 
-## Contents
+## 内容
 
-* January
+* 一月
   * [Bitcoin Inquisition](#inquisition)
   * [Swap-in-potentiam](#potentiam)
-  * [BIP329 wallet label export format](#bip329)
-* February
-  * [Ordinals and inscriptions](#ordinals)
+  * [BIP329 钱包标签导出格式](#bip329)
+* 二月
+  * [Ordinals 与铭文](#ordinals)
   * [Bitcoin Search, ChatBTC, and TL;DR](#chatbtc)
-  * [Peer storage backups](#peer-storage)
-  * [LN quality of service](#ln-qos)
-  * [HTLC endorsement](#htlc-endorsement)
+  * [对等节点存储备份](#peer-storage)
+  * [LN 节点的服务质量](#ln-qos)
+  * [HTLC 背书提议](#htlc-endorsement)
   * [Codex32](#codex32)
-* March
-  * [Hierarchical channels](#mpchan)
-* April
-  * [Watchtower accountability proofs](#watchaccount)
-  * [Route blinding](#route-blinding)
+* 三月
+  * [层级式通道](#mpchan)
+* 四月
+  * [瞭望塔问责证明](#watchaccount)
+  * [路径盲化](#route-blinding)
   * [MuSig2](#musig2)
-  * [RGB and Taproot Assets](#clientvalidation)
-  * [Channel splicing](#splicing)
-* May
-  * [LSP specifications](#lspspec)
+  * [RGB 和 Taproot Assets](#clientvalidation)
+  * [通道拼接](#splicing)
+* 五月
+  * [LSP 规范](#lspspec)
   * [Payjoin](#payjoin)
   * [Ark](#ark)
-* June
-  * [Silent payments](#silentpayments)
-* July
-  * [Validating Lightning Signer](#vls)
-  * [LN developer meeting](#ln-meeting)
-* August
-  * [Onion messages](#onion-messages)
-  * [Outdated backup proofs](#backup-proofs)
-  * [Simple taproot channels](#tapchan)
-* September
-  * [Compressed Bitcoin transactions](#compressed-txes)
-* October
-  * [Payment switching and splitting](#pss)
+* 六月
+  * [静默支付](#silentpayments)
+* 七月
+  * [验证闪电签名者](#vls)
+  * [LN 开发者峰会](#ln-meeting)
+* 八月
+  * [洋葱消息](#onion-messages)
+  * [过时备份证明](#backup-proofs)
+  * [简单 taproot 通道](#tapchan)
+* 九月
+  * [压缩比特币交易](#compressed-txes)
+* 十月
+  * [付款拆分与切换](#pss)
   * [Sidepools](#sidepools)
   * [AssumeUTXO](#assumeutxo)
-  * [Version 2 P2P transport](#p2pv2)
+  * [第 2 版加密 P2P 传输](#p2pv2)
   * [Miniscript](#miniscript)
-  * [State compression and BitVM](#statebitvm)
-* November
-  * [Offers](#offers)
-  * [Liquidity advertisements](#liqad)
-* December
-  * [Cluster mempool](#clustermempool)
+  * [状态压缩与 BitVM](#statebitvm)
+* 十一月
+  * [要约](#offers)
+  * [流动性广告](#liqad)
+* 十二月
+  * [集群交易池](#clustermempool)
   * [Warnet](#warnet)
-* Featured summaries
-  * [Soft fork proposals](#softforks)
-  * [Security disclosures](#security)
-  * [Major releases of popular infrastructure projects](#releases)
+* 特别总结
+  * [软分叉提议](#softforks)
+  * [安全披露](#security)
+  * [流行基础设施项目的主要发布](#releases)
   * [Bitcoin Optech](#optech)
 
-## January
+## 一月
 
 {:#inquisition}
-Anthony Towns [announced][jan inquisition] Bitcoin Inquisition, a
-software fork of Bitcoin Core designed to be used on the default signet
-for testing proposed soft forks and other significant protocol changes.
-By the end of the year, it contained support for several proposals:
-[SIGHASH_ANYPREVOUT][topic sighash_anyprevout],
-[OP_CHECKTEMPLATEVERIFY][topic op_checktemplateverify], and basic
-[ephemeral anchors][topic ephemeral anchors], with pull requests open in
-its repository to add support for [OP_CAT][], `OP_VAULT`, and the
-[restriction against 64-byte transactions][topic consensus cleanup].
+Anthony Towns [推出][jan inquisition] 了 Bitcoin Inquisition，一款复刻了 Bitcoin Core 的软件，设计目标是在默认的 signet 上运行，以测试人们提出的软分叉和其它重大的协议变更。截至今年年底，Bitcoin Inquisition 已经支持了多项提案：[SIGHASH_ANYPREVOUT][topic sighash_anyprevout]、[OP_CHECKTEMPLATEVERIFY][topic op_checktemplateverify] 以及基本的 “[临时锚点][topic ephemeral anchors]”；并且，旨在为 [OP_CAT][]、`OP_VAULT` 以及限制 64 字节交易而增加支持的 PR 已经提交到其代码库。
 
 {:#potentiam}
-ZmnSCPxj and Jesse Posner [proposed][jan potentiam] _swap-in-potentiam_,
-a non-interactive method for opening Lightning Network channels,
-addressing challenges faced by often-offline wallets like those on
-mobile devices.  A client can receive funds in an onchain transaction
-while it is offline.  The transaction can receive enough confirmations
-to make it immediately safe to open a channel with a pre-selected peer
-when the client comes back online---without placing any trust in that
-peer.  Within a few months of the proposal, at least one popular LN
-wallet <!-- Phoenix --> was using an implementation of the idea.
+ZmnSCPxj 以及 Jesse Posner [提出][jan potentiam] 了 “swap-in-potentiam”，这是一种可以开启闪电通道的非交互式方法，用于解决经常离线的钱包（比如移动设备上的钱包）所面临的挑战。客户端可以在自己离线时以链上交易的形式接收资金。一旦这样的交易得到足够多的确认，当客户端再次回到线上时，就可以立即安全地跟预先选定的对等节点开启一条通道 —— 无需信任该对等节点。在这个提案提出的几个月内，至少一个热门的闪电钱包已经用上了这个想法的实现。
 
 {:#bip329}
-A standard format for [wallet label][topic wallet labels] export and
-import was [assigned][jan bip329] the identifier [BIP329][].  Not only
-does the standard make it easier to back up important wallet data that
-can't be recovered from a [BIP32 seed][topic bip32], but it also makes
-it much easier to copy transaction metadata into non-wallet programs,
-such as accounting software.  By the end of the year, several wallets
-had implemented BIP329 export.
+一种用于导出和导入[钱包内部标签][topic wallet labels]的标准格式被[分配][jan bip329]了标识符[BIP329][]。这个标准不仅让用户更容易备份无法通过 [BIP32 种子][topic bip32] 来复原的重要钱包数据，还大大方便了复制交易元数据到非钱包程序（比如记账软件）中。截至今年年底，已经有多款钱包实现了 BIP329 导出功能。
 
-## February
+## 二月
 
 {:#ordinals}
-February saw the [beginning][feb ord1] of a [discussion][feb ord2] that
-would continue for the rest of the year about Ordinals and Inscriptions,
-two related protocols for associating meaning and data with transaction
-outputs.  Andrew Poelstra summarized the position of many protocol
-developers: "there is no sensible way to prevent people from storing
-arbitrary data in witnesses without incentivizing even worse behavior
-and/or breaking legitimate use cases." Given the method used by
-Inscriptions allows storing large amounts of data, Christopher Allen
-suggested increasing Bitcoin Core's 83-byte limit for data storage in
-outputs prefixed by `OP_RETURN`; a proposal that was also [advanced][aug
-opreturn] by Peter Todd later in the year.
+二月份[开始出现][feb ord1]贯穿了全年的关于 Ordinals 和 “铭文（Inscriptions）” 的[讨论][feb ord2]，这两个相关的协议旨在为交易输出附加含义和数据。Andrew Poelstra 总结了许多协议开发者的立场：“没有一种实用的办法能够在阻止人们在交易的见证字段存储任意数据的同时，不吸引他们尝试更加糟糕的行为 以及/或者 打破合理的用途。”鉴于铭文所用的方法允许存储大体积的数据，Christopher Allen 建议提高 Bitcoin Core 对以 `OP_RETURN` 为前缀的输出可存储的数据体积限制（83 字节）；同年晚些时候，Peter Todd 也[支持][aug opreturn]这样的提议。
 
 {:#chatbtc}
-BitcoinSearch.xyz was [launched][feb bitcoinsearch] early in the year,
-providing a search engine for Bitcoin technical documentation and
-discussions.  By the end of the year, the site offered a [chat
-interface][chatbtc] and [summaries][tldr] of recent discussions.
+BitcoinSearch.xyz 在今年初[启动][feb bitcoinsearch]了，它为比特币的技术文档和讨论提供了一个搜索引擎。截至今年年底，该网站也提供了一个[聊天界面][chatbtc]，以及最新讨论的[总结][tldr]。
 
 {:#peer-storage}
-Core Lightning [added][feb storage] experimental support for peer
-storage backups, which allow a node to store a small encrypted backup
-file for its peers. If a peer later needs to reconnect, perhaps after
-losing data, it can request the backup file.  The peer can use a key
-derived from its wallet seed to decrypt the file and use the contents to
-recover the latest state of all of its channels.
+Core Lightning [添加][feb storage]了对 “对等节点存储备份” 的实验性支持；该特性允许一个节点为其对等节点存储一个小体积的加密备份文件。如果一个对等节点需要重新建立连接，可能已经弄丢了数据，那么可以请求这个备份文件。请求节点可以使用从自己的钱包种子词中派生的密钥来解密这个文件，然后用其中的内容来复原其所有通道的最新状态。
 
 {:#ln-qos}
-Joost Jager [proposed][feb lnflag] a "high availability" flag for LN
-channels, allowing the channel to signal it offered reliable payment
-forwarding.  Christian Decker noted challenges in creating reputation
-systems, such as infrequent node encounters. A previously proposed
-alternative approach was also mentioned: [overpayment with
-recovery][topic redundant overpayments] (previously termed boomerang or
-refundable overpayments), where payments are split and sent via multiple
-routes, reducing reliance on highly available channels.
+Joost Jager [提议][feb lnflag]给闪电通道增加一种 “高可用性” 标记，以允许一条通道表示自己可以提供可靠的支付转发服务。Christian Decker 指出创建声誉系统会面临的挑战，比如同一个节点可能不会被同一个支付发起方频繁使用。此前出现的一种替代性方法也被提及：“[带有复原机制的超额支付][topic redundant overpayments]”（曾用名 “回旋镖”、“可退款的超额支付”），其中支付会被分切并通过多条路径来发送，从而减少对高可用通道的依赖。
 
 {:#htlc-endorsement}
-Ideas from a [paper][jamming paper] posted last year became a particular
-focus of the 2023 effort to mitigate [LN channel jamming][topic channel
-jamming attacks].  In February, Carla Kirk-Cohen and the paper's
-co-author Clara Shikhelman began [asking][feb htlcendo] for feedback on
-the suggested parameters to use when implementing one of the ideas from
-the paper, [HTLC endorsement][topic htlc endorsement].  In April, they
-[posted][apr htlcendo] a draft specification for their testing plans.
-In July, the idea and the proposal were [discussed][jul htlcendo] at the
-LN development meeting, which led to some mailing list discussion about
-an [alternative approach][aug antidos] to make the costs paid by both
-attackers and honest users reflect the underlying costs paid by the node
-operators providing the service; that way, a node operator who is
-earning a reasonable return on providing services to honest users will
-continue earning reasonable returns if attackers begin using those
-services.  In August, it was [announced][aug htlcendo] developers
-associated with Eclair, Core Lightning, and LND were all implementing
-parts of the HTLC endorsement protocol in order to begin collecting data
-related to it.
+来自去年出版的一篇[论文][jamming paper]的想法成了 2023 年缓解 “[闪电通道阻塞][topic channel jamming attacks]” 问题的焦点。二月份，Carla Kirk-Cohen 以及论文的联合作者 Clara Shikhelman 开始[征求][feb htlcendo]对实现论文的其中一个想法 “[HTLC 背书][topic htlc endorsement]” 时应使用的建议参数的反馈。四月份，他们为自己的测试计划[提出][apr htlcendo]了一份规范草案。六月份，论文中的想法和提议在闪电网络开发者会议上得到了[讨论][jul htlcendo]，从而引起了邮件组内关于一种[替代性方法][aug antidos]的讨论；该替代方法希望让攻击者和诚实用户所支付的费用都能反映节点运营者提供服务所需付出的真实成本，如此一来，能够凭借向诚实用户提供服务来赚取合理回报的节点，也将能在攻击者尝试使用其服务时持续获得合理的回报。八月份，[公开消息][aug htlcendo]称 Eclair、Core Lightning 和 LND 的开发者都实现了部分的 HTLC 背书协议，以开始收集与之相关的数据。
 
 {:#codex32}
-Russell O'Connor and Andrew Poelstra [proposed][feb codex32] a new BIP
-for backing up and restoring [BIP32][] seeds called [codex32][topic
-codex32].  Similar to SLIP39, it allows creating several shares using
-Shamir’s Secret Sharing Scheme with configurable threshold requirements.
-An attacker who obtains less than the threshold number of shares will
-learn nothing about the seed. Unlike other recovery codes that use a
-wordlist, codex32 uses the same alphabet as [bech32][topic bech32]
-addresses. The main advantage of codex32 over existing schemes is its
-ability to perform all operations manually using pen, paper,
-instructions, and paper cutouts, including generating an encoded seed
-(with dice), protecting it with a checksum, creating checksummed shares,
-verifying checksums, and recovering the seed. This allows users to
-periodically verify the integrity of individual shares without relying
-on trusted computing devices.
+Russell O'Connor 和 Andrew Poelstra 为备份和存储 [BIP32][] 助记词[提出][feb codex32]了一个新的 BIP，称为 “[codex32][topic codex32]”。类似于 SLIP39，codex32 允许使用 Shamir 私钥分割方案将一个种子词分成多个碎片，并允许配置复原种子词的阈值要求。攻击者所得的碎片数量若小于阈值，就无法得出完整的种子词。但是，codex32 不像其它复原码使用一张词表，它使用跟 [bech32][topic bech32] 地址相同的字母表。与现有的方案相比，codex32 的主要优势在于，用户可以使用纸、笔、指令和剪纸，手动运行所有操作，包括生成一个编码过的助记词（使用骰子）、用一个校验和来保护它、创建带有校验和的碎片、验证校验和以及复原种子词。这使得用户可以周期性地验证单个碎片的完整性，而无需依赖于可信任的计算设备。
 
-## March
+## 三月
 
 {:#mpchan}
-In March, pseudonymous developer John Law [published][mar mpchan] a
-paper describing a way to create a hierarchy of channels for multiple
-users from a single onchain transaction.  The design can allow
-all online users to spend their funds even when some of their channel
-counterparties are offline, which is not currently possible in LN.  This
-optimization would allow always-online users to use their capital more
-efficiently, likely reducing the costs for other users of LN.  The proposal
-depends on Law's tunable penalty protocol, which has not seen any
-public software development since it was proposed in 2022.
+三月份，化名开发者 John Law [出版][mar mpchan]了一篇论文，介绍了一种可以仅使用单笔链上交易就为多个用户创建一种层级式通道的方法。这种设计允许即使在部分参与者离线时，在线的用户也能花费自己的资金，而这在当前的闪电通道中是做不到的。这种优化使得总是在线的用户能够更高效地使用自己的资金，从而也可能降低其它闪电网络用户的成本。本提议基于 Law 的可调整惩罚协议，而该协议从 2022 年提出以来，还未看到任何公开的软件开发。
 
 ![Tunable Penalty Protocol](/img/posts/2023-03-tunable-commitment.dot.png)
 
 <div markdown="1" class="callout" id="softforks">
-### 2023 summary<br>Soft fork proposals
+### 2023 总结<br>软分叉提议
 
-A [proposal][jan op_vault] for a new `OP_VAULT` opcode was posted in
-January by James O'Beirne, [followed][feb op_vault] in February by a
-draft BIP an implementation for Bitcoin Inquisition.  This was further
-followed a few weeks later by a [proposal][feb op_vault2] for an
-alternative design for `OP_VAULT` by Gregory Sanders.
+James O'Beirne 在一月[提出][jan op_vault]了一种新的 `OP_VAULT` 操作码，[随后][feb op_vault]在二月为之编写了一份 BIP 草案以及提交到 Bitcoin Inquisition 的实现。几周后，Gregory Sanders [提出][feb op_vault2]了 `OP_VAULT` 的一种替代性设计。
 
-The merklize all the things (MATT) proposal first described last year saw
-activity again this year. Salvatore Ingala [showed][may
-matt] how it could provide most of the features of the proposed
-`OP_VAULT` opcodes.  Johan Torås Halseth [further demonstrated][jun
-matt] how one of the opcodes from the MATT proposal could replicate
-key functions of the `OP_CHECKTEMPLATEVERIFY` proposed opcode, although the
-MATT version was less space efficient.  Halseth also used the
-opportunity to introduce readers to a tool he'd built, [tapsim][], which
-allows debugging Bitcoin transactions and [tapscripts][topic tapscript].
+“默克尔化一切（MATT）” 提议首次亮相是在去年，而在今年再次有了动静。Salvatore Ingala [展示][may matt]了 MATT 如何能够提供拟议的 `OP_VAULT` 操作码的绝大部分特性。Johan Torås Halseth [进一步展示][jun matt]来自 MATT 提议的其中一个操作码如何能够复制拟议的 `OP_CHECKTEMPLATEVERIFY` 操作码的关键功能，虽然 MATT 的做法在空间效率上稍差。Halseth 还利用这个机会，向读者介绍了一种他开发的工具 “[tapsim][]”，可以用来调试比特币交易和 [tapscripts][topic tapscript]。
 
-In June, Robin Linus [described][jun specsf] how users could timelock funds today,
-use them on a sidechain for a long time, and then allow
-the receivers of the funds on the sidechain to effectively withdraw them
-on Bitcoin at a later point---but only if Bitcoin users eventually
-decide to change the consensus rules in a certain way.  This could allow
-users willing to take a financial risk to immediately begin using their
-funds with new consensus features they desire, while providing a path
-for those funds to later return to Bitcoin's mainnet.
+六月份，Robin Linus [描述][jun specsf]了用户如何能够在当下用时间锁锁定资金、在侧链上长期使用这些资金、允许侧链上的资金接收者在未来从比特币网络上取出资金 —— 但仅在比特币用户最终决定以某种方式改变共识规则时才可以。这将允许愿意承担财务风险的用户立即开始在自己的资金上尝试想要的新共识规则，同时提供一种办法，让这些资金日后能够回到比特币主链上。
 
-In August, Brandon Black [proposed][aug combo] a version of `OP_TXHASH`
-combined with [OP_CHECKSIGFROMSTACK][topic op_checksigfromstack] that
-would provide most of the features of [OP_CHECKTEMPLATEVERIFY][topic
-op_checktemplateverify] (CTV) and [SIGHASH_ANYPREVOUT][topic
-sighash_anyprevout] (APO) without much additional onchain cost over
-those individual proposals.
+八月份，Brandon Black [提出][aug combo] 了一种 `OP_TXHASH`，结合 [OP_CHECKSIGFROMSTACK][topic op_checksigfromstack]，就能提供 [OP_CHECKTEMPLATEVERIFY][topic op_checktemplateverify]（CTV）和 [SIGHASH_ANYPREVOUT][topic sighash_anyprevout]（APO）的绝大部分特性，而且链上开销相比这两个单独的提议不会高太多。
 
-In September, John Law [suggested][sep lnscale] enhancing LN
-scalability using covenants. He uses a construction similar to [channel
-factories][topic channel factories] and the proposed Ark protocol to
-potentially fund millions of channels offchain, which can be reclaimed
-by the factory funder after an expiry, with users withdrawing their
-funds over LN beforehand. The model allows funds to be moved between
-factories without user interaction, reducing the risk of last-minute
-onchain congestion and transaction fees. Anthony Towns raised concerns
-about the _forced expiration flood_ problem, where the failure of a
-large user could force many time-sensitive onchain transactions
-simultaneously. Law replied to note that he is working on a solution to
-delay expiry during high transaction fee periods.
+九月份，John Law [提议][sep lnscale]使用限制条款来加强闪电网络的可扩展性。他使用了一种类似于 “[通道工厂][topic channel factories]” 和拟议的 Ark 协议的构造，以在链下同时为大量的通道注入资金；这些资金在一定时间之后，可以被工厂的注资者收回，因此用户需要提前通过闪电网络取出自己的资金。这种模式允许资金在多个工厂之间移动，而无需用户的交互，从而降低工厂生命末期的链上阻塞风险和交易费。Anthony Towns 提出了对 “*强制过期洪水*” 问题的担忧，也就是一个大体量的用户的故障可能迫使许多时间敏感型链上交易同时出现。Law 回应称他正在研究一种解决方案，以在高手续费时期推迟过期。
 
-October started with Steven Roose [posting][oct txhash] a draft BIP for
-a new OP_TXHASH opcode. The idea for the opcode has been discussed
-before but this is the first specification of the idea. In addition to
-describing exactly how the opcode would work, it examined some
-downsides, such as full nodes potentially needing to hash up to several
-megabytes of data every time the opcode is invoked. The BIP draft
-included a sample implementation of the opcode.
+十月份，Steven Roost 为新的 OP_TXHASH 操作码[发布][oct txhash]了一份 BIP 草稿。这个操作码的想法，前面已经提到过，但这份草稿是其第一份规范。除了准确地描述这个操作码会如何工作，该规范也探究了其一些缺点，例如，每次涉及这个操作码时，全节点可能都需要哈希高达几 MB 的数据。该 BIP 草案也包含了该操作码的一个实现样本。
 
-Also in October, Rusty Russell [researched][oct generic] generic
-covenants with minimal changes to Bitcoin's scripting language and Ethan
-Heilman [published][oct op_cat] a draft BIP to add an [OP_CAT][op_cat]
-opcode that would concatenate two elements on the stack.  The discussion
-for both of those topics would [continue][nov cov] into November.
+同样在十月，Rusty Russell [研究][oct generic]了如何以对比特币脚本语言的尽可能小的变更实现通用的限制条款，而 Ethan Heilman [发布][oct op_cat]了一份 BIP 草稿，提议加入一种 [OP_CAT][op_cat] 操作码，以拼接堆栈中的两个元素。对这两个主题的讨论都[持续][nov cov]到了十一月。
 
-Before the end of the year, Johan Torås Halseth would also [suggest][nov
-htlcagg] that covenant-style soft forks could allow aggregation
-of multiple [HTLCs][topic htlc] into a single output that could be spent
-all at once if a party knew all the preimages. If a party only knew some
-of the preimages, they could claim just those and then the remaining
-balance could be refunded to the other party. This would be more
-efficient onchain and could make it more difficult to perform certain
-types of [channel jamming attacks][topic channel jamming attacks].
+在年底，Johan Torås Halseth 也[提出][nov htlcagg]，限制条款类型的软分叉可以聚合多个 [HTLCs][topic htlc] 成单个输出；如果某一方知道所有的原像，则可以一次性花费；如果 TA 只知道部分原像，则只能取走一部分的资金，而剩余资金将由另一方收回。这将具有更高的链上空间效率，而且更难对其执行特性类型的[通道阻塞攻击][topic channel jamming attacks]。
 
 </div>
-## April
+
+## 四月
 
 {:#watchaccount}
-Sergi Delgado Segura [proposed][apr watchtower] an accountability
-mechanism for [watchtowers][topic watchtowers] for cases where they fail to respond to
-protocol breaches that they were capable of detecting. For example,
-Alice provides a watchtower with data for detecting and responding to
-the confirmation of an old LN channel state; later, that state is
-confirmed but the watchtower fails to respond. Alice would like to be
-able to hold the watchtower operator accountable by publicly proving it
-failed to respond appropriately.  Delgado suggests a mechanism based on
-cryptographic accumulators that watchtowers can use for creating
-commitments, which users can later use to produce accountability proofs
-if a breach occurs.
+Sergi Delgado Segura [提议了][apr watchtower]一种问责机制，以应对[瞭望塔][topic watchtowers]未能对其应该检测到的协议违规行为做出回应的情况。例如，Alice 为瞭望塔提供了用于检测和响应旧 LN 通道状态确认的数据；后来，该状态得到了确认，但瞭望塔未能作出反应。Alice 希望能够通过公开证明瞭望塔未能适当回应来追究瞭望塔运营商的责任。Delgado 建议使用一种基于密码学累加器的机制，瞭望塔可以用其来创建承诺，如果发生违规，用户随后可以用它来产生问责证明。
 
 {:#route-blinding}
-[Route blinding][topic rv routing], first described three years earlier,
-was [added][apr blinding] to the LN specification in April.  It allows a
-receiver to provide a spender with the identifier of a particular
-forwarding node and an onion-encrypted path from that node to the
-receiver's own node.  The spender forwards a payment and the encrypted
-path information to the selected forwarding node; the forwarding node
-decrypts information for the next hop; that next hop decrypts the hop
-after it; and so on, until the payment arrives at the receiver's node
-with neither the spender nor any of the forwarding nodes ever learning
-(for sure) which node belonged to the receiver.  It significantly
-improves the privacy of receiving money using LN.
+[路径盲化][topic rv routing]在三年前被首次提出，在今年四月被[添加到][apr blinding] LN 规范当中。它允许收款方向付款方提供特定转发节点的标识符和从该节点到付款方自己节点的洋葱加密路径。付款方将支付和加密的路径信息转发到选定的转发节点；转发节点为下一跳解密信息；下一跳为其下一跳解密；依此类推，直到支付到达收款方节点，付款方和任何转发节点都永远不会（确定地）知道哪个节点属于收款方。它显著提高了使用 LN 收钱的隐私性。
 
 {:#musig2}
-[BIP327][] was [assigned][apr musig2] to the [MuSig2][topic musig]
-protocol for creating [scriptless multisignatures][topic multisignature]
-in April.  This protocol would be implemented in multiple programs and
-systems over the year, including LND's [signrpc][apr signrpc] RPC, <!-- sic -->
-Lightning Lab's [Loop][apr loop] service, BitGo's [multisignature
-service][apr bitgo], LND's experimental [simple taproot channels][apr
-taproot channels], and a [draft BIP][apr musig2 psbt] for extending
-[PSBTs][topic psbt].
+[BIP327][] 在四月份[被分配][apr musig2]给了用于创建[无脚本多重签名][topic multisignature]的 [MuSig2][topic musig] 协议。该协议将在一年内在多个程序和系统中实施，其中包括 LND 的 [signrpc][apr signrpc] RPC、<!-- sic --> 闪电实验室的 [Loop][apr loop] 服务、BitGo 的[多重签名服务][apr bitgo]、LND 的试验性[简单 taproot 通道][apr taproot channels]和一个[BIP 草案][apr musig2 psbt] 以用来扩展 [PSBTs][topic psbt]。
 
 {:#clientvalidation}
-Maxim Orlovsky [announced][apr rgb] the release of RGB v0.10 in April, a
-new version of this protocol for allowing the creation and transfer of
-tokens (among other things) using contracts that are defined and
-[validated][topic client-side validation] offchain.
-Changes to the contract state (e.g. transfers) are associated with
-onchain transactions in a way that uses no additional block space over a
-typical transaction and which can keep all information about the
-contract state (including its existence) completely private from third
-parties.  Later in the year, the Taproot Assets protocol, which is
-partly derived from RGB, released [specifications][sept tapassets]
-intended to become BIPs.
+Maxim Orlovsky 在四月[宣布了][apr rgb] RGB v0.10 版本，这是 RGB 协议的一个新版本，允许使用链外定义和[客户端验证][topic client-side validation]的合约创建和转移代币（以及其他一些东西）。与典型交易相比，合约状态的改变（例如转账）与链上交易相关联，这种方式不需要额外的区块空间，且能够完全保护合约状态（包括合约的存在）的所有信息对第三方完全保密。今年晚些时候，Taproot Assets 协议（部分源自 RGB）发布了旨在成为 BIP 的[规范][sept tapassets]。
 
 {:#splicing}
-April also saw significant [discussion][apr splicing] about the
-proposed protocol for [splicing][topic splicing], which allows nodes to
-continue using a channel while funds are added to it or removed from it.
-This is especially useful for keeping funds in a channel while still
-allowing instant onchain payments to be made from that balance, allowing
-a wallet user interface to show users a single balance from which they
-can make either onchain or offchain payments.  By the end of the year,
-both Core Lightning and Eclair would support splicing.
+四月，针对已提议的[通道拼接][topic splicing]协议，出现了大量的[讨论][apr splicing]，该协议允许节点在向通道添加资金或从通道中取出资金的同时继续使用该通道。这对于在允许即时链上支付的同时保持通道中的资金尤其有用，以允许钱包用户界面向用户显示可用于链上或链下支付的统一余额。到今年年底，Core Lightning 和 Eclair 都将支持通道拼接。
 
 ![Splicing](/img/posts/2023-04-splicing1.dot.png)
 
-## May
+## 五月
 
 {:#lspspec}
-A set of draft specifications for Lightning Service Providers (LSPs) was
-[released][may lsp] in May.  Standards make it easy for a client to
-connect to multiple LSPs, which will prevent vendor lock-in and improve
-privacy.  The first specification released describes an API for allowing
-a client to purchase a channel from an LSP, achieving a functionality
-similar to [liquidity advertisements][topic liquidity advertisements].
-The second describes an API for setting up and managing [just-in-time
-(JIT) channels][topic jit channels].
+五月[发布了][may lsp]一套针对闪电网络服务商（LSP）的规范草案。这些标准使客户端可以轻松连接多个 LSP，这将防止供应商锁定并改善隐私性。首个发布的规范描述了一个 API，以允许客户端从 LSP 购买一个通道，实现了类似于[流动性广告（liquidity ads）][topic liquidity advertisements]的功能。第二个规范描述了一个用于建立和管理[即时(JIT)通道][topic jit channels]的API。
 
 {:#payjoin}
-Dan Gould spent a significant part of the year working on enhancements
-to the [payjoin][topic payjoin] protocol, a privacy-enhancing technique
-that makes it much more difficult for a third party to reliably
-associate inputs and outputs in a transaction with either the spender or
-receiver.  In February, he [proposed][feb payjoin] a serverless payjoin
-protocol that can be used even if the receiver doesn't operate an
-always-on HTTPS server on a public network interface.  In May, he
-[discussed][may payjoin] several advanced applications using payjoin,
-including variations of payment cut-through; for example, rather than
-Alice paying Bob, Alice instead pays Bob’s vendor (Carol), reducing a
-debt he owes her (or pre-paying for an expected future bill)---this
-saves block space and further improves privacy over standard payjoin.
-In August, he posted a [draft BIP][aug payjoin] for serverless payjoin
-which doesn't require the spender and receiver to be online at
-the same time (although each of them will need to come online at least
-once after the transaction is initiated before it can be broadcast).
-Throughout the year, he was a top contributor to the [payjoin
-development kit][jul pdk] (PDK) as well as the [payjoin-cli][dec
-payjoin] project that provides an add-on for creating payjoins with
-Bitcoin Core.
+Dan Gould 在今年的大部分时间致力于增强 [payjoin][topic payjoin] 协议，这是一种提高隐私的技术，使第三方很难可靠地将交易中的输入和输出与发送方或接收方相关联。在二月，他[提议了][feb payjoin]一个无服务器版 payjoin 协议，即使接收方不在公共网络接口上运行始终在线的 HTTPS 服务器，也可以使用。在五月，他[讨论了][may payjoin]使用 payjoin 的几种高级应用，包括支付合并（payment cut-through）的变体；例如，Alice 不是向 Bob 付款，而是向 Bob 的供应商 （Carol） 付款，从而减少他欠她的债务（或预付将来的预期账单）——这节省了区块空间，并进一步改善了标准的 payjoin 的隐私。在八月，他发布了一个无服务器版 [BIP 草案][aug payjoin]，即不要求发送方和接收方同时在线（尽管他们每个人在交易发起后至少需要上线一次才能广播交易）。一整年里，他是 [payjoin 开发工具包][jul pdk] (PDK)以及为 Bitcoin Core 创建 payjoin 提供插件的 [payjoin-cli][dec payjoin] 项目的头号贡献者。
 
 {:#ark}
-Burak Keceli [proposed][may ark] a new [joinpool][topic joinpools]-style protocol called
-Ark, where Bitcoin owners can opt-in to use a counterparty as a
-co-signer on all transactions within a certain time period. Owners can
-either withdraw their bitcoins onchain after the expiry of the timelock
-or instantly and trustlessly transfer them offchain to the counterparty
-before the timelock expires. The protocol provides a trustless
-single-hop, single-direction atomic transfer protocol from the owner to
-the counterparty for various uses such as mixing coins, making internal
-transfers, and paying LN invoices.  Concerns were raised about the high
-onchain footprint and the need for the operator to keep a large amount
-of funds in a hot wallet compared to LN.  However, several
-developers remained enthusiastic about the proposed protocol and its
-potential to provide a simple and trustless experience for its users.
+Burak Keceli [提出了][may ark]一种新的 [joinpool][topic joinpools] 式协议，名为 Ark。基于此协议，比特币所有者可以选择在特定时间段内使用对手方作为所有交易的共同签名人。所有者可以在时间锁过期后在链上取回比特币，或者在时间锁过期前即时且免信任地将比特币在链下转移给对手方。该协议为所有者向交易对手方提供了免信任的单跳、单向原子转账协议，可用于混币、进行内部转账和支付 LN 发票等用途。与 LN 相比，链上足迹较大且运营商需要在热钱包中持有大量资金引起了些许担忧。然而，几位开发人员对该提议协议及其为用户提供简单且免信任的体验的潜力仍然保持热情。
 
-## June
+## 六月
 
 {:#silentpayments}
-Josie Baker and Ruben Somsen [posted][jun sp] a draft BIP for [silent
-payments][topic silent payments], a type of reusable payment code that
-will produce a unique onchain address each time it is used, preventing
-[output linking][topic output linking].  Output linking can
-significantly reduce the privacy of users (including users not directly
-involved in a transaction). The draft goes into detail about the
-benefits of the proposal, its tradeoffs, and how software can
-effectively use it.  Ongoing work implementing silent payments for
-Bitcoin Core was also [discussed][aug sp] during a Bitcoin Core PR
-Review Club meeting.
+Josie Baker 和 Ruben Somsen [发布了][jun sp]一份用于[静默支付][topic silent payments]的 BIP 草案，这是一种可复用的支付代码，每次使用时都会产生一个唯一的链上地址，从而防止[输出关联（地址复用）][topic output linking]。输出关联可以显著降低用户（包括未直接参与交易的用户）的隐私。该草案详细介绍了该提案的好处、它的权衡以及软件如何有效地使用它。此外，在 Bitcoin Core PR 审核俱乐部会议期间还[讨论了][aug sp]正在进行的为 Bitcoin Core 实施静默支付的工作。
 
 <div markdown="1" class="callout" id="security">
-### 2023 summary<br>Security disclosures
+### 2023 总结<br>安全披露
 
-Optech reported on three significant security vulnerabilities this year:
+Optech 今年报告了三个重大安全漏洞：
 
-- [Milk Sad vulnerability in Libbitcoin `bx`][aug milksad]: a widely
-  undocumented lack of entropy in a command suggested for creating
-  wallets ultimately led to the theft of a significant number of
-  bitcoins across multiple wallets.
+- [Libbitcoin `bx` 中的 Milk Sad 漏洞][aug milksad]：用于创建钱包的命令中存在广泛未记录的熵缺失，最终导致多个钱包中的大量比特币被盗。
 
-- [Fake funding denial-of-service against LN nodes][aug fundingdos]: a
-  denial-of-service attack was privately discovered and [responsibly
-  disclosed][topic responsible disclosures] reported by Matt Morehouse.
-  All affected nodes were able to update and, as of this writing, we are
-  unaware of the vulnerability being exploited.
+- [LN 节点的虚假注资拒绝服务攻击][aug fundingdos]：Matt Morehouse 私下发现并[负责任地披露了][topic responsible disclosures]一种拒绝服务攻击。所有受影响的节点都能够更新，在撰写本文时，我们尚未发现该漏洞被利用。
 
-- [Replacement cycling against HTLCs][oct cycling]: a fund-stealing
-  attack against [HTLCs][topic htlc] used in LN and possibly other
-  protocols was privately discovered and responsibly disclosed by
-  Antoine Riard.  All LN implementations tracked by Optech deployed
-  mitigations, although the effectiveness of those mitigations was a
-  subject of discussion and other mitigations have been proposed.
+- [对 HTLC 的替代交易循环攻击][oct cycling]：Antoine Riard 私下发现并负责任地披露了一种针对使用 [HTLC][topic htlc] 技术的 LN 和其他潜在协议的窃取资金的攻击。Optech 跟踪的所有 LN 实现都部署了缓解措施，尽管这些缓解措施的有效性还在讨论之中，同时已经提出了其他缓解措施。
 
 </div>
 
-## July
+## 七月
 
 {:#vls}
-The Validating Lightning Signer (VLS) project [released][jul vls] their
-first beta version in July.  The project allows the separation of an LN
-node from the keys that control its funds. An LN node running with VLS
-will route signing requests to a remote signing device instead of local
-keys. The beta release supports CLN and LDK, layer-1 and layer-2
-validation rules, backup and recovery capabilities, and provides a
-reference implementation.
+验证闪电签名者（VLS）项目于七月[发布了][jul vls]他们的第一个 beta 版本。该项目允许将 LN 节点与控制其资金的密钥分离。使用 VLS 运行的 LN 节点将签名请求路由到远程签名设备，而不是本地密钥。Beta 版支持 CLN 和 LDK、layer-1 和 layer-2 验证规则、备份和恢复功能，并提供了参考实现。
 
 {:#ln-meeting}
-An LN developer [meeting][jul summit] held in July discussed a variety
-of topics, including reliable transaction confirmation at the base
-layer, [taproot][topic taproot] and [MuSig2][topic musig] channels,
-updated channel announcements, [PTLCs][topic ptlc] and [redundant
-overpayment][topic redundant overpayments], [channel jamming mitigation
-proposals][topic channel jamming attacks], simplified commitments, and
-the specification process.  Other LN discussions around the same time
-included a [clean up][jul cleanup] of the LN specification to remove unused legacy
-features and a [simplified protocol][jul lnclose] for closing channels.
+七月举行的 LN 开发者[峰会][jul summit]讨论了各种话题，包括可靠的主链交易确认数量、[taproot][topic taproot] 和 [MuSig2][topic musig] 通道、
+更新的通道公告、[PTLC][topic ptlc] 和[冗余超额支付][topic redundant overpayments]、[缓解通道阻塞攻击提议][topic channel jamming attacks]、简化承诺和规范流程。同时期关于 LN 的其他讨论包括[整理][jul cleanup]LN 规范以删除未使用的传统功能和[简化的闪电通道关闭协议][jul lnclose]。
 
-## August
+## 八月
 
 {:#onion-messages}
-[Support][aug onion] for [onion messages][topic onion messages] was
-added to the LN specification in August.  Onion messages allow sending
-one-way messages across the network. Like payments ([HTLCs][topic
-htlc]), the messages use onion encryption so that each forwarding node
-only knows what peer it received the message from and what peer should
-next receive the message. Message payloads are also encrypted so that
-only the ultimate receiver can read it.  Onion messages use [blinded
-paths][topic rv routing], which were added to the LN specification in
-April, and onion messages are themselves used by the proposed [offers
-protocol][topic offers].
+八月，LN 规范中添加并[支持了][aug onion][洋葱消息][topic onion messages]。洋葱消息允许通过网络发送单向消息。与支付（[HTLC][topic htlc]）一样，消息使用洋葱加密，这样每个转发节点只知道它从哪个对等节点接收消息和哪个对等节点应该下一个接收消息。消息净荷也是加密的，所以只有最终接收者可以读取它。洋葱消息使用了四月添加到 LN 规范中的[盲化路径][topic rv routing]，洋葱消息本身也在拟议的[要约（offers）协议][topic offers]中使用。
 
 {:#backup-proofs}
-Thomas Voegtlin [proposed][aug fraud] a protocol that would allow
-penalizing providers for offering outdated backup states to users. This
-service involves a simple mechanism where a user, Alice, backs up data
-with a version number and signature to Bob. Bob adds a nonce and commits
-to the complete data with a time-stamped signature. If Bob provides
-outdated data, Alice can generate a fraud proof showing Bob previously
-signed a higher version number.  This mechanism isn't Bitcoin-specific,
-but incorporating certain Bitcoin opcodes could enable its use onchain.
-In a Lightning Network (LN) channel, that would allow Alice to claim all
-channel funds if Bob provided an outdated backup, thus reducing the risk
-of Bob deceiving Alice and stealing her balance.  The proposal sparked
-significant discussion.  Peter Todd pointed out its versatility beyond
-LN and suggested a simpler mechanism without fraud proofs, while Ghost43
-highlighted the importance of such proofs when dealing with anonymous
-peers.
+Thomas Voegtlin [提出了][aug fraud]一项协议，该协议允许对提供给用户过期备份状态的服务商进行惩罚。该服务涉及一个简单的机制，即用户 Alice 使用版本号和签名将备份的数据给 Bob。Bob 添加一个随机数，并使用带时间戳的签名对完整的数据承诺。如果 Bob 提供过时数据，Alice 可以生成一个欺诈证明，显示 Bob 曾经签署过一个更高版本号。这个机制并不是比特币专用的，但是结合特定的比特币操作码可以使其在链上使用。在闪电网络（LN）通道中，如果 Bob 提供了一个过期的备份，Alice 可以要求索取所有通道资金，从而降低了 Bob 欺骗 Alice 并窃取她余额的风险。该提议引发了重要的讨论。Peter Todd 指出了其超越了 LN 的通用性，并提出一个更简单的没有欺诈证明的机制，而 Ghost43 强调了在与匿名对等节点打交道时这些证明的重要性。
 
 {:#tapchan}
-LND added [experimental support][aug lnd taproot] for "simple taproot
-channels", allowing LN funding and commitment transactions to use
-[P2TR][topic taproot] with support for [MuSig2][topic musig]-style
-[scriptless multisignature signing][topic multisignature] when both
-parties are cooperating.  This reduces transaction weight and
-improves privacy when channels are closed cooperatively. LND continues
-to exclusively use [HTLCs][topic htlc], allowing payments starting in a
-taproot channel to continue to be forwarded through other LN nodes that
-don’t support taproot channels.
+LND 添加了对“简单 taproot 通道”的[实验性支持][aug lnd taproot]，允许 LN 的注资和承诺交易使用[P2TR][topic taproot]，并在双方合作时支持 [MuSig2][topic musig] 风格的[无脚本多重签名][topic multisignature]。这在通道合作关闭时减少了交易重量并提高了隐私。LND 继续专门使用 [HTLC][topic htlc]，允许在 taproot 通道中开始的支付可以继续通过其他不支持 taproot 通道的 LN 节点进行转发。
 
-## September
+## 九月
 
 {:#compressed-txes}
-In September, Tom Briar [published][sept compress] a draft specification
-and implementation of compressed Bitcoin transactions. The proposal
-addresses the challenge of compressing uniformly distributed data in
-Bitcoin transactions by replacing integer representations with
-variable-length integers, using block height and location to reference
-transactions instead of their outpoint txid, and omitting public keys
-from P2WPKH transactions. While the compressed format saves space,
-converting it back into a usable format requires more CPU, memory, and
-I/O than processing regular serialized transactions, which is an
-acceptable tradeoff in situations such as broadcast by satellite or
-steganographic transfer.
+今年九月，Tom Briar [发布了][sept compress]一份压缩比特币交易的规范和实现草案。该提案解决了压缩比特币交易中均匀分布数据的难题，用变长整数来表示整数，使用区块高度和位置来引用交易而不是其输出点 txid，并省略了 P2WPKH 交易中的公钥。虽然压缩格式节省了空间，但与处理常规序列化的交易相比，将其转换回可用格式需要更多的 CPU、内存和 I/O，在卫星广播或隐秘传输等情况下，这是可以接受的权衡。
 
 <div markdown="1" class="callout" id="releases">
-### 2023 summary<br>Major releases of popular infrastructure projects
+### 2023 总结<br>流行基础设施项目的主要发布
 
-- [Eclair 0.8.0][jan eclair] added support for [zero-conf
-  channels][topic zero-conf channels] and Short Channel IDentifier
-  (SCID) aliases.
+- [Eclair 0.8.0][jan eclair] 新增了对[零配置通道][topic zero-conf channels]和短通道标识符 (SCID) 别名的支持。
 
-- [HWI 2.2.0][jan hwi] added support for [P2TR][topic taproot] keypath
-  spends using the BitBox02 hardware signing device.
+- [HWI 2.2.0][jan hwi] 增加了对使用 BitBox02 硬件签名设备的 [P2TR][topic taproot] keypath 花费的支持。
 
-- [Core Lightning 23.02][mar cln] added experimental support for peer
-  storage of backup data and updated experimental support for [dual
-  funding][topic dual funding] and [offers][topic offers].
+- [Core Lightning 23.02][mar cln] 增加了对等节点备份数据存储的实验性支持，并更新了对[双向注资][topic dual funding]和[要约][topic offers]的实验性支持。
 
-- [Rust Bitcoin 0.30.0][mar rb] provided a large number of API changes,
-  along with the announcement of a new website.
+- [Rust Bitcoin 0.30.0][mar rb] 提供了大量 API 变动，同时宣布了一个新网站。
 
-- [LND v0.16.0-beta][apr lnd] provided a new major version of this
-  popular LN implementation.
+- [LND v0.16.0-beta][apr lnd] 为这个流行的闪电网络实现提供了一个新的主要版本。
 
-- [Libsecp256k1 0.3.1][apr secp] fixed an issue related to code that
-  should have run in constant time but did not when compiled with Clang
-  version 14 or higher.
+- [Libsecp256k1 0.3.1][apr secp] 修正了一个与代码有关的问题。这些代码本应在恒定时间内运行，但在使用 Clang 14 或更高版本编译时却无法运行。
 
-- [LDK 0.0.115][apr ldk] included more support for the experimental
-  [offers protocol][topic offers] and improved security and privacy.
+- [LDK 0.0.115][apr ldk] 包含对实验性[要约][topic offers]协议的更多支持，并改进了安全性和隐私性。
 
-- [Core Lightning 23.05][may cln] included support for [blinded
-  payments][topic rv routing], version 2 [PSBTs][topic psbt], and more
-  flexible feerate management.
+- [Core Lightning 23.05][may cln] 支持[盲化支付][topic rv routing]、第 2 版 [PSBT][topic psbt] 和更灵活的 feerate 管理。
 
-- [Bitcoin Core 25.0][may bcc] added a new `scanblocks` RPC, simplified
-  the use of `bitcoin-cli`, added [miniscript][topic miniscript] support
-  to the `finalizepsbt` RPC, reduced default memory use with the
-  `blocksonly` configuration option, and sped up wallet rescans when
-  [compact block filters][topic compact block filters] are enabled.
+- [Bitcoin Core 25.0][may bcc] 添加了新的 `scanblocks` RPC，简化了 `bitcoin-cli` 的使用，为 `finalizepsbt` RPC 添加了 [miniscript][topic miniscript] 支持，使用 `blocksonly` 配置选项减少了默认内存的使用，并在启用[致密区块过滤器][topic compact block filters]时加快了钱包重新扫描的速度。
 
-- [Eclair v0.9.0][jun eclair] was a release that "contains a lot of
-  preparatory work for important (and complex) lightning features:
-  [dual-funding][topic dual funding], [splicing][topic splicing], and
-  BOLT12 [offers][topic offers]."
+- [Eclair v0.9.0][jun eclair] 是一个“包含大量重要（且复杂）闪电功能准备工作的版本：[双向注资][topic dual funding]、[通道拼接][topic splicing]和 BOLT12 [要约][topic offers]”。
 
-- [HWI 2.3.0][jul hwi] added support for DIY Jade devices and a binary
-  for running the main hwi program on Apple Silicon hardware with MacOS
-  12.0+.
+- [HWI 2.3.0][jul hwi] 增加了对 DIY Jade 设备的支持，以及在 MacOS 12.0+ 的 Apple Silicon 硬件上运行 hwi 主程序的二进制文件。
 
-- [LDK 0.0.116][jul ldk] included support for [anchor outputs][topic
-  anchor outputs] and [multipath payments][topic multipath payments]
-  with [keysend][topic spontaneous payments].
+- [LDK 0.0.116][jul ldk] 支持[锚点输出][topic anchor outputs]和 [keysend][topic spontaneous payments] [多路径支付][topic multipath payments]。
 
-- [BTCPay Server 1.11.x][aug btcpay] included improvements to invoice
-  reporting, additional upgrades to the checkout process, and new
-  features for the point-of-sale terminal.
+- [BTCPay Server 1.11.x][aug btcpay] 包括对发票报告的改进、结账流程的额外升级以及售货点终端的新功能。
 
-- [BDK 0.28.1][aug bdk] added a template for using [BIP86][] derivation
-  paths for [P2TR][topic taproot] in [descriptors][topic descriptors].
+- [BDK 0.28.1][aug bdk] 添加了一个模板，用于在[描述符][topic descriptors]中为 [P2TR][topic taproot] 使用 [BIP86][] 派生路径。
 
-- [Core Lightning 23.08][aug cln] included the ability to change several node
-  configuration settings without restarting the node, support for
-  [codex32][topic codex32]-formatted seed backup and restore, a new
-  experimental plugin for improved payment pathfinding, experimental
-  support for [splicing][topic splicing], and the ability to pay
-  locally-generated invoices.
+- [Core Lightning 23.08][aug cln] 包括无需重启节点即可更改多个节点配置设置的功能、对 [codex32][topic codex32] 格式种子备份和还原的支持、用于改进支付路径查找的新实验插件、对[通道拼接][topic splicing]的实验支持以及支付本地生成发票的功能。
 
-- [Libsecp256k1 0.4.0][sep secp] added a module with an implementation
-  of ElligatorSwift encoding, which would later be used for the [v2 P2P
-  transport protocol][topic v2 p2p transport].
+- [Libsecp256k1 0.4.0][sep secp] 添加了一个实现 ElligatorSwift 编码的模块。该编码以后将用于[第 2 版 P2P 传输协议][topic v2 p2p transport]。
 
-- [LND v0.17.0-beta][oct lnd] included experimental support for “simple
-  taproot channels”, which allows using [unannounced channels][topic
-  unannounced channels] funded onchain using a [P2TR][topic taproot]
-  output. This is the first step towards adding other features to LND’s
-  channels, such as support for Taproot Assets and [PTLCs][topic ptlc].
-  The release also includes a significant performance improvement for
-  users of the Neutrino backend, which uses [compact block
-  filters][topic compact block filters], as well as improvements to
-  LND’s built-in [watchtower][topic watchtowers] functionality.
+- [LND v0.17.0-beta][oct lnd] 包含对“简单 taproot 通道”的实验性支持，允许使用基于 [P2TR][topic taproot] 输出在链上注资的[未公告通道][topic unannounced channels]。这是为 LND 通道添加其他功能（如支持 Taproot Assets 和 [PTLC][topic ptlc]）的第一步。该版本还包括对使用[致密区块过滤器][topic compact block filters]的 Neutrino 后端用户性能的大幅提升，以及对 LND 内置的[瞭望塔][topic watchtowers]功能的改进。
 
-- [LDK 0.0.117][oct ldk] included security bug fixes related to the
-  [anchor outputs][topic anchor outputs] features included in the
-  immediately prior release. The release also improved pathfinding,
-  improved [watchtower][topic watchtowers] support, and enabled
-  [batch][topic payment batching] funding of new channels.
+- [LDK 0.0.117][oct ldk] 包含与前一版本中的[锚点输出][topic anchor outputs]功能相关的安全漏洞修复。该版本还改进了寻路功能，改进了[瞭望塔][topic watchtowers]支持，并启用了新通道的[批量][topic payment batching]注资功能。
 
-- [LDK 0.0.118][nov ldk] included partial experimental support for the
-  [offers protocol][topic offers].
+- [LDK 0.0.118][nov ldk] 包含对[要约协议][topic offers]的部分实验性支持。
 
-- [Core Lightning 23.11][nov cln] provided additional flexibility to the
-  _rune_ authentication mechanism, improved backup verification, and new
-  features for plugins.
+- [Core Lightning 23.11][nov cln] 为 _符文_ （rune）鉴定机制提供了更多灵活性，改进了备份验证，并为插件提供了新功能。
 
-- [Bitcoin Core 26.0][dec bcc] included experimental support for the
-  [version 2 transport protocol][topic v2 p2p transport], support for
-  [taproot][topic taproot] in [miniscript][topic miniscript], new RPCs
-  for working with states for [assumeUTXO][topic assumeutxo], and an
-  experimental RPC for submitting [packages of transactions][topic
-  package relay] to the local node's mempool.
+- [Bitcoin Core 26.0][dec bcc] 包含对[第 2 版传输协议][topic v2 p2p transport]的实验性支持、对 [miniscript][topic miniscript] 中 [taproot][topic taproot] 的支持、用于 [assumeUTXO][topic assumeutxo] 处理状态的新 RPC，以及用于向本地节点的 mempool 提交[交易包][topic package relay]的实验性 RPC。
 
 </div>
 
-## October
+## 十月
 
 {:#pss}
-Gijs van Dam posted [research results and code][oct pss] about _payment
-splitting and switching_ (PSS). His code allows nodes to split incoming
-payments into [multiple parts][topic multipath payments], which can take
-different routes before reaching the final recipient. For instance, a
-payment from Alice to Bob could be partly routed through Carol. This
-technique significantly hinders balance discovery attacks, where
-attackers probe channel balances to track payments across the network.
-Van Dam's research showed a 62% decrease in information gained by
-attackers using PSS.  Additionally, PSS offers increased Lightning
-Network throughput and may help mitigate [channel jamming attacks][topic
-channel jamming attacks].
+Gijs van Dam 发布了有关 _支付拆分与切换_ （PSS）的[研究成果和代码][oct pss]。他的代码允许节点将正在接收的付款分成[多个部分][topic multipath payments]，这些部分在到达最终收款人之前可以通过不同的路径。
+例如，Alice 支付给 Bob 款项的一部分可以通过 Carol 来路由。这种技术可以显著抑制余额发现攻击，即攻击者通过探测通道余额来追踪整个网络的支付情况。Van Dam 的研究表明，使用 PSS，攻击者获得的信息减少了 62%。此外，PSS 要约提高了闪电网络的吞吐量，并有助于减轻[通道阻塞攻击][topic channel jamming attacks]。
 
 {:#sidepools}
-Developer ZmnSCPxj [proposed][oct sidepool] a concept called _sidepools_
-that aims to enhance LN's liquidity management. Sidepools involve
-multiple forwarding nodes depositing funds into a multiparty offchain
-state contract similar to LN channels. This allows funds to be
-redistributed among participants offchain. For instance, if Alice, Bob,
-and Carol each start with 1 BTC, the state can be updated so that Alice
-has 2 BTC, Bob 0 BTC, and Carol 1 BTC.  Participants would still use and
-advertise regular LN channels, and if those channels became imbalanced,
-a rebalancing can be done through an offchain peerswap within the state
-contract. This method is private to participants, requires less onchain
-space, and likely eliminates offchain rebalancing fees, thus improving
-revenue potential for forwarding nodes and reliability for LN payments.
-However, it requires a multiparty state contract, which is untested in
-production.  ZmnSCPxj suggests building on [LN-Symmetry][topic eltoo]
-or duplex payment channels, both of which have advantages and
-disadvantages.
+开发者 ZmnSCPxj [提出了][oct sidepool]一个名为 _sidepools_ 的概念，旨在加强闪电网络的流动性管理。Sidepools 涉及多个转发节点将资金存入类似于闪电网络通道的多方链外状态合约。这样，资金就可以在参与者之间进行链外再分配。例如，如果 Alice、Bob 和 Carol 开始时各有 1 BTC，则可以更新状态，使 Alice 拥有 2 BTC，Bob 拥有 0 BTC，Carol 拥有 1 BTC。参与者仍将使用和广告常规的闪电网络通道，如果这些通道失衡，则可以通过状态合约内的链外点对点互换进行重新平衡。这种方法对参与者来说是私密的，需要的链上空间更少，而且很可能省去链外再平衡费用，从而提高转发节点的收入潜力和闪电网络支付的可靠性。不过，它需要多方状态合约，而这在生产中尚未经过测试。ZmnSCPxj 建议可以建在[对称闪电网络（LN-Symmetry）][topic eltoo]或双工支付通道上，这两者各有利弊。
 
 {:#assumeutxo}
-October saw the [completion][oct assumeutxo] of the first phase of the
-[assumeUTXO project][topic assumeutxo], containing all the remaining
-changes necessary to both use an assumedvalid snapshot chainstate and do
-a full validation sync in the background. It makes UTXO snapshots
-loadable via an RPC.  Although the feature set is not yet directly
-usable by inexperienced users, this merge marked the culmination of a
-multi-year effort. The project, proposed in 2018 and formalized in 2019,
-will significantly improve the user experience of new full nodes first
-coming onto the network.
+[assumeUTXO 项目][topic assumeutxo]的第一阶段已于十月份[完成][oct assumeutxo]，其中包含使用假定有效的链状态快照和在后台进行一次完整验证同步所需的所有剩余更改。它使 UTXO 快照可以通过 RPC 加载。虽然经验少的用户还无法直接使用该功能集，但此次合并标志着多年努力的最终成果。该项目于 2018 年提出，2019 年正式确定，将显著改善新的全节点首次进入网络时的用户体验。
 
 {:#p2pv2}
-Also [accomplished][oct p2pv2] by the Bitcoin Core project in October was the
-addition of support for [version 2 encrypted P2P transport][topic v2 p2p
-transport] as specified in [BIP324][]. The feature is currently disabled
-by default but can be enabled using the `-v2transport` option.
-Encrypted transport helps improve the privacy of Bitcoin users by
-preventing passive observers (such as ISPs) from directly determining
-which transactions nodes relay to their peers. It’s also possible to use
-encrypted transport to detect active man-in-the-middle observers by
-comparing session identifiers. In the future, the addition of [other
-features][topic countersign] may make it convenient for a lightweight
-client to securely connect to a trusted node over a P2P encrypted
-connection.
+Bitcoin Core 项目在十月份还[完成了][oct p2pv2]对 [BIP324][] 中规定的[第 2 版加密 P2P 传输][topic v2 p2p transport]的支持。该功能目前默认为禁用，但可以使用 `-v2transport` 选项启用。加密传输可以防止被动观察者（如互联网服务提供商）直接确定节点向其对等节点转发了哪些交易，从而有助于提高比特币用户的隐私保护。还可以使用加密传输通过比较会话标识符来检测主动的中间观察者。未来，增加[其他功能][topic countersign]可能会使轻量级客户端更方便地通过 P2P 加密连接安全地连接到受信任节点。
 
 {:#miniscript}
-Miniscript descriptor support saw several additional improvements in
-Bitcoin Core throughout the year.  February saw the
-[ability][feb miniscript] to create miniscript descriptors for P2WSH
-output scripts.  October saw miniscript support [updated][oct
-miniscript] to support taproot, including miniscript descriptors for
-tapscript.
+在这一年中，Bitcoin Core 对 Miniscript 描述符的支持又有了一些改进。二月，为 P2WSH 输出脚本创建 miniscript 描述符的[能力][feb miniscript]得以实现。十月，对 miniscript 的支持进行了[更新][oct miniscript]以支持 taproot ，包括 tapscript 的 miniscript 描述符。
 
 {:#statebitvm}
-A method for state compression in Bitcoin using zero-knowledge validity
-proofs was [described][may state] by Robin Linus and Lukas George in
-May.  This massively reduces the amount of state that a client needs to
-download in order to trustlessly verify future operations in a system,
-for example starting a new full node with only a relatively small
-validity proof rather than validating every already confirmed
-transaction on the block chain.  In October, Robin Linus
-[introduced][oct bitvm] BitVM, a method enabling bitcoins to be paid
-contingent on the successful execution of an arbitrary program, without
-requiring a consensus change in Bitcoin.  BitVM requires substantial
-offchain data exchange but needs only a single onchain transaction for
-agreement, or a small number of onchain transactions if there's a
-dispute. BitVM makes complex trustless contracts possible even in
-adversarial scenarios, which has caught the attention of several
-developers.
+Robin Linus 和 Lukas George 在今年五月[描述][may state]了一种在比特币中使用零知识有效性证明进行状态压缩的方法。这极大地减少了客户端为无需信任地验证系统中未来的操作而需要下载的状态量，例如，只需相对较少的有效性证明即可启动一个新的全节点，而无需验证区块链上每一笔已确认交易。今年十月，Robin Linus [介绍了][oct bitvm] BitVM，这是一种能够以任意程序的成功执行为条件支付比特币的方法，而不需要改变比特币的共识。BitVM 需要大量的链外数据交换，但只需要单个链上交易来达成一致。如果有争议，也只需要少量的链上交易。BitVM 使复杂的无需信任的合约成为可能，即使在有敌手的场景下也是如此。这引起了一些开发者的关注。
 
-## November
+## 十一月
 
 {:#offers}
-With the final specification of [blinded paths][topic rv routing] and
-[onion messages][topic onion messages], and their implementation in
-multiple popular LN nodes, a significant amount of progress was made
-through this year in the development of the [offers protocol][topic offers]
-that depends on them.  Offers allow a receiver's wallet to generate a
-short _offer_ that can be shared with a spender's wallet.  The spender's
-wallet can use the offer to contact the receiver's wallet over the LN
-protocol to request a specific invoice, which it can then pay in the
-usual way.  This allows the creation of reusable offers that can each
-produce a different invoice, invoices that can be updated with current
-information (e.g. the exchange rate) just seconds before they're paid,
-and offers that can be paid by the same wallet more than once (e.g. a
-subscription), among other features.  Existing experimental
-implementations of offers in [Core Lightning][feb cln offers] and
-[Eclair][feb eclair offers] were updated during the year, and support
-for offers was added to [LDK][sept ldk offers].  Additionally, November
-saw a [discussion][nov offers] about creating an updated version of
-Lightning Addresses that is compatible with offers.
+随着[盲化路径][topic rv routing]和[洋葱信息][topic onion messages]的规范定稿及其在多个流行的闪电网络节点中的实施，依赖于它们的[要约协议][topic offers]在今年的开发取得了重大进展。要约允许接收者的钱包生成简短的 _要约_，并分享给花费者的钱包。花费者的钱包可以使用要约通过闪电网络协议来联系接收者的钱包，要求开具特定发票，然后再以常规方式支付。这样就可以创建可重复使用的要约，每个要约可以产生不同的发票，发票可以在支付前几秒更新当前信息（如汇率），要约可以由同一个钱包支付多次（如订阅）等等。在这一年中，[Core Lightning][feb cln offers] 和 [Eclair][feb eclair offers] 更新了现有的实验性要约实现，[LDK][sept ldk offers] 也增加了对要约的支持。此外，十一月还[讨论][nov offers]了创建一个兼容要约的更新版本的 Lightning Addresses 的问题。
 
 {:#liqad}
-November also saw an [update][nov liqad] to the specification for
-[liquidity advertisements][topic liquidity advertisements] that allow a
-node to announce that it's willing to contribute some of its funds to a
-new [dual-funded channel][topic dual funding] in exchange for a fee,
-allowing the requesting node to quickly begin receiving incoming LN
-payments.  The updates were mostly minor, although there was discussion
-that [continued][dec liqad] into December about whether channels created
-from a liquidity advertisement should contain a time lock.  A time lock
-could give an incentive-based assurance to the buyer that they would
-actually receive the liquidity they paid for, but the time lock could
-also be used by a malicious or inconsiderate buyer to lock up an excess
-amount of the provider's capital.
+十一月还有[流动性广告][topic liquidity advertisements]规范的[更新][nov liqad]，允许节点向新建立的[双向注资通道][topic dual funding]宣布提供部分资金以获得手续费的意愿，从而使请求的节点能够迅速开始接收闪电网络的付款。这些更新大部分都是次要的，但关于流动性广告创建的通道是否应包含时间锁的讨论一直[持续][dec liqad]到十二月。时间锁可以向买方提供激励性保证，即他们将实际收到所支付的流动性，但时间锁也可能被恶意或不考虑他人的买方用来对提供者锁定额外资本。
 
 <div markdown="1" class="callout" id="optech">
-### 2023 summary<br>Bitcoin Optech
+### 2023 总结<br>Bitcoin Optech
 
 {% comment %}<!-- commands to help me create this summary for next year
 
@@ -762,17 +325,9 @@ grep duration rss | sed 's!^.*>\([0-9].*\):..</.*$!\1!' | sed 's/:/ * 60 + /' | 
 }
 </style>
 
-In Optech's sixth year, we published 51 weekly [newsletters][],
-published a 10-part [series about mempool policy][policy series], and
-added 15 new pages to our [topics index][].  Altogether, Optech
-published over 86,000 English words about Bitcoin software research and
-development this year, the rough equivalent of a 250-page book.
+在 Optech 的第六年，我们出版了 51 期[周报][newsletters]，发表了一个关于交易池政策 10 篇的[系列][policy series]文章，并为我们的[主题索引][topics index]增加了 15 个新页面。今年，Optech 总共发表了超过 86,000 个英文单词的比特币软件研究和开发文章，大致相当于一本 250 页的书。
 
-In addition, every newsletter this year was accompanied by a [podcast][]
-episode, totaling over 50 hours in audio form and 450,000 words in
-transcript form.  Many of Bitcoin's top contributors were guests on the
-show---some of them on more than one episode---with a total of 62
-different unique guests in 2023:
+此外，今年的每期周报都配有一集[播客][podcast]，音频总时长超过 50 小时，文字稿超过 45 万字。比特币的许多顶级贡献者都是节目嘉宾。2023 年共有 62 位不同的特别来宾——其中有些人不止参加一集：
 
 - Abubakar Ismail
 - Adam Gibson
@@ -837,161 +392,135 @@ different unique guests in 2023:
 - Yuval Kogman
 - ZmnSCPxj
 
-Optech also published two contributed field reports from the business
-community: one from Brandon Black at BitGo about [implementing
-MuSig2][] for reducing fee costs and improving privacy, and a second
-report from Antoine Poinsot at Wizardsardine about [building software
-with miniscript][].
+Optech 还发表了两篇来自业界的田野调查报告：一篇来自 BitGo 公司的 Brandon Black，介绍了如何[实施 MuSig2][implementing MuSig2] 以降低费用成本和提高隐私保护；另一篇来自 Wizardsardine 公司的 Antoine Poinsot，介绍了如何使用 [miniscript 构建软件][building software with miniscript]。
 
 [implementing musig2]: /en/bitgo-musig2/
 [building software with miniscript]: /en/wizardsardine-miniscript/
 
 </div>
 
-## December
+## 十二月
 
 {:#clustermempool}
-Several Bitcoin Core developers [began][may cluster] working on a new
-[cluster mempool][topic cluster mempool] design to
-simplify mempool operations while maintaining the necessary transaction
-ordering, where parent transactions must be confirmed before their
-children.  Transactions are grouped into clusters, then split into
-feerate-sorted chunks, ensuring that high feerate chunks are confirmed
-first.  This allows the creation of block templates by simply choosing the
-highest feerate chunks in the mempool, and eviction of transactions by
-dropping the lowest feerate chunks.  This fixes some existing
-undesirable behavior (e.g., where miners might lose out on fee revenue
-due to suboptimal evictions) and may be able to improve other aspects of
-mempool management and transaction relay in the future.  Archives of
-their discussions were [published][dec cluster] in early December.
+几位 Bitcoin Core 开发者[开始][may cluster]研究一种新的[集群交易池][topic cluster mempool]的设计，以简化交易池操作，同时保持必要的交易排序，即父交易必须先于子交易确认。交易被分组到集群中，然后被分割成按费率排序的交易块，同时会确保高费率的交易块首先被确认。这样就可以通过简单地选择交易池中费率最高的交易块来创建块模板，并通过放弃费率最低的交易块来剔除交易。这解决了一些现有令人不满意的行为（例如，矿工可能会因为次优的剔除策略而损失手续费收入），并可能在未来改善交易池管理和交易中继的其他方面。他们讨论的归档内容已于十二月初[发布][dec cluster]。
 
 {:#warnet}
-December also saw the public [announcement][dec warnet announce] of a new
-tool for launching a large number of Bitcoin nodes with a defined set of
-connections between them (usually on a test network).  This can be used
-to test behavior that's difficult to replicate using small numbers of nodes
-or which would cause problems on public networks, such as known attacks
-and propagation of gossiped information.  One [public example][dec
-zipkin warnet] of using the tool was measuring the memory consumption of
-Bitcoin Core before and after a proposed change.
+十二月还有一个新工具[公布][dec warnet announce]，用于启动大量比特币节点。节点之间（通常在测试网络上）会有一组定义好的连接。这可以用来测试用少量节点难以复现的行为，或者在公共网络上测试会造成问题的行为，比如已知的攻击和 gossip 信息的传播。使用该工具的一个[公开示例][dec zipkin warnet]是测量 Bitcoin Core 在一项提议变更前后的内存消耗。
 
-*We thank all of the Bitcoin contributors named above, plus the many
-others whose work was just as important, for another incredible year of
-Bitcoin development.  The Optech newsletter will return to its regular
-Wednesday publication schedule on January 3rd.*
+*我们感谢所有上面提到的比特币贡献者及其他很多贡献者。他们的工作同样重要。感谢他们为比特币的发展又贡献了不可思议的一年。Optech 周报将于 1 月 3 日恢复正常的每周三发布安排。*
 
 {% assign day_after_posting = page.date | date: "%s" | plus: 86400 | date: "%Y-%m-%d 15:00" %}
 {% include snippets/recap-ad.md when=day_after_posting %}
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="" %}
 [apr bitgo]: /en/bitgo-musig2/
-[apr blinding]: /en/newsletters/2023/04/05/#bolts-765
-[apr htlcendo]: /en/newsletters/2023/05/17/#testing-htlc-endorsement
-[apr ldk]: /en/newsletters/2023/04/26/#ldk-0-0-115
-[apr lnd]: /en/newsletters/2023/04/05/#lnd-v0-16-0-beta
-[apr loop]: /en/newsletters/2023/05/24/#lightning-loop-defaults-to-musig2
-[apr musig2 psbt]: /en/newsletters/2023/10/18/#proposed-bip-for-musig2-fields-in-psbts
-[apr musig2]: /en/newsletters/2023/04/12/#bips-1372
-[apr rgb]: /en/newsletters/2023/04/19/#rgb-update
-[apr secp]: /en/newsletters/2023/04/12/#libsecp256k1-0-3-1
-[apr signrpc]: /en/newsletters/2023/02/15/#lnd-7171
-[apr splicing]: /en/newsletters/2023/04/12/#splicing-specification-discussions
-[apr taproot channels]: /en/newsletters/2023/08/30/#lnd-7904
-[apr watchtower]: /en/newsletters/2023/04/05/#watchtower-accountability-proofs
-[aug antidos]: /en/newsletters/2023/08/09/#denial-of-service-dos-protection-design-philosophy
-[aug bdk]: /en/newsletters/2023/08/09/#bdk-0-28-1
-[aug btcpay]: /en/newsletters/2023/08/02/#btcpay-server-1-11-1
-[aug cln]: /en/newsletters/2023/08/30/#core-lightning-23-08
-[aug combo]: /en/newsletters/2023/08/30/#covenant-mashup-using-txhash-and-csfs
-[aug fraud]: /en/newsletters/2023/08/23/#fraud-proofs-for-outdated-backup-state
-[aug fundingdos]: /en/newsletters/2023/08/30/#disclosure-of-past-ln-vulnerability-related-to-fake-funding
-[aug htlcendo]: /en/newsletters/2023/08/09/#htlc-endorsement-testing-and-data-collection
-[aug lnd taproot]: /en/newsletters/2023/08/30/#lnd-7904
-[aug milksad]: /en/newsletters/2023/08/09/#libbitcoin-bitcoin-explorer-security-disclosure
-[aug onion]: /en/newsletters/2023/08/09/#bolts-759
-[aug opreturn]: /en/newsletters/2023/08/09/#proposed-changes-to-bitcoin-core-default-relay-policy
-[aug payjoin]: /en/newsletters/2023/08/16/#serverless-payjoin
-[aug sp]: /en/newsletters/2023/08/09/#bitcoin-core-pr-review-club
+[apr blinding]: /zh/newsletters/2023/04/05/#bolts-765
+[apr htlcendo]: /zh/newsletters/2023/05/17/#htlc
+[apr ldk]: /zh/newsletters/2023/04/26/#ldk-0-0-115
+[apr lnd]: /zh/newsletters/2023/04/05/#lnd-v0-16-0-beta
+[apr loop]: /zh/newsletters/2023/05/24/#lightning-loop-defaults-to-musig2-lightning-loop-musig2
+[apr musig2 psbt]: /zh/newsletters/2023/10/18/#proposed-bip-for-musig2-fields-in-psbts-psbt-musig2-bip
+[apr musig2]: /zh/newsletters/2023/04/12/#bips-1372
+[apr rgb]: /zh/newsletters/2023/04/19/#rgb
+[apr secp]: /zh/newsletters/2023/04/12/#libsecp256k1-0-3-1
+[apr signrpc]: /zh/newsletters/2023/02/15/#lnd-7171
+[apr splicing]: /zh/newsletters/2023/04/12/#splicing-specification-discussions
+[apr taproot channels]: /zh/newsletters/2023/08/30/#lnd-7904
+[apr watchtower]: /zh/newsletters/2023/04/05/#watchtower-accountability-proofs
+[aug antidos]: /zh/newsletters/2023/08/09/#dos
+[aug bdk]: /zh/newsletters/2023/08/09/#bdk-0-28-1
+[aug btcpay]: /zh/newsletters/2023/08/02/#btcpay-server-1-11-1
+[aug cln]: /zh/newsletters/2023/08/30/#core-lightning-23-08
+[aug combo]: /zh/newsletters/2023/08/30/#txhash-csfs
+[aug fraud]: /zh/newsletters/2023/08/23/#fraud-proofs-for-outdated-backup-state
+[aug fundingdos]: /zh/newsletters/2023/08/30/#disclosure-of-past-ln-vulnerability-related-to-fake-funding
+[aug htlcendo]: /zh/newsletters/2023/08/09/#htlc
+[aug lnd taproot]: /zh/newsletters/2023/08/30/#lnd-7904
+[aug milksad]: /zh/newsletters/2023/08/09/#libbitcoin-bitcoin
+[aug onion]: /zh/newsletters/2023/08/09/#bolts-759
+[aug opreturn]: /zh/newsletters/2023/08/09/#bitcoin-core
+[aug payjoin]: /zh/newsletters/2023/08/16/#serverless-payjoin-payjoin
+[aug sp]: /zh/newsletters/2023/08/09/#bitcoin-core-pr-审核俱乐部
 [chatbtc]: https://chat.bitcoinsearch.xyz/
-[dec bcc]: /en/newsletters/2023/12/06/#bitcoin-core-26-0
-[dec cluster]: /en/newsletters/2023/12/06/#cluster-mempool-discussion
-[dec liqad]: /en/newsletters/2023/12/13/#discussion-about-griefing-liquidity-ads
-[dec payjoin]: /en/newsletters/2023/12/13/#payjoin-client-for-bitcoin-core-released
-[dec warnet announce]: /en/newsletters/2023/12/13/#bitcoin-network-simulation-tool-warnet-announced
-[dec zipkin warnet]: /en/newsletters/2023/12/06/#testing-with-warnet
-[feb bitcoinsearch]: /en/newsletters/2023/02/15/#bitcoinsearch-xyz
-[feb cln offers]: /en/newsletters/2023/02/08/#core-lightning-5892
-[feb codex32]: /en/newsletters/2023/02/22/#proposed-bip-for-codex32-seed-encoding-scheme
-[feb eclair offers]: /en/newsletters/2023/02/22/#eclair-2479
-[feb htlcendo]: /en/newsletters/2023/02/22/#feedback-requested-on-ln-good-neighbor-scoring
-[feb lnflag]: /en/newsletters/2023/02/22/#ln-quality-of-service-flag
-[feb miniscript]: /en/newsletters/2023/02/22/#bitcoin-core-24149
-[feb op_vault2]: /en/newsletters/2023/03/08/#alternative-design-for-op-vault
-[feb op_vault]: /en/newsletters/2023/02/22/#draft-bip-for-op-vault
-[feb ord1]: /en/newsletters/2023/02/08/#discussion-about-storing-data-in-the-block-chain
-[feb ord2]: /en/newsletters/2023/02/15/#continued-discussion-about-block-chain-data-storage
-[feb payjoin]: /en/newsletters/2023/02/01/#serverless-payjoin-proposal
-[feb storage]: /en/newsletters/2023/02/15/#core-lightning-5361
-[jamming paper]: /en/newsletters/2022/11/16/#paper-about-channel-jamming-attacks
-[jan bip329]: /en/newsletters/2023/01/25/#bips-1383
-[jan eclair]: /en/newsletters/2023/01/04/#eclair-0-8-0
-[jan hwi]: /en/newsletters/2023/01/18/#hwi-2-2-0
-[jan inquisition]: /en/newsletters/2023/01/04/#bitcoin-inquisition
-[jan op_vault]: /en/newsletters/2023/01/18/#proposal-for-new-vault-specific-opcodes
-[jan potentiam]: /en/newsletters/2023/01/11/#non-interactive-ln-channel-open-commitments
-[jul cleanup]: /en/newsletters/2023/07/12/#ln-specification-clean-up-proposed
-[jul htlcendo]: /en/newsletters/2023/07/26/#channel-jamming-mitigation-proposals
-[jul hwi]: /en/newsletters/2023/07/26/#hwi-2-3-0
-[jul ldk]: /en/newsletters/2023/07/26/#ldk-0-0-116
-[jul lnclose]: /en/newsletters/2023/07/26/#simplified-ln-closing-protocol
-[jul pdk]: /en/newsletters/2023/07/19/#payjoin-sdk-announced
-[jul summit]: /en/newsletters/2023/07/26/#ln-summit-notes
-[jul vls]: /en/newsletters/2023/07/19/#validating-lightning-signer-vls-beta-announced
-[jun eclair]: /en/newsletters/2023/06/21/#eclair-v0-9-0
-[jun matt]: /en/newsletters/2023/06/07/#using-matt-to-replicate-ctv-and-manage-joinpools
-[jun sp]: /en/newsletters/2023/06/14/#draft-bip-for-silent-payments
-[jun specsf]: /en/newsletters/2023/06/28/#speculatively-using-hoped-for-consensus-changes
-[mar cln]: /en/newsletters/2023/03/08/#core-lightning-23-02
-[mar mpchan]: /en/newsletters/2023/03/29/#preventing-stranded-capital-with-multiparty-channels-and-channel-factories
-[mar rb]: /en/newsletters/2023/03/29/#rust-bitcoin-0-30-0
-[may ark]: /en/newsletters/2023/05/31/#proposal-for-a-managed-joinpool-protocol
-[may bcc]: /en/newsletters/2023/05/31/#bitcoin-core-25-0
-[may cln]: /en/newsletters/2023/05/24/#core-lightning-23-05
-[may cluster]: /en/newsletters/2023/05/17/#mempool-clustering
-[may lsp]: /en/newsletters/2023/05/17/#request-for-feedback-on-proposed-specifications-for-lsps
-[may matt]: /en/newsletters/2023/05/03/#matt-based-vaults
-[may payjoin]: /en/newsletters/2023/05/17/#advanced-payjoin-applications
-[may state]: /en/newsletters/2023/05/24/#state-compression-with-zero-knowledge-validity-proofs
-[newsletters]: /en/newsletters/
-[nov cln]: /en/newsletters/2023/11/29/#core-lightning-23-11
-[nov cov]: /en/newsletters/2023/11/01/#continued-discussion-about-scripting-changes
-[nov htlcagg]: /en/newsletters/2023/11/08/#htlc-aggregation-with-covenants
-[nov ldk]: /en/newsletters/2023/11/01/#ldk-0-0-118
-[nov liqad]: /en/newsletters/2023/11/29/#update-to-the-liquidity-ads-specification
-[nov offers]: /en/newsletters/2023/11/22/#offers-compatible-ln-addresses
-[oct assumeutxo]: /en/newsletters/2023/10/11/#bitcoin-core-27596
-[oct bitvm]: /en/newsletters/2023/10/18/#payments-contingent-on-arbitrary-computation
-[oct cycling]: /en/newsletters/2023/10/25/#replacement-cycling-vulnerability-against-htlcs
-[oct generic]: /en/newsletters/2023/10/25/#research-into-generic-covenants-with-minimal-script-language-changes
-[oct ldk]: /en/newsletters/2023/10/11/#ldk-0-0-117
-[oct lnd]: /en/newsletters/2023/10/04/#lnd-v0-17-0-beta
-[oct miniscript]: /en/newsletters/2023/10/18/#bitcoin-core-27255
-[oct op_cat]: /en/newsletters/2023/10/25/#proposed-bip-for-op-cat
-[oct p2pv2]: /en/newsletters/2023/10/11/#bitcoin-core-28331
-[oct pss]: /en/newsletters/2023/10/04/#payment-splitting-and-switching
-[oct sidepool]: /en/newsletters/2023/10/04/#pooled-liquidity-for-ln
-[oct txhash]: /en/newsletters/2023/10/11/#specification-for-op-txhash-proposed
-[policy series]: /en/blog/waiting-for-confirmation/
-[sep lnscale]: /en/newsletters/2023/09/27/#using-covenants-to-improve-ln-scalability
-[sep secp]: /en/newsletters/2023/09/06/#libsecp256k1-0-4-0
-[sept compress]: /en/newsletters/2023/09/06/#bitcoin-transaction-compression
-[sept ldk offers]: /en/newsletters/2023/09/20/#ldk-2371
-[sept tapassets]: /en/newsletters/2023/09/13/#specifications-for-taproot-assets
-[tapsim]: /en/newsletters/2023/06/21/#tapscript-debugger-tapsim
+[dec bcc]: /zh/newsletters/2023/12/06/#bitcoin-core-26-0
+[dec cluster]: /zh/newsletters/2023/12/06/#cluster-mempool-discussion
+[dec liqad]: /zh/newsletters/2023/12/13/#discussion-about-griefing-liquidity-ads
+[dec payjoin]: /zh/newsletters/2023/12/13/#bitcoin-core-payjoin
+[dec warnet announce]: /zh/newsletters/2023/12/13/#warnet
+[dec zipkin warnet]: /zh/newsletters/2023/12/06/#testing-with-warnet-warnet
+[feb bitcoinsearch]: /zh/newsletters/2023/02/15/#bitcoinsearch-xyz
+[feb cln offers]: /zh/newsletters/2023/02/08/#core-lightning-5892
+[feb codex32]: /zh/newsletters/2023/02/22/#codex32-bip
+[feb eclair offers]: /zh/newsletters/2023/02/22/#eclair-2479
+[feb htlcendo]: /zh/newsletters/2023/02/22/#feedback-requested-on-ln-good-neighbor-scoring
+[feb lnflag]: /zh/newsletters/2023/02/22/#ln-quality-of-service-flag
+[feb miniscript]: /zh/newsletters/2023/02/22/#bitcoin-core-24149
+[feb op_vault2]: /zh/newsletters/2023/03/08/#op-vault
+[feb op_vault]: /zh/newsletters/2023/02/22/#op-vault-bip
+[feb ord1]: /zh/newsletters/2023/02/08/#discussion-about-storing-data-in-the-block-chain
+[feb ord2]: /zh/newsletters/2023/02/15/#continued-discussion-about-block-chain-data-storage
+[feb payjoin]: /zh/newsletters/2023/02/01/#serverless-payjoin-proposal-payjoin
+[feb storage]: /zh/newsletters/2023/02/15/#core-lightning-5361
+[jamming paper]: /zh/newsletters/2022/11/16/#paper-about-channel-jamming-attacks
+[jan bip329]: /zh/newsletters/2023/01/25/#bips-1383
+[jan eclair]: /zh/newsletters/2023/01/04/#eclair-0-8-0
+[jan hwi]: /zh/newsletters/2023/01/18/#hwi-2-2-0
+[jan inquisition]: /zh/newsletters/2023/01/04/#bitcoin-inquisition
+[jan op_vault]: /zh/newsletters/2023/01/18/#vault
+[jan potentiam]: /zh/newsletters/2023/01/11/#noninteractive-ln-channel-open-commitments
+[jul cleanup]: /zh/newsletters/2023/07/12/#ln
+[jul htlcendo]: /zh/newsletters/2023/07/26/#channel-jamming-mitigation-proposals
+[jul hwi]: /zh/newsletters/2023/07/26/#hwi-2-3-0
+[jul ldk]: /zh/newsletters/2023/07/26/#ldk-0-0-116
+[jul lnclose]: /zh/newsletters/2023/07/26/#simplified-ln-closing-protocol
+[jul pdk]: /zh/newsletters/2023/07/19/#payjoin-sdk
+[jul summit]: /zh/newsletters/2023/07/26/#ln-summit-notes
+[jul vls]: /zh/newsletters/2023/07/19/#vls-beta
+[jun eclair]: /zh/newsletters/2023/06/21/#eclair-v0-9-0
+[jun matt]: /zh/newsletters/2023/06/07/#matt-ctv-joinpools
+[jun sp]: /zh/newsletters/2023/06/14/#draft-bip-for-silent-payments-bip
+[jun specsf]: /zh/newsletters/2023/06/28/#speculatively-using-hoped-for-consensus-changes
+[mar cln]: /zh/newsletters/2023/03/08/#core-lightning-23-02
+[mar mpchan]: /zh/newsletters/2023/03/29/#preventing-stranded-capital-with-multiparty-channels-and-channel-factories
+[mar rb]: /zh/newsletters/2023/03/29/#rust-bitcoin-0-30-0
+[may ark]: /zh/newsletters/2023/05/31/#joinpool
+[may bcc]: /zh/newsletters/2023/05/31/#bitcoin-core-25-0
+[may cln]: /zh/newsletters/2023/05/24/#core-lightning-23-05
+[may cluster]: /zh/newsletters/2023/05/17/#mempool-clustering
+[may lsp]: /zh/newsletters/2023/05/17/#lsp
+[may matt]: /zh/newsletters/2023/05/03/#mattbased-vaults-matt
+[may payjoin]: /zh/newsletters/2023/05/17/#payjoin
+[may state]: /zh/newsletters/2023/05/24/#state-compression-with-zeroknowledge-validity-proofs
+[newsletters]: /zh/newsletters/
+[nov cln]: /zh/newsletters/2023/11/29/#core-lightning-23-11
+[nov cov]: /zh/newsletters/2023/11/01/#continued-discussion-about-scripting-changes
+[nov htlcagg]: /zh/newsletters/2023/11/08/#htlc-aggregation-with-covenants-htlc
+[nov ldk]: /zh/newsletters/2023/11/01/#ldk-0-0-118
+[nov liqad]: /zh/newsletters/2023/11/29/#update-to-the-liquidity-ads-specification
+[nov offers]: /zh/newsletters/2023/11/22/#offers-compatible-ln-addresses
+[oct assumeutxo]: /zh/newsletters/2023/10/11/#bitcoin-core-27596
+[oct bitvm]: /zh/newsletters/2023/10/18/#payments-contingent-on-arbitrary-computation
+[oct cycling]: /zh/newsletters/2023/10/25/#replacement-cycling-vulnerability-against-htlcs-htlcs
+[oct generic]: /zh/newsletters/2023/10/25/#research-into-generic-covenants-with-minimal-script-language-changes
+[oct ldk]: /zh/newsletters/2023/10/11/#ldk-0-0-117
+[oct lnd]: /zh/newsletters/2023/10/04/#lnd-v0-17-0-beta
+[oct miniscript]: /zh/newsletters/2023/10/18/#bitcoin-core-27255
+[oct op_cat]: /zh/newsletters/2023/10/25/#proposed-bip-for-op-cat-op-cat-bip
+[oct p2pv2]: /zh/newsletters/2023/10/11/#bitcoin-core-28331
+[oct pss]: /zh/newsletters/2023/10/04/#payment-splitting-and-switching
+[oct sidepool]: /zh/newsletters/2023/10/04/#pooled-liquidity-for-ln-ln
+[oct txhash]: /zh/newsletters/2023/10/11/#op-txhash
+[policy series]: /zh/blog/waiting-for-confirmation/
+[sep lnscale]: /zh/newsletters/2023/09/27/#using-covenants-to-improve-ln-scalability
+[sep secp]: /zh/newsletters/2023/09/06/#libsecp256k1-0-4-0
+[sept compress]: /zh/newsletters/2023/09/06/#bitcoin-transaction-compression
+[sept ldk offers]: /zh/newsletters/2023/09/20/#ldk-2371
+[sept tapassets]: /zh/newsletters/2023/09/13/#taproot-assets
+[tapsim]: /zh/newsletters/2023/06/21/#tapscript-tapsim
 [tldr]: https://tldr.bitcoinsearch.xyz/
 [topics index]: /en/topics/
 [yirs 2018]: /en/newsletters/2018/12/28/
 [yirs 2019]: /en/newsletters/2019/12/28/
 [yirs 2020]: /en/newsletters/2020/12/23/
 [yirs 2021]: /en/newsletters/2021/12/22/
-[yirs 2022]: /en/newsletters/2022/12/21/
+[yirs 2022]: /zh/newsletters/2022/12/21/
