@@ -413,7 +413,7 @@ Optech 还发表了两篇来自业界的田野调查报告：一篇来自 BitGo 
 {% include snippets/recap-ad.md when=day_after_posting %}
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="" %}
-[apr bitgo]: /en/bitgo-musig2/
+[apr bitgo]: /zh/bitgo-musig2/
 [apr blinding]: /zh/newsletters/2023/04/05/#bolts-765
 [apr htlcendo]: /zh/newsletters/2023/05/17/#htlc
 [apr ldk]: /zh/newsletters/2023/04/26/#ldk-0-0-115
