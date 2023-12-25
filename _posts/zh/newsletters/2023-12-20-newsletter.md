@@ -394,15 +394,15 @@ grep duration rss | sed 's!^.*>\([0-9].*\):..</.*$!\1!' | sed 's/:/ * 60 + /' | 
 
 Optech 还发表了两篇来自业界的田野调查报告：一篇来自 BitGo 公司的 Brandon Black，介绍了如何[实施 MuSig2][implementing MuSig2] 以降低费用成本和提高隐私保护；另一篇来自 Wizardsardine 公司的 Antoine Poinsot，介绍了如何使用 [miniscript 构建软件][building software with miniscript]。
 
-[implementing musig2]: /en/bitgo-musig2/
-[building software with miniscript]: /en/wizardsardine-miniscript/
+[implementing musig2]: /zh/bitgo-musig2/
+[building software with miniscript]: /zh/wizardsardine-miniscript/
 
 </div>
 
 ## 十二月
 
 {:#clustermempool}
-几位 Bitcoin Core 开发者[开始][may cluster]研究一种新的[集群交易池][topic cluster mempool]的设计，以简化交易池操作，同时保持必要的交易排序，即父交易必须先于子交易确认。交易被分组到集群中，然后被分割成按费率排序的交易块，同时会确保高费率的交易块首先被确认。这样就可以通过简单地选择交易池中费率最高的交易块来创建块模板，并通过放弃费率最低的交易块来剔除交易。这解决了一些现有令人不满意的行为（例如，矿工可能会因为次优的剔除策略而损失手续费收入），并可能在未来改善交易池管理和交易中继的其他方面。他们讨论的归档内容已于十二月初[发布][dec cluster]。
+几位 Bitcoin Core 开发者[开始][may cluster]研究一种新的[聚类交易池][topic cluster mempool]的设计，以简化交易池操作，同时保持必要的交易排序，即父交易必须先于子交易确认。交易被分组到群组中，然后被分割成按费率排序的交易块，同时会确保高费率的交易块首先被确认。这样就可以通过简单地选择交易池中费率最高的交易块来创建块模板，并通过放弃费率最低的交易块来剔除交易。这解决了一些现有令人不满意的行为（例如，矿工可能会因为次优的剔除策略而损失手续费收入），并可能在未来改善交易池管理和交易中继的其他方面。他们讨论的归档内容已于十二月初[发布][dec cluster]。
 
 {:#warnet}
 十二月还有一个新工具[公布][dec warnet announce]，用于启动大量比特币节点。节点之间（通常在测试网络上）会有一组定义好的连接。这可以用来测试用少量节点难以复现的行为，或者在公共网络上测试会造成问题的行为，比如已知的攻击和 gossip 信息的传播。使用该工具的一个[公开示例][dec zipkin warnet]是测量 Bitcoin Core 在一项提议变更前后的内存消耗。
@@ -413,7 +413,7 @@ Optech 还发表了两篇来自业界的田野调查报告：一篇来自 BitGo 
 {% include snippets/recap-ad.md when=day_after_posting %}
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="" %}
-[apr bitgo]: /en/bitgo-musig2/
+[apr bitgo]: /zh/bitgo-musig2/
 [apr blinding]: /zh/newsletters/2023/04/05/#bolts-765
 [apr htlcendo]: /zh/newsletters/2023/05/17/#htlc
 [apr ldk]: /zh/newsletters/2023/04/26/#ldk-0-0-115
