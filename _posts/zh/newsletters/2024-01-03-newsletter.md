@@ -12,7 +12,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--disclosure-of-past-lnd-vulnerabilities-->LND 过往漏洞的披露**：Niklas Gögge 在 Delving Bitcoin 论坛中[公布][gogge lndvuln]了两个他之前[尽责披露][topic responsible disclosures]了的漏洞，这些披露也导致了 LND 发布修复版本。使用 LND 0.15.0 以及更新版本的用户将不受影响；而使用更老版本 LND 的用户则应考虑立即升级，因为这些漏洞和其它已知的漏洞会影响更老的版本。简而言之，这两个现在公开的漏洞是：
+- **<!--disclosure-of-past-lnd-vulnerabilities-->LND 过往漏洞的披露**：Niklas Gögge 在 Delving Bitcoin 论坛中[公布][gogge lndvuln]了两个他之前[尽责披露][topic responsible disclosures]了的漏洞，这些披露也促使了 LND 发布修复版本。使用 LND 0.15.0 以及更新版本的用户将不受影响；而使用更老版本 LND 的用户则应考虑立即升级，因为这些漏洞和其它已知的漏洞会影响更老的版本。简而言之，这两个现在公开的漏洞是：
 
     - 一种 DoS 漏洞，可能导致 LND 用尽内存然后宕机。如果 LND 停止运行，它就无法广播时间敏感型交易，这可能会导致资金损失。
     - 一种审查漏洞，允许一个攻击者阻止一个 LND 节点从网络中了解目标通道的更新。攻击者可以利用这点来误导受害者节点，使之为自己的支付选择特定的路径，从而给予攻击者更多的转发费用，以及关于受害者节点的支付的更多信息。
