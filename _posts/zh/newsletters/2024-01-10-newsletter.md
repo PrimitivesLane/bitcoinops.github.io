@@ -15,16 +15,16 @@ lang: zh
   Antoine Poinsot 在 Delving Bitcoin 上[发帖][poinsot v3]，以促进关于 [v3 交易中继策略][topic v3 transaction relay]和[临时锚点][topic ephemeral anchors]的讨论。这个主题似乎是由 Peter Todd 在他的博客上[发表][todd v3]关于 v3 中继策略的批评而激发的。我们任意地将讨论分成几个部分:
 
   - **<!--frequent-use-of-exogenous-fees-may-risk-mining-decentralization-->频繁使用外生费用可能会危及挖矿的去中心化：**
-    比特币协议的理想版本应该按照矿工的算力比例奖励每个矿工。交易中支付的隐含费用保留了这一属性：拥有 10% 总算力的矿工有 10% 的机会获取下一个区块的费用，而拥有 1% 算力的矿工则有 1% 的机会。直接支付给矿工的除交易之外的费用，叫做[协议外的手续费][topic out-of-band fees]，违反了这一属性：一个支付给控制超过 55% 算力的矿工的系统，如果在 6 个区块内<!-- 1 - (1 - 0.55)**6 -->有 99% 的机会确认交易，很可能导致很少的动力向拥有 1% 或更少算力的小矿工支付费用。如果小矿工获得的报酬比大矿工相对更少，矿业将自然地中心化，这将减少需要被妥协以审查哪些交易得到确认的实体的数量。
+    比特币协议的理想版本应该按照矿工的算力比例奖励每个矿工。交易中支付的隐式手续费保留了这一属性：拥有 10% 总算力的矿工有 10% 的机会获取下一个区块的费用，而拥有 1% 算力的矿工则有 1% 的机会。在交易之外并且直接支付给某个矿工的手续费，叫做[协议外的手续费][topic out-of-band fees]，违反了这一属性：一个支付给控制超过 55% 算力的矿工的系统，在 6 个区块内<!-- 1 - (1 - 0.55)**6 -->有 99% 的机会确认交易，很可能导致很少的动力向拥有 1% 或更少算力的小矿工支付费用。如果小矿工获得的报酬比大矿工相对更少，矿业将自然地中心化，这将减少为了审查交易（不让交易得到确认）而需要攻陷的实体的数量。
 
-      活跃使用的协议，例如：[带有锚点输出的 LN 承诺交易 (LN-Anchors)][topic anchor outputs]、[谨慎日志合约][dlc cpfp]和[客户端验证][topic client-side validation]，允许它们至少有一部分链上交易通过_外生性地_方式支付费用，这意味着交易核心支付的费用可以通过使用一个或多个独立的 UTXO 来增加。例如，在 LN-Anchors 中，承诺交易包括一个输出，用于每个参与方使用[子为父偿（CPFP）][topic cpfp]增加费用 (子交易花费额外的 UTXO)。还有，使用 `SIGHASH_SINGLE|SIGHASH_ANYONECANPAY` 部分签名的 HTLC-Success 和 HTLC-Failure 交易(HTLC-X 交易)，它们可以聚合到一个交易中，至少有一个额外的输入来支付费用（额外的输入是单独的 UTXO）。
+      活跃使用的协议，例如：[带有锚点输出的 LN 承诺交易 (LN-Anchors)][topic anchor outputs]、[谨慎日志合约][dlc cpfp]和[客户端验证][topic client-side validation]，允许它们至少有一部分链上交易通过_外生性的_方式支付费用，这意味着交易核心支付的费用可以通过使用一个或多个独立的 UTXO 来增加。例如，在 LN-Anchors 中，承诺交易包括一个输出，用于每个参与方使用[子为父偿（CPFP）][topic cpfp]增加费用 (子交易花费额外的 UTXO)。还有，使用 `SIGHASH_SINGLE|SIGHASH_ANYONECANPAY` 部分签名的 HTLC-Success 和 HTLC-Failure 交易(HTLC-X 交易)，它们可以聚合到一个交易中，至少有一个额外的输入来支付费用（额外的输入是单独的 UTXO）。
 
-      对专注于使用 [P2TR][topic taproot] 和提议的临时锚点的 LN 的思想实验版本，Peter Todd 认为其对外生费用的依赖明显激励了协议外费用。特别是，没有待处理付款 ([HTLCs][topic htlc]) 的通道的单方面关闭将允许接受协议外费用的大矿工在一个区块中包含两倍于只接受通过 CPFP 费用提升支付的协议内费用的较小矿工可以包含的关闭交易数量。大型矿工可以通过为使用协议外支付的用户提供适度折扣来获利地鼓励这种做法。Peter Todd 称这是对去中心化的威胁。
+      对专注于使用 [P2TR][topic taproot] 和提议的临时锚点的 LN 的思想实验版本，Peter Todd 认为其对外生费用的依赖明显激励了协议外费用。特别是，没有待处理付款 ([HTLCs][topic htlc]) 的通道的单方面关闭将允许接受协议外费用的大矿工在一个区块中包含两倍于只接受通过 CPFP 追加协议内费用的较小矿工可以包含的关闭交易数量。大型矿工可以通过为使用协议外支付的用户提供适度折扣来鼓励这种做法并获利。Peter Todd 称这是对去中心化的威胁。
 
       该帖子确实建议了协议中一些使用外生费用的情况是可以接受的，因此可能担心的是预期使用频率以及使用它们和协议外支付之间相对大小的差异。换句话说，频繁发生的零等待单方关闭（开销占比100%）可能会被认为是比更少见的有 20 个待处理 HTLC 的单方关闭具有更大的风险，后者的开销不到 10%。
 
   - **<!--implications-of-exogenous-fees-on-safety-scalability-and-costs-->外生费用对安全性、可扩展性和成本的影响：**
-    Peter Todd 的帖子还指出，现有的设计，比如 [LN-Anchors（LN 锚点）][topic anchor outputs]和未来使用[临时锚点][topic ephemeral anchors]的设计都要求每个用户在他们的钱包中保留一个额外的 UTXO，用于必要的费用提升。由于创建 UTXO 会消耗区块空间，因此理论上可以将比特币协议的最大独立用户数量减少一半或更多。这也意味着用户无法安全地将其全部钱包余额分配给其 LN 通道，从而恶化了 LN 用户体验。最后，使用 [CPFP 费用提升][topic cpfp]或将额外的输入附加到交易中以外生性地方式支付费用比直接从交易的输入（内生费用）来支付费用需要更多的区块空间，并支付更多的交易费用，因此即使其他问题并非关注的焦点，从理论上讲也更昂贵。
+    Peter Todd 的帖子还指出，现有的设计，比如 [LN-Anchors（LN 锚点）][topic anchor outputs]和未来使用[临时锚点][topic ephemeral anchors]的设计都要求每个用户在他们的钱包中保留一个额外的 UTXO，用于必要的费用提升。由于创建 UTXO 会消耗区块空间，因此理论上可以将比特币协议的最大独立用户数量减少一半或更多。这也意味着用户无法安全地将其全部钱包余额分配给其 LN 通道，从而恶化了 LN 用户体验。最后，使用 [CPFP 费用提升][topic cpfp]或将额外的输入附加到交易中以外生方式支付费用，比直接从交易的输入支付费用（内生费用）需要更多的区块空间，也需要支付更多的交易费用，因此即使其他问题并非关注的焦点，从理论上讲也更昂贵。
 
   - **<!--ephemeral-anchors-introduce-a-new-pinning-attack-->临时锚点引入了一种新的钉死攻击：** 正如[上周周报][news283 pinning]所描述的，Peter Todd 描述了一种针对使用临时锚点的小型钉死攻击。对于没有待处理付款（HTLC）的承诺交易，一个无特权的攻击者可能会制造这样一种情况，即诚实用户可能需要支付 1.5 倍到 3.7 倍的费用才能获得他们预期的费率。然而，如果诚实用户选择[耐心等待][harding pinning]而不是花费额外费用，攻击者最终将支付诚实用户的部分或全部费用。鉴于零待处理承诺交易没有任何时间锁依赖的紧迫性，许多诚实的用户可能会选择耐心等待，并以攻击者的费用来确认他们的交易。当使用 HTLC 时，攻击也有效，但诚实用户摆脱它的成本更低，并且仍然可能导致攻击者损失资金。
 
@@ -33,7 +33,7 @@ lang: zh
 
       尽管这个想法在某些情况下可能有效，但 Peter Todd 的帖子指出，带有预签名的递增提升的内生费用并不是在所有情况下都是对外生费用令人满意的替代。当包含多个 HTLC 的预签名承诺交易所需的延迟乘以典型支付路径上的多个跳时，[延迟][harding delays]很容易超过一秒，至少在理论上会延长到一分钟以上。Peter Todd 指出，如果提议的 [SIGHASH_ANYPREVOUT][topic sighash_anyprevout] 操作码（APO）可用，延迟可以减少到大致恒定的时间。
 
-      即使延迟是固定的 5 毫秒，[也有可能][harding stuckless]导致转发节点使用内生费用赚取的转发费用比使用外生费用的节点少，因为 LN 支付者预期会产生[冗余的超额支付][topic redundant overpayments]，这将经济地奖励更快的转发，即使差异只有毫秒级别。
+      即使延迟是固定的 5 毫秒，[也有可能][harding stuckless]导致使用内生费用的转发节点赚取的转发费用比使用外生费用的节点少，因为 LN 支付者预期会产生[冗余的超额支付][topic redundant overpayments]，这将经济地奖励更快的转发，即使差异只有毫秒级别。
 
       HTLC-Success 和 HTLC-Timeout 交易（HTLC-X 交易）使用相同的内生费用也将是一个额外的挑战。即使有 APO，这在朴素的情况下意味着要创建 <i>n<sup>2</sup></i> 个签名，尽管 Peter Todd 指出，通过假设 HTLC-X 交易将支付与承诺交易相似的费率，可以减少签名的数量。
 
@@ -50,7 +50,7 @@ lang: zh
 
     - *<!--simplicity-->简单性：* LN-Symmetry 是一种比目前使用的 LN-Penalty/[LN-Anchors（LN-锚点）][topic anchor outputs]协议简单得多的协议。
 
-    - *<!--pinning-->交易钉死：* “[交易钉死][topic transaction pinning]很难避免”。Sander 在这个问题上的担忧而付出的工作给了他洞察力和灵感，促使了他在[包中继][topic package relay]和广受赞誉[临时锚点][topic ephemeral anchors]提案的贡献。
+    - *<!--pinning-->交易钉死：* “[交易钉死][topic transaction pinning]很难避免”。Sander 在这个问题上的担忧而付出的工作给了他洞察力和灵感，曾让他在[包中继][topic package relay]和广受赞誉的[临时锚点][topic ephemeral anchors]提议中作出贡献。
 
     - *CTV：* “[CTV][topic op_checktemplateverify] (通过仿真)[...]允许非常简单的“快速转发”，如果广泛采用，可能会减少支付时间。”
 
@@ -72,7 +72,7 @@ lang: zh
   a0link="https://bitcoincore.reviews/28956#l-39"
 
   q1="<!--what-is-the-difference-between-median-time-past-mtp-and-network-adjusted-time-which-of-these-are-relevant-to-the-pr-->过去中位时间（MTP）和网络调整时间之间有什么区别？其中哪些与 PR 相关？"
-  a1="MTP 是最近 11 个区块的中位时间，是区块时间戳有效性的下限。网络调整时间的计算方法是我们自己的节点的时间加上我们的时间与随机选择的 199 个出站对等节点之间的偏移量的中位数。（此中位数可以为负数。网络调整时间加上 2 小时是最大有效区块时间戳。只有网络调整的时间与此 PR 相关。"
+  a1="MTP 是最近 11 个区块的中位时间，是区块时间戳有效性的下限。网络调整时间的计算方法是我们自己的节点的时间加上我们的时间与随机选择的 199 个出站对等节点之间的偏移量的中位数。（此中位数可以为负数）。网络调整时间加上 2 小时是最大有效区块时间戳。只有网络调整的时间与此 PR 相关。"
   a1link="https://bitcoincore.reviews/28956#l-67"
 
   q2="<!--why-are-these-times-conceptually-very-different-->为什么这些时间在概念上非常不同？"
