@@ -122,7 +122,7 @@ Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo] 和 [Bitcoin Inquis
 [poinsot v3]: https://delvingbitcoin.org/t/v3-transaction-policy-for-anti-pinning/340
 [todd v3]: https://petertodd.org/2023/v3-transactions-review
 [dlc cpfp]: https://github.com/discreetlogcontracts/dlcspecs/blob/master/Non-Interactive-Protocol.md
-[news283 pinning]: /zh/newsletters/2024/01/03/#v3-transaction-pinning-costs
+[news283 pinning]: /zh/newsletters/2024/01/03/#v3-transaction-pinning-costs-v3
 [harding pinning]: https://delvingbitcoin.org/t/v3-transaction-policy-for-anti-pinning/340/22
 [harding delays]: https://delvingbitcoin.org/t/v3-transaction-policy-for-anti-pinning/340/6
 [harding stuckless]: https://delvingbitcoin.org/t/v3-transaction-policy-for-anti-pinning/340/5
