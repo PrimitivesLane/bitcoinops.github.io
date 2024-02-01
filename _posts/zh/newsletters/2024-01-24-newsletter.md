@@ -54,7 +54,7 @@ lang: zh
 
 - **<!--envoy-15-released-->Envoy 1.5 推出**：[Envoy 1.5][]增加了对 [taproot][topic taproot] 花费和接收的支持，并改变了处理[不经济的输出][topic uneconomical outputs]的方法；此外还有一些 bug 修复和[其它更新][envoy blog]。
 
-- **<!--liana-v40-released-->Liana v4.0 推出**：[Liana v4.0][] 已经 [released][liana blog]，包含了对 [RBF 手续费追加法][topic rbf]、使用 RBF 取消交易、自动化[找钱][topic coin selection]以及硬件签名设备地址验证的支持。
+- **<!--liana-v40-released-->Liana v4.0 推出**：[Liana v4.0][] 已经 [released][liana blog]，包含了对 [RBF 手续费追加法][topic rbf]、使用 RBF 取消交易、自动化[选币][topic coin selection]以及硬件签名设备地址验证的支持。
 
 - **<!--mercury-layer-announced-->Mercury Layer 推出**：[Mercury Layer][] 是一种 [statechain][topic statechains] 实现，它使用了 [MuSig2][topic musig] 的一个[变种][mercury blind musig]以实现 statechain 运营者的盲签名。
 
