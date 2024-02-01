@@ -12,7 +12,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--disclosure-of-fixed-consensus-failure-in-btcd-->已修复的 btcd 共识故障披露**：Niklas Gögge 在 Delving Bitcoin 论坛[公开][gogge btcd]了他已经[尽责披露][topic responsible disclosures]的旧版 btcd 软件中的一个共识故障。相对[时间锁][topic timelocks]是通过向交易输入的 sequence 字段添加共识强制的含义的软分叉而[添加到比特币中的][topic soft fork activation]。为了保证在分叉之前创建的任何预签名交易都不会因此而作废，相对时间锁仅对交易版本号为 2 乃至更高数字的数字，以允许原本默认版本号为 1 的交易可以容许任意输入。然而，在最初的比特币软件中，版本 号是有符号的整数，意思是负数也是有可能的。而 [BIP68][] 的 “参考实现” 部分指出，“版本号为 2 以及更高” 意味着将版本号从有符号的整数[转变][cast]为无符号的整数，从而保证这个规则适用于任何交易版本号不为 0 和 1 的交易。
+- **<!--disclosure-of-fixed-consensus-failure-in-btcd-->已修复的 btcd 共识故障披露**：Niklas Gögge 在 Delving Bitcoin 论坛[公开][gogge btcd]了他已经[尽责披露][topic responsible disclosures]的旧版 btcd 软件中的一个共识故障。相对[时间锁][topic timelocks]是通过向交易输入的 sequence 字段添加共识强制的含义的软分叉而[添加到比特币中的][topic soft fork activation]。为了保证在分叉之前创建的任何预签名交易都不会因此而作废，相对时间锁仅对交易版本号为 2 乃至更高数字的数字，以允许原本默认版本号为 1 的交易可以容许任意输入。然而，在最初的比特币软件中，版本号是有符号的整数，即也可能是负数。而 [BIP68][] 的 “参考实现” 部分指出，“版本号为 2 以及更高” 意味着将版本号从有符号的整数[转变][cast]为无符号的整数，从而保证这个规则适用于任何交易版本号不为 0 和 1 的交易。
 
     Gögge 发现，btcd 并没有实现这种从有符号到无符号整数的转变，所以有可能构造处一笔采用负版本号的交易，Bitcoin Core 将要求它遵循 BIP68 规则，但 btcd 不会。这时候，前者会拒绝这笔交易（以及任何包含了这笔交易的区块），而后者则会接受它（并且不会拒绝包含它的区块），从而导致链分裂。攻击者可以利用这一点来欺骗一个 btcd 节点的运营者（或者连接到 btcd 节点的软件）接受无效的比特币。
 
@@ -34,7 +34,7 @@ lang: zh
 
   - *<!--imbued-v3-logic-->渗透 v3 逻辑*：在回应闪电网络规范会议中出现的担忧（闪电网络可能需要很长时间来设计、实现和部署这些变更）时，Gregory Snders [提议][sanders transition]采用一个过渡阶段，对看起来像当前锚点风格的闪电网络承诺交易进行临时的特殊处理，以允许 Bitcoin Core 部署族群交易池而不会被闪电网络的开发阻碍。当软件已经得到广泛部署、所有的闪电客户端实现都升级到使用 v3 时，可以抛弃过渡的特殊规则。
 
-  - *<!--request-for-max-child-size-->请求为子交易体积设置上限*：v3 交易转发的提议草案将待确认交易的子交易的体积上限设为 1000 vbyte。这个体积越大，承诺交易需要为克服 “[交易钉死][topic transaction pinning]” 而支付的手续费就越多（见[周报 #283][news283 v3pin]）。这个体积越小，诚实用户可以用来贡献手续费的输入位置就越少。
+  - *<!--request-for-max-child-size-->请求为子交易体积设置上限*：v3 交易转发的提议草案将待确认交易的子交易的体积上限设为 1000 vbyte。这个体积越大，诚实用户需要为克服 “[交易钉死][topic transaction pinning]” 而支付的手续费就越多（见[周报 #283][news283 v3pin]）。这个体积越小，诚实用户可以用来贡献手续费的输入位置就越少。
 
 - **<!--new-documentation-repository-->新的文档仓库**：Anthony Towns 在 Bitcoin-Dev 邮件组中[公布][towns binana]了一个用于存放协议规范的新仓库：*Bitcoin Inquisition Numbers And Names Authority*（[BINANA][binana repo]）。截至本刊撰写之时，仓库内已有 4 个规范：
 
@@ -44,7 +44,7 @@ lang: zh
 
     - [BIN24-3][]  `OP_CHECKSIGFROMSTACK`，由 Brandon Black 撰写，说明了这个[提出了很长时间的想法][topic OP_CHECKSIGFROMSTACK]。[上周的周报][news285 lnhance]介绍了 Black 将该操作码放进 LNHANCE 软分叉组合的的提议。
 
-    - [BIN24-4][]  `OP_INTERNALKEY`，由 Brandon Black 撰写，说明了一个从脚本解释器种检索 taproot 内部公钥的操作码。它也是上周介绍的 LNHANCE 软分叉组合的一部分。
+    - [BIN24-4][]  `OP_INTERNALKEY`，由 Brandon Black 撰写，说明了一个从脚本解释器中检索 taproot 内部公钥的操作码。它也是上周介绍的 LNHANCE 软分叉组合的一部分。
 
     Bitcoin Optech 已经将 BINANA 仓库加入我们观察更新的文档资源清单，该清单也包括 BIP、BOLT 和 BLIP。未来的更新可能会出现在 “重大代码和文档变更” 栏目中。
 
