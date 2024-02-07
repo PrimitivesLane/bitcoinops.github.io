@@ -7,7 +7,7 @@ type: newsletter
 layout: newsletter
 lang: zh
 ---
-本周的周报描述了一项提案，以允许使用 RBF 规则替换 v3 交易，以便更容易地过渡到族群内存池，并总结了反对 `OP_CHECKTEMPLATEVERIFY` 的论点，因为它通常需要外生费用。此外还有我们的常规部分：其中包括 Bitcoin Stack Exchange 的热门问题和答案的总结，新版本和候选版本的公告，以及对热门比特币基础设施项目的重大变更介绍。
+本周的周报描述了一项提案，以允许使用 RBF 规则替换 v3 交易，以便更容易地过渡到族群交易池，并总结了反对 `OP_CHECKTEMPLATEVERIFY` 的论点，因为它通常需要外生费用。此外还有我们的常规部分：其中包括 Bitcoin Stack Exchange 的热门问题和答案的总结，新版本和候选版本的公告，以及对热门比特币基础设施项目的重大变更介绍。
 
 ## 新闻
 
