@@ -1,6 +1,6 @@
 ---
 title: 'Bitcoin Optech Newsletter #287'
-permalink: /en/newsletters/2024/01/31/
+permalink: /zh/newsletters/2024/01/31/
 name: 2024-01-31-newsletter-zh
 slug: 2024-01-31-newsletter-zh
 type: newsletter
@@ -42,22 +42,22 @@ lang: zh
 nswer -->{% endcomment %}
 {% assign bse = "https://bitcoin.stackexchange.com/a/" %}
 
-- [目前 Bitcoin Core 中的块同步是如何工作的？]({{bse}}121292)
+- [<!--how-does-block-synchronization-work-in-bitcoin-core-today-->目前 Bitcoin Core 中的块同步是如何工作的？]({{bse}}121292)
   Pieter Wuille 描述了区块头树、区块数据和活跃的 chaintip 区块链数据结构，并继续解释了作用于它们的区块头同步、区块同步和区块激活过程。
 
-- [区块头优先如何防止磁盘写满攻击？]({{bse}}76018)
+- [<!--how-does-headers-first-prevent-disk-fill-attack-->区块头优先如何防止磁盘写满攻击？]({{bse}}76018)
   Pieter Wuille 跟进了一个老问题，解释了最近在比 Bitcoin Core 24.0 中添加的IBD“区块头预同步”(见 [周报 #216][news216 headers presync])，区块头垃圾邮件缓解措施，以防止磁盘写满攻击。
 
-- [在 Tor 和 I2P 连接上，BIP 324 v2 传输是否冗余？]({{bse}}121360)
+- [<!--is-bip324-v2transport-redundant-on-tor-and-i2p-connections-->在 Tor 和 I2P 连接上，BIP 324 v2 传输是否冗余？]({{bse}}121360)
   Pieter Wuille 承认在使用[匿名网络][topic anonymity networks]时，[v2 传输][topic v2 p2p transport]加密的效益不足，但指出相比 v1 未加密传输，可能存在潜在的计算性能提升。
 
-- [设置最大连接数的经验法则是什么？]({{bse}}121088)
+- [<!--what-s-a-rule-of-thumb-for-setting-the-maximum-number-of-connections-->设置最大连接数的经验法则是什么？]({{bse}}121088)
   Pieter Wuille 区分了[出站和入站连接]({{bse}}121015)，并列出了设置较高 `-maxconnections` 值时需要考虑的因素。
 
-- [为什么不将区块时间戳的上限（+2h）设置为共识规则？]({{bse}}121248)
+- [<!--why-isn-t-the-upper-bound-2h-on-the-block-timestamp-set-as-a-consensus-rule-->为什么不将区块时间戳的上限（+2h）设置为共识规则？]({{bse}}121248)
   在这个问题和[其他]({{bse}}121247)相关[问题]({{bse}}121253)中，Pieter Wuille 解释了新区块时间戳必须早于未来 2 小时要求的重要性，以及为什么“共识规则只能依赖于通过区块哈希所承诺的信息”。
 
-- [Sigop 计数及其对交易选择的影响？]({{bse}}121355)
+- [<!--sigop-count-and-its-influence-on-transaction-selection-->Sigop 计数及其对交易选择的影响？]({{bse}}121355)
   用户 Cosmik Debris 询问，签名检查操作“sigops”的限制如何影响矿工的区块模板构建和基于交易池的[费用估算][topic fee estimation]？用户 mononaut 概述了 sigops 在区块模板构建中成为限制因素的罕见性，并讨论了 `-bytespersigop` 选项。
 
 ## 版本和候选版本
@@ -66,7 +66,7 @@ nswer -->{% endcomment %}
 
 - [HWI 2.4.0][]是此软件包的下一个版本，为多个不同的硬件签名设备提供通用接口。新版本增加了对 Trezor Safe 3 的支持，并包含一些小的改进。
 
-## 重大的代码和文档变更 
+## 重大的代码和文档变更
 
 _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core
 Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、
@@ -103,13 +103,13 @@ repo]。_
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="29291,2811,2813,2814,8167,7733,8275,1092,2366,716,1172,3" %}
 [hwi 2.4.0]: https://github.com/bitcoin-core/HWI/releases/tag/2.4.0
-[news286 bip68ver]: /zh/newsletters/2024/01/24/#disclosure-of-fixed-consensus-failure-in-btcd
+[news286 bip68ver]: /zh/newsletters/2024/01/24/#disclosure-of-fixed-consensus-failure-in-btcd-btcd
 [trezor safe 3]: https://trezor.io/trezor-safe-3
-[news283 fdt]: /zh/newsletters/2024/01/03/#fee-dependent-timelocks
+[news283 fdt]: /zh/newsletters/2024/01/03/#feedependent-timelocks
 [zhao v3kindred]: https://delvingbitcoin.org/t/sibling-eviction-for-v3-transactions/472
-[news259 lncleanup]: /zh/newsletters/2023/07/12/#ln-specification-clean-up-proposed
+[news259 lncleanup]: /zh/newsletters/2023/07/12/#ln
 [news284 ptexogenous]: /zh/newsletters/2024/01/10/#frequent-use-of-exogenous-fees-may-risk-mining-decentralization
 [zhao kindredimpl]: https://github.com/bitcoin/bitcoin/pull/29306
 [pt ctv]: https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2024-January/022309.html
-[news286 imbued]: /zh/newsletters/2024/01/24/#imbued-v3-logic
-[news216 headers presync]: /en/newsletters/2022/09/07/#bitcoin-core-25717
+[news286 imbued]: /zh/newsletters/2024/01/24/#imbued-v3-logic-v3
+[news216 headers presync]: /zh/newsletters/2022/09/07/#bitcoin-core-25717
