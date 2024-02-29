@@ -16,13 +16,19 @@ lang: zh
 
 - **<!--what-would-have-happened-if-v3-semantics-had-been-applied-to-anchor-outputs-a-year-ago-->如果 v3 语义在一年前就应用到了锚点输出上，那会怎么样？**Suhas Daftuar 在 Delving Bitcoin [分享][daftuar retrospective]了他对自动在[锚点类型][topic anchor outputs]的闪电通道承诺交易和手续费追加交易上应用 [v3 交易转发策略][topic v3 transaction relay]的研究（可在[周报 #286][news286 imbued] 了解其背后的 “渗透 v3 逻辑”）。简而言之，他记录了 2023 年的 1 4124 笔看起来像是花费锚点输出的交易。在这些交易中：
 
-    - 大约 94% 会在 v3 规则下成功。
-    - 大约 2.1% 有超过一个父交易（例如，是尝试批量处理 [CPFP][topic cpfp] 花费）。一些闪电钱包会在短时间内关闭超过一条通道时这样做，以提高效率。这些钱包需要禁用这种行为，如果锚点类型的输出要渗透 v3 特性的话。
-    - 大约 1.8% 并不是其父交易的第一个子交易。使用渗透 v3 提议，第二个子交易可以在一个[交易包][topic package relay]中替代第一个子交易（详见[周报 #287][news287 kindred]）。
-    - 大约 1.2% 似乎是承诺交易的孙交易，也即，花费了花费锚点输出的交易。闪电钱包可能会出于许多原因而这样做，从按顺序关闭多条通道，到使用锚点关闭通道交易的找零输出来开启新通道。如果锚点类型的输出要渗透 v3 特性，闪电钱包将不能再使用这种行为。
-    - 大约 1.2% 从未被挖出，也无法进一步分析。
-    - 大约 0.1% 花费了一个无关的未确认输出，导致锚点花费交易拥有不止一个父交易（不被 v3 允许）。开发者 Bastien Teinturier 认为，这可能是 Eclair 客户端的做法，并指出，在最新的代码中，Eclair 已经自动解决了这种情况。
-    - 小于 0.1% 是超过 1000 vbyte 的。这也是闪电钱包需要改变的行为。Daftuar 的进一步分析表明，几乎所有的锚点花费交易都小于 500 vbyte，一定程度上表明 v3 的体积限制进一步缩小。更小的体积限制，将让防守方只需更小的代价就能克服针对一笔锚点花费花费交易的[钉死攻击][topic transaction pinning]，但也会进一步减少闪电钱包可以添加的、用来贡献手续费的输入的数量。Teinturier [说][teinturier better]，“将 1000 vbyte 的限制进一步缩小是很诱人的，但过往的数据只显示了诚实的尝试（待处理的 HTLC 很少），因为我们还没有看到任何对网络的广泛攻击，所以很难说什么数值会 ‘更好’。”
+    * 大约 94%<!-- (14124 - 856) / 14124 -->会在 v3 规则下成功。
+
+    * 大约 2.1%<!-- 302/14124 --> 有超过一个父交易（例如，是尝试批量处理 [CPFP][topic cpfp] 花费）。一些闪电钱包会在短时间内关闭超过一条通道时这样做，以提高效率。这些钱包需要禁用这种行为，如果锚点类型的输出要渗透 v3 特性的话。
+
+    * 大约 1.8%<!-- 251/14124 --> 并不是其父交易的第一个子交易。使用渗透 v3 提议，第二个子交易可以在一个[交易包][topic package relay]中替代第一个子交易（详见[周报 #287][news287 kindred]）。
+
+    * 大约 1.2%<!-- 175/14124 --> 似乎是承诺交易的孙交易，也即，花费了花费锚点输出的交易。闪电钱包可能会出于许多原因而这样做，从按顺序关闭多条通道，到使用锚点关闭通道交易的找零输出来开启新通道。如果锚点类型的输出要渗透 v3 特性，闪电钱包将不能再使用这种行为。
+
+    * 大约 1.2%<!-- 173 / 14124 --> 从未被挖出，也无法进一步分析。
+
+    * 大约 0.1%<!-- 19/14124 --> 花费了一个无关的未确认输出，导致锚点花费交易拥有不止一个父交易（不被 v3 允许）。开发者 Bastien Teinturier 认为，这可能是 Eclair 客户端的做法，并指出，在最新的代码中，Eclair 已经自动解决了这种情况。
+
+    * 小于 0.1%<!-- 10/14124 --> 是超过 1000 vbyte 的。这也是闪电钱包需要改变的行为。Daftuar 的进一步分析表明，几乎所有的锚点花费交易都小于 500 vbyte，一定程度上表明 v3 的体积限制进一步缩小。更小的体积限制，将让防守方只需更小的代价就能克服针对一笔锚点花费花费交易的[钉死攻击][topic transaction pinning]，但也会进一步减少闪电钱包可以添加的、用来贡献手续费的输入的数量。Teinturier [说][teinturier better]，“将 1000 vbyte 的限制进一步缩小是很诱人的，但过往的数据只显示了诚实的尝试（待处理的 HTLC 很少），因为我们还没有看到任何对网络的广泛攻击，所以很难说什么数值会 ‘更好’。”
 
     虽然我们预期该主题还会有额外的讨论和研究，我们从该研究中得出的印象是，在 Bitcoin Core 可以安全地将锚点花费交易按照 v3 交易来处理之前，闪电钱包为了更好地适应 v3 语义而需要改变的部分很少。
 
@@ -38,35 +44,35 @@ lang: zh
 “[为 `submitpackage` 添加 `maxfeerate` 和 `maxburnamount` 参数][review club 28950]” 是由 Greg Sanders（GitHub 用户 instagibbs）提出的一项 PR，为 `submitpackage` RPC 添加了已经在针对单交易的 RPC `sendrawtransaction` 和 `testmempoolaccept` 中出现的功能。这个 PR 是更大的 “[交易包转发][topic package relay]” 项目的一部分。具体来说，这个 PR 允许一个交易包的发送者指定参数（就如 PR 的名字所示），这些参数可用于对所请求的交易包中的交易进行安全检查，以防止意外的资金损失。审核俱乐部会议由 Abubakar Sadiq Ismail（GitHub 用户 ismaelsadeeq）主持。
 
 {% include functions/details-list.md
-  q0="为什么要对提交过来的交易包执行这样的检查？"
+  q0="<!--why-is-it-important-to-perform-these-checks-on-submitted-packages-->为什么要对提交过来的交易包执行这样的检查？"
   a0="这可以帮助用户确保，放在交易包中的交易拥有跟以单体形式提交的交易相同的安全保证。"
   a0link="https://bitcoincore.reviews/28950#l-27"
 
-  q1="除了 `maxburnamout` 和 `maxfeerate`，是否还有其它重要的检查，应该在一个交易包被交易池接受之前执行？"
+  q1="<!--are-there-other-important-checks-apart-from-maxburnamount-and-maxfeerate-that-should-be-performed-on-packages-before-they-are-accepted-to-the-mempool-->除了 `maxburnamout` 和 `maxfeerate`，是否还有其它重要的检查，应该在一个交易包被交易池接受之前执行？"
   a1="有的。两个例子是基础手续费检查以及最大标准交易体积。但这是两种低成本的检查，所以可以在早期执行并很快传出错误。"
   a1link="https://bitcoincore.reviews/28950#l-33"
 
-  q2="`maxburnamount` 和 `maxfeerate` 可以阻止一笔交易进入交易池并被转发。我们可以将这些选项视为一种交易池规则吗？为什么呢？"
+  q2="<!--the-options-maxburnamount-and-maxfeerate-can-prevent-a-transaction-from-entering-the-mempool-and-being-relayed-can-we-consider-these-options-as-policy-rules-why-or-why-not-->`maxburnamount` 和 `maxfeerate` 可以阻止一笔交易进入交易池并被转发。我们可以将这些选项视为一种交易池规则吗？为什么呢？"
   a2="它确实是一种交易池规则；因为这些检查不是应用在已挖出的区块中的交易上的（所以它不是共识规则）。但它们不会影响对等节点之间的交易转发，只会影响在本地通过 RPC 来提交的交易。"
   a2link="https://bitcoincore.reviews/28950#l-47"
 
-  q3="为什么我们要用 “修饰后费率（modified fee rate）” 来验证 maxfeerate，而不是使用 “基本费率（base fee rate）” 呢？"
+  q3="<!--why-do-we-validate-maxfeerate-against-the-modified-feerate-instead-of-the-base-fee-rate-->为什么我们要用 “修饰后费率（modified fee rate）” 来验证 maxfeerate，而不是使用 “基本费率（base fee rate）” 呢？"
   a3="（更早的会议 [24152][review club 24152]、[24538][review club 24538] 和 [27501][review club 27501] 介绍了修饰后费率与基础费率的不同。大部分参与者都认为应该使用基础手续费，而不是修饰后手续费，因为 `sendrawtransaction` 和 `testmempoolaccept` 本身是使用基础手续费的，如果使用相同的标准，会有更好的一致性。但可能在现实中不会有什么差异，因为 `prioritiseansaction`（让修饰后手续费与基础手续费产生差别的因素）基本上只会被矿工使用。"
   a3link="https://bitcoincore.reviews/28950#l-69"
 
-  q4="我们使用包内单笔交易的修饰后费率来验证 maxfeerate，而不是交易包的费率。这在什么时候会不准确吗？"
+  q4="<!--we-validate-maxfeerate-against-the-modified-feerate-of-individual-package-transactions-not-package-feerate-when-can-this-be-inaccurate-->我们使用包内单笔交易的修饰后费率来验证 maxfeerate，而不是交易包的费率。这在什么时候会不准确吗？"
   a4="在交易包内的一笔子交易会因为自身的修饰后费率超过 `maxfeerate` 而被拒绝、但整个交易包的费率并不超过这个数值时，就会不准确。"
   a4link="https://bitcoincore.reviews/28950#l-84"
 
-  q5="如果有不准确的情形，为什么不用交易包费率来检查 `maxfeerate` 呢？"
+  q5="<!--given-that-possible-inaccuracy-why-not-check-maxfeerate-against-package-feerate-instead-->如果有不准确的情形，为什么不用交易包费率来检查 `maxfeerate` 呢？"
   a5="因为这可能会产生另一种不准确。假设交易 A 没有手续费，而交易 B 是为其追加手续费的交易。A 和 B 的体积都很大，所以没有任何一笔的费率超过 `maxfeerate`。"
   a5link="https://bitcoincore.reviews/28950#l-108"
 
-  q6="为什么 `maxfeerate` 不能在解码之后立即检查，就像 `maxburnamount` 那样？"
+  q6="<!--why-can-t-maxfeerate-be-checked-immediately-after-decoding-like-maxburnamount-is-->为什么 `maxfeerate` 不能在解码之后立即检查，就像 `maxburnamount` 那样？"
   a6="因为，众所周知，交易的输入不会显式地声明输入的数额，只能在查找到父输出之后才能知道。手续费率的计算需要知道手续费，而这又需要知道输入的数额。"
   a6link="https://bitcoincore.reviews/28950#l-141"
 
-  q7="`testmempoolaccept` RPC 中的 `maxfeerate` 与 `submitpackage` RPC 中的检查有何不同？为什么不能是一样的？"
+  q7="<!--how-does-the-maxfeerate-check-in-testmempoolaccept-rpc-differ-from-submitpackage-rpc-why-can-t-they-be-the-same-->`testmempoolaccept` RPC 中的 `maxfeerate` 与 `submitpackage` RPC 中的检查有何不同？为什么不能是一样的？"
   a7="`submitpackage` 使用了修饰后费率，而 `testmempoolaccept` 使用基础费率，这个前面已经解释了。此外，手续费率检查是在 `testaccept` 交易包处理之后完成的，因为交易要在处理之后才会添加到交易池中并被广播，所以我们可以安全地检查 `maxfeerate` 并返回合适的错误消息。而在 `submitpackage` 中不能采用相同的办法，因为交易包内的交易可能已经被交易池接受了、广播到对等节点了，所以有些检查是多余的。"
   a7link="https://bitcoincore.reviews/28950#l-153"
 %}
