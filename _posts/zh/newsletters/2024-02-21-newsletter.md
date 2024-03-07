@@ -7,7 +7,7 @@ type: newsletter
 layout: newsletter
 lang: zh
 ---
-本周的周报描述了提供基于 DNS 的人类可读的比特币支付指南的提案，总结了一篇关于交易池激励兼容性想法的文章，链接到讨论 Cashu 和其他 ecash 系统设计的帖子，简要介绍了关于比特币脚本中 64 位算术的持续讨论（包括之前提出的操作码的规范），并概述了一个改进的可重复的 ASMap 的创建过程。此外还有我们的常规部分：描述客户端和服务的更新、新版本和候选版本的公告，以及对热门比特币基础设施项目的重大变更介绍。
+本周的周报描述了提供基于 DNS 的人类可读的比特币支付说明的提案，总结了一篇关于交易池激励兼容性想法的文章，链接到讨论 Cashu 和其他 ecash 系统设计的帖子，简要介绍了关于比特币脚本中 64 位算术的持续讨论（包括之前提出的操作码的规范），并概述了一个改进的可重复的 ASMap 的创建过程。此外还有我们的常规部分：描述客户端和服务的更新、新版本和候选版本的公告，以及对热门比特币基础设施项目的重大变更介绍。
 
 ## 新闻
 
@@ -16,16 +16,16 @@ lang: zh
   bitcoin:bc1qexampleaddress0123456?sp=sp1qexampleaddressforsilentpayments0123456&b12=lno1qexampleblindedpathforanoffer...
   ```
 
-  不同支持的支付协议的具体细节并未在草案 BIP 中定义。Corallo 有另外两个草案，一份 [BOLT][dns bolt] 和一份 [BLIP][dns BLIP]，用于描述与闪电网络节点相关的细节。BOLT 允许域名所有者设置诸如 `*.user._bitcoin-payment.example.com` 这样的通配符记录，它将解析为包含 `omlookup` ([洋葱消息][topic onion messages]查找)参数和指向特定闪电网络节点的[盲化路径][topic rv routing]的 BIP21 URI。想要向 `example@example.com` 发出付款的人，将把接收方部分(`example`)传递给该闪电网络节点，以允许多用户节点正确处理付款。BLIP 描述了一种选项，允许任何 LN 节点通过闪电网络通信协议安全地解析任何其他节点的付款说明。
+  受支持的支付协议的具体细节并未在草案 BIP 中定义。Corallo 有另外两个草案，一份 [BOLT][dns bolt] 和一份 [BLIP][dns BLIP]，用于描述与闪电网络节点相关的细节。BOLT 允许域名所有者设置诸如 `*.user._bitcoin-payment.example.com` 这样的通配符记录，它将解析为包含 `omlookup` ([洋葱消息][topic onion messages]查找)参数和指向特定闪电网络节点的[盲化路径][topic rv routing]的 BIP21 URI。想要向 `example@example.com` 发出付款的人，将把接收方部分(`example`)传递给该闪电网络节点，以允许多用户节点正确处理付款。BLIP 描述了一种选项，允许任何 LN 节点通过闪电网络通信协议安全地解析任何其他节点的付款说明。
 
   在撰写本文时，有关该提案的大多数讨论都可以在 [BIP 库的 PR][bips #1551] 中找到。一个建议是使用 HTTPS 解决方案，该解决方案可能更容易被许多 Web 开发人员访问，但需要额外的依赖项；Corallo 说他不会改变规范的这一部分，但他确实写了一个[小型库][dnssec-prover]并带有一个[演示网站][dns demo]，这为 Web 开发人员完成了所有工作。另一个建议是使用现有的 [OpenAlias][] 基于DNS的支付地址解析系统，这已经受到一些比特币软件（如Electrum）的支持。第三个被广泛讨论的主题是地址应该如何显示，例如 `example@example.com`，`@example@example.com`，`example$example.com` 等。
 
-- **<!--Thinking-about-mempool-incentive-compatibility-->思考交易池激励兼容性：** Suhas Daftuar 在 Delving Bitcoin 上[发布了][daftuar incentive]一些关于全节点可以使用哪些标准来选择接受哪些交易到他们的交易池、中继到其他节点以及最大化收益的见解。这篇文章从第一性原理出发，以通俗易懂的描述，一直探讨到当前前沿研究，任何对 Bitcoin Core 交易中继规则设计感兴趣的人都应该可以访问这些描述。我们发现最有趣的一些见解包括：
+- **<!--Thinking-about-mempool-incentive-compatibility-->思考交易池激励兼容性：** Suhas Daftuar 在 Delving Bitcoin 上[发布了][daftuar incentive]一些关于全节点可以使用哪些标准来选择接受哪些交易到他们的交易池、中继到其他节点以及最大化收益的见解。这篇文章从第一性原理出发，一直探讨到当前前沿研究，其描述通俗易懂，任何对 Bitcoin Core 交易中继规则设计感兴趣的人应该都能读懂。我们发现最有趣的一些见解包括：
 
   - *<!--pure-replace-by-feerate-doesn-t-guarantee-incentive-compatibility-->纯费率替换并不能保证激励兼容性：*
     似乎用支付较高费率的交易[替换][topic rbf]支付较低费率的交易对矿工来说应该是绝对有利的。Daftuar 却用一个[简单的例子][daftuar feerate rule]说明为什么情况并非总是如此。关于纯费率替换的之前讨论，见[周报 #288][news288 rbfr]。
 
-  - *<!--miners-with-different-hashrates-have-different-priorities-->拥有不同算力的矿工有不同的优先级：* 如果拥有总网络算力的1％的矿工选择不在其区块模板中包含特定交易并设法找到下一个区块，则仅有 1％ 的机会挖出能够包含该交易的即时后继区块。这强烈鼓励小型矿工尽可能多地收取费用，即使这意味着将大大减少了未来区块矿工（可能包括自己）可获取的手续费。
+  - *<!--miners-with-different-hashrates-have-different-priorities-->拥有不同算力的矿工有不同的优先级：* 如果拥有总网络算力的1％的矿工在挖掘下一个区块时不在其区块模板中包含某一笔交易，则仅有 1％ 的机会挖出再下一个区块来包含这笔交易。这强烈鼓励小型矿工尽可能多地收取费用，即使这意味着将大大减少了未来区块矿工（可能包括自己）可获取的手续费。
 
     相比之下，一个占总网络算力 25% 的矿工，如果放弃在下一区块中包含某个交易，那么他有 25% 的概率立即挖出后继区块来包含该笔交易。这个庞大的矿工会被激励去避免现在收取一些费用，如果这样做可能会显著地增加未来可获取的费用。
 
@@ -34,12 +34,12 @@ lang: zh
   - *寻找无法抵御 DoS 攻击但具有激励兼容性的行为将是有用的：*
     Daftuar 描述了 Bitcoin Core 项目如何尝试[实施][mempool series]既激励兼容又抵抗拒绝服务（DoS）攻击的规则策略。但他指出，“一个有趣且有价值的研究领域将是确定是否存在无法抗拒 DoS 攻击的激励兼容行为可以部署到整个网络上（如果存在的话，并对其进行特性描述）。如果是这样，这种行为可能会激励用户直接连接到矿工，这对双方可能是互惠的，但对整体网络上的挖矿去中心化是有害的。[...]了解这些情况也可能有助于我们设计出既具有激励兼容性又能抵御DoS 攻击的协议，让我们知道在什么范围内是可能实现的。”
 
-- **<!--Cashu-and-other-ecash-system-design-discussion-->Cashu 和其他 ecash 系统设计讨论：** 几周前，开发者 Thunderbiscuit 在 Delving Bitcoin 上[发布了][thunderbiscuit ecash]关于 [Chaumian ecash][]系统背后的[盲签名方案][blind signature scheme]的描述，该系统在 [Cashu][]中使用，以 satoshis 作为余额单位，允许使用比特币和 LN 进行货币发送和接收。开发者 Moonsettler 和 Zmnscpxj 本周的回复讨论了盲签名简化版本的一些限制，以及如何通过备选协议可能提供额外好处。讨论完全是理论性的，但我们认为对于对 ecash 系统感兴趣的人来说可能会很有趣。
+- **<!--Cashu-and-other-ecash-system-design-discussion-->Cashu 和其他 ecash 系统设计讨论：** 几周前，开发者 Thunderbiscuit 在 Delving Bitcoin 上[发布了][thunderbiscuit ecash]关于 [Chaumian ecash][]系统背后的[盲签名方案][blind signature scheme]的描述，该系统在 [Cashu][]中使用，以 satoshis 作为余额单位，允许使用比特币和 LN 进行货币发送和接收。开发者 Moonsettler 和 Zmnscpxj 本周的回复讨论了盲签名简化版本的一些限制，以及备选协议可能提供的额外好处。讨论完全是理论性的，但我们认为对于对 ecash 系统感兴趣的人来说可能会很有趣。
 
 - **<!--Continued-discussion-about-64-bit-arithmetic-and-OP_INOUT_AMOUNT-opcode-->关于 64 位算术和 `OP_INOUT_AMOUNT` 操作码的持续讨论：**
-  一些开发人员在[持续讨论][64bit discuss]一个未来潜在的软分叉，该软分叉可以向比特币添加 64 位算术运算 (见[周报 #285][news285 64bit])。自我们之前提到以来，大多数讨论都集中在如何在脚本中编码 64 位值，主要区别在于是使用最小化链上数据的格式还是最简单的编程操作格式。还讨论了是使用有符号整数还是只允许无符号整数(对于那些不知道的人，似乎还包括一个自称为先进比特币创新者的人，有符号整数表示他们使用什么_符号_(正号或负号)；无符号整数只允许表示零和正数)。此外，还考虑了是否允许对更大的数字进行操作，可能高达 4160 位 (这与当前比特币堆栈元素的大小限制 520 字节相匹配)。
+  一些开发人员在[持续讨论][64bit discuss]可以向比特币添加 64 位算术运算 (见[周报 #285][news285 64bit])的未来可能软分叉。自我们之前提到以来，大多数讨论都集中在如何在脚本中编码 64 位值，主要区别在于是使用最小化链上数据的格式还是最简单的编程操作格式。还讨论了是使用有符号整数还是只允许无符号整数(给不了解这个话题的读者们解释一下，有符号整数包含了自身所用的_符号_(正号或负号)，无符号整数只允许表示零和正数；似乎一位自称为先进比特币创新者的人也需要这个解释呢)。此外，还考虑了是否允许对更大的数字进行操作，可能高达 4160 位 (这与当前比特币堆栈元素的大小限制 520 字节相匹配)。
 
-  本周，Chris Stewart 为一个新的[讨论主题][stewart inout]创建了一个[BIP 草案][bip inout]，这是最初作为 `OP_TAPLEAF_UPDATE_VERIFY` 的一部分提出的一个操作码(见 [周报 #166][news166 tluv])。操作码 `OP_INOUT_AMOUNT` 将当前输入的值(即其正在花费的输出的值)和具有与此输入相同索引的交易中输出的值推送到堆栈上。例如，如果交易的第一个输入值为 4 百万 sats，第二个输入值为 3 百万 sats，第一个输出支付 2 百万 sats，第二个输出支付 1 百万 sats，那么作为评估第二个输入的一部分执行的 `OP_INOUT_AMOUNT` 会将 `3_000_000 1_000_000` (如果我们正确理解 BIP 草案，编码为一个 64 位小端无符号整数，例如 `0xc0c62d0000000000 0x40420f0000000000`)放入堆栈。如果将操作码添加到比特币中作为软分叉，那么合同将更容易验证输入和输出金额是否在合同预期范围内，例如，用户仅从 [joinpool][topic joinpools] 中提取了应得的金额。
+  本周，Chris Stewart 为一个新的[讨论主题][stewart inout]创建了一个[BIP 草案][bip inout]，这是最初作为 `OP_TAPLEAF_UPDATE_VERIFY` 的一部分提出的一个操作码(见 [周报 #166][news166 tluv])。操作码 `OP_INOUT_AMOUNT` 将当前输入的值(即其正在花费的输出的值)和具有与此输入相同索引的交易中输出的值推送到堆栈上。例如，如果交易的第一个输入值为 4 百万 sats，第二个输入值为 3 百万 sats，第一个输出支付 2 百万 sats，第二个输出支付 1 百万 sats，那么作为求值第二个输入的一部分执行的 `OP_INOUT_AMOUNT` 会将 `3_000_000 1_000_000` (如果我们正确理解 BIP 草案，编码为一个 64 位小端无符号整数，例如 `0xc0c62d0000000000 0x40420f0000000000`)放入堆栈。如果将操作码添加到比特币中作为软分叉，那么合约将更容易验证输入和输出金额是否在合约预期范围内，例如，用户仅从 [joinpool][topic joinpools] 中提取了应得的金额。
 
 - **<!--Improved-reproducible-ASMap-creation-process-->改进的可重复的 ASMap 创建过程：** Fabian Jahr 在 Delving Bitcoin 上[发布了][jahr asmap]关于在创建[自治系统][autonomous systems] (ASMap)方面进展的帖子，每个 ASMap 控制着互联网大部分区域的路由。Bitcoin Core 目前试图与来自全局命名空间各个子网的对等节点保持连接，以便攻击者需要获取每个子网的 IP 地址才能执行对节点的最简单类型的[日蚀攻击][topic eclipse attacks]。然而，一些 ISP 和托管服务商控制多个子网的 IP 地址，削弱了这种保护措施。ASMap 项目旨在向 Bitcoin Coin 提供关于哪些 ISP 直接控制哪些IP 地址的大致信息(见周报[#52][news52 asmap]和[#83][news83 asmap])。该项目面临的主要挑战是允许多个贡献者以可重复的方式创建地图，从而允许独立验证其内容在创建时是否准确。
 
@@ -74,7 +74,7 @@ lang: zh
 _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement
 Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。_
 
-- [Bitcoin Core #27877][] 使用新的[选币][topic coin selection]策略 CoinGrinder (见[周报 #283][news283 coingrinder])更新了 Bitcoin Core 的钱包。该策略旨在在预估费率高于其长期基准时使用，使得允许钱包现在创建小额交易(结果可能需要在以后创建更大的交易，希望此时费率较低)。
+- [Bitcoin Core #27877][] 使用新的[选币][topic coin selection]策略 CoinGrinder (见[周报 #283][news283 coingrinder])更新了 Bitcoin Core 的钱包。该策略旨在在预估费率高于其长期基准时使用，使得允许钱包现在创建小额交易(结果可能需要在以后创建更大的交易，希望那时候费率较低)。
 
 - [BOLTs #851][] 在 LN 规范中增加了对[双向注资][topic dual funding]支持的功能，同时支持交互式交易构建协议。交互式构建允许两个节点交换偏好和 UTXO 详细信息，从而使它们能够共同构建一笔注资交易。双向注资允许一笔交易包含来自任意一方或双方的输入。例如，Alice 可能想要与 Bob 建立一个通道。在这个规范改变之前，Alice 必须为通道提供所有资金。现在，当使用支持双向注资的实现时，Alice 可以与 Bob 建立通道，他提供所有资金，或者他们各自向初始的通道状态注入资金。这可以与实验性的[流动性广告协议（liquidity ads）][topic liquidity advertisements]结合使用，该协议尚未包含在规范中。
 
