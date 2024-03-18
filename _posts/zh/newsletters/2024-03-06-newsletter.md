@@ -19,7 +19,7 @@ lang: zh
 - **<!--psbts-for-multiple-concurrent-musig2-signing-sessions-->为多个并存的 MuSig2 签名会话设计 PSBT**：Salvatore Ingala 在 Delving Bitcoin 论坛中[发帖][ingala musig2]，讨论了在并行执行多个 [MuSig2][topic musig] 签名会话时，如何尽可能减少需要维护的状态规模。使用 [BIP327][] 所描述的算法，一组联合签名人需要临时存储一些数据，数据规模会随他们想要给要创建的交易加入的输入的数量呈线性增长。许多硬件签名设备都只有少量的存储空间，（在不牺牲安全性的前提下）尽可能减少需要临时存储的数据（称为 “状态”）的规模是非常有用的。
 
     Ingala 提议创建为一个完整的 PSBT 创建一个状态对象，然后从中确定性提派生出每一个输入的状态，并且应该让结果与随机结果无法区分。这样一个签名器需要存储的状态就是一个常量，无论一笔交易有多少输入。
-    
+
     在一个[回复][scott musig2]中，开发者 Christopher Scott 指出，[BitEscrow][] 已经使用了一套类似的机制。
 
 - **<!--discussion-about-adding-more-bip-editors-->关于增加更多 BIP 编辑的讨论**：Ava Chow 在 Bitcoin-Dev 邮件组中[发帖][chow bips]建议增加 BIP 编辑，以帮助现任的编辑。现任的唯一编辑是 Luke Dashjr，他曾[表示][dashjr backlogged]自己已经挤压了一些工作，需要帮助。Chow 提名了两位著名的专家贡献者担任编辑，他们似乎已经得到支持。此外，人们还讨论了补充的编辑应否能够分配 BIP 编号。在本刊撰写之时，尚未有明确的结果。
@@ -56,6 +56,6 @@ lang: zh
 [chow bips]: https://gnusha.org/pi/bitcoindev/2092f7ff-4860-47f8-ba1a-c9d97927551e@achow101.com/
 [dashjr backlogged]: https://twitter.com/LukeDashjr/status/1761127972302459000
 [news37 invalid]: /en/newsletters/2019/03/12/#bitcoin-core-vulnerability-disclosure
-[news251 block]: /en/newsletters/2023/05/17/#bitcoin-core-27608
+[news251 block]: /zh/newsletters/2023/05/17/#bitcoin-core-27608
 [eclair v0.10.0]: https://github.com/ACINQ/eclair/releases/tag/v0.10.0
 [bitcoin core 26.1rc1]: https://bitcoincore.org/bin/bitcoin-core-26.1/
