@@ -15,7 +15,7 @@ lang: zh
 
     这个基本想法以前已经被提出过([示例][rubin bet])，但 ZmnSCPxj 的版本涉及到了至少一个潜在的未来软分叉，即 [OP_CHECKTEMPLATEVERIFY][topic op_checktemplateverify] 的具体情况。ZmnSCPxj 还简要考虑了将该构造推广到其他提议的软分叉的挑战，尤其是那些升级了 `OP_SUCCESSx` 操作码的软分叉。
 
-- **<!--Overview-of-Chia-Lisp-for-Bitcoiners-->为比特币人概述 Chia Lisp：** Anthony Towns 在 Delving Bitcoin 上[发布了][towns lisp]一篇关于 Chia 加密货币所使用的 [Lisp][] 变体的详细概述。Towns 之前曾提议通过软分叉将基于 Lisp 的脚本语言引入比特币(见[周报 #191][news191 lisp])。对这个话题感兴趣的人都强烈建议阅读他的文章。
+- **<!--Overview-of-Chia-Lisp-for-Bitcoiners-->为比特币人概述 Chia Lisp：** Anthony Towns 在 Delving Bitcoin 上[发布了][towns lisp]一篇关于 Chia 密码货币所使用的 [Lisp][] 变体的详细概述。Towns 之前曾提议通过软分叉将基于 Lisp 的脚本语言引入比特币(见[周报 #191][news191 lisp])。强烈建议对这个话题感兴趣的人都阅读他的文章。
 
 ## Bitcoin Core PR 审核俱乐部
 
