@@ -19,7 +19,7 @@ lang: zh
 
 - **BTC Lisp 概述：**Anthony Towns 在 Delving Bitcoin 上[发布][towns lisp]了他在过去几年中为比特币创建 [Lisp][] 语言变体的实验，名为 BTC Lisp。之前的讨论见周报 [#293][news293 lisp] 和 [#191][news191 lisp]。这篇文章非常详细，我们鼓励对这个想法感兴趣的人直接阅读。我们将简要引述其_结论_和_未来工作_部分：
 
-  “[BTC Lisp] 在链上可能有点昂贵，但似乎你可以做几乎任何事情[……]我不认为实现 Lisp 解释器或需要与之配套的一系列操作码太难，[但]如果没有编译器将较高层次的表示转换为共识级的操作码，编写 Lisp 代码是非常恼人的，[尽管]看起来可行。[这]项工作的下一步，[可通过]实现类似这样的语言来推进，并将其部署到 Signet/inquisition 上”。
+  “[BTC Lisp] 在链上可能有点昂贵，但似乎你可以做几乎任何事情[……]我不认为实现 Lisp 解释器或需要与之配套的一系列操作码太难，[但]如果没有编译器将高级表示转换为共识级的操作码，编写 Lisp 代码是非常恼人的，[尽管]看起来可行。[这]项工作的下一步，[可通过]实现类似这样的语言来推进，并将其部署到 Signet/inquisition 上”。
 
   [Simplicity][topic simplicity] 语言未来也可能被视为共识脚本语言的替代语言。Russell O'Connor 是该语言的开发者，他在[回答][oconnor lisp]中对比特币当前的脚本语言、Simplicity 和 Chia/BTC Lisp 进行了一些比较。他总结道：“Simplicity 和 clvm（[Chia Lisp 虚拟机]）都是低级语言，旨在方便机器求值，这就造成了人类难以阅读的取舍。它们是被有意设计为从不同的、人类可读的、非共识关键的语言编译而成。Simplicity 和 clvm 用不同的方式表达了同样的老事情：从环境中获取数据、对数据位进行元组化处理、运行条件语句以及各种原始操作。[……] 既然我们希望这种[高效的低级共识语言和高级的非共识可理解语言之间的分裂]无关紧要，那么低级语言的细节就变得不那么重要了。也就是说，只要稍加努力，你的高级 BTC lisp 语言也许可以翻译/编译成 Simplicity 语言[……]同样的，无论[基于 Simplicity 的] [高级非共识语言] Simphony 的设计最终走向何方，它也许都可以翻译/编译[成]你的低级 BTC lisp 语言，每种翻译/编译语言对都提供了不同的潜在复杂性/优化机会”。
 
@@ -37,7 +37,7 @@ lang: zh
   [Bitkey][bitkey website] 设备旨在与移动设备和 Bitkey 服务器密钥一起用于 2-3 多重签名设置。固件和各种组件的源代码目前[已可用][bitkey github]，是基于修改后的 MIT 许可协议（Commons Clause modified MIT License）。
 
 - **Envoy v1.6.0 发布：**
-  该[版本][envoy blog]增加了手续费提升交易和取消交易的功能，都基于手续费替换（RBF）。
+  该[版本][envoy blog]增加了提升交易手续费和取消交易的功能，都基于手续费替换（RBF）。
 
 - **VLS v0.11.0 发布：**
   该 [beta 版本][vls beta 3]允许在同一个闪电节点上使用多个签名设备。他们称之为[团队搭档签名（tag team signing）][vls blog]。
@@ -70,7 +70,7 @@ Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、
 [Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana
 repo]。_
 
-*注意：下面提到的对 Bitcoin Core 的提交适用于其主开发分支，因此这些改动可能要到即将发布的 27 版本发布大约六个月后才会发布。*
+*注意：下面提到的对 Bitcoin Core 的提交适用于其主开发分支，因此这些改动可能要到即将发布的 27 版本发布后大约六个月才会发布。*
 
 - [Bitcoin Core #27375][] 在 `-proxy` 和 `-onion` 功能中添加了对使用 Unix 域套接字而非本地 TCP 端口的支持。套接字可以比 TCP 端口更快，并提供了不同的安全权衡。
 
