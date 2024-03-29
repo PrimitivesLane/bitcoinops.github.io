@@ -89,7 +89,7 @@ repo]。_
 [bitcoin core 26.1rc2]: https://bitcoincore.org/bin/bitcoin-core-26.1/
 [Bitcoin Core 27.0rc1]: https://bitcoincore.org/bin/bitcoin-core-27.0/test.rc1/
 [lisp]: https://en.wikipedia.org/wiki/Lisp_(programming_language)
-[news293 lisp]: /zh/newsletters/2024/03/13/#overview-of-chia-lisp-for-bitcoiners
+[news293 lisp]: /zh/newsletters/2024/03/13/#overview-of-chia-lisp-for-bitcoiners-chia-lisp
 [news191 lisp]: /en/newsletters/2022/03/16/#using-chia-lisp
 [falbesoner bip324]: https://delvingbitcoin.org/t/bip324-proxy-easy-integration-of-v2-transport-protocol-for-light-clients-poc/678
 [towns lisp]: https://delvingbitcoin.org/t/btc-lisp-as-an-alternative-to-script/682
