@@ -43,9 +43,7 @@ lang: zh
 
 了解更多信息，请参阅（WIP）[BIP][bip 64bit arithmetic]，以及 DelvingBitcoin 论坛上的[讨论][delving 64bit arithmetic]。
 
-
-{% include functions/details-list.md q0="What does the `CScriptNum`
-  `nMaxNumSize` 参数有什么作用？" a0="表示正在求值的 `CScriptNum` 堆栈元素的最大大小（以字节为单位）。默认设置为 4 字节" a0link="https://bitcoincore.reviews/29221#l-34"
+{% include functions/details-list.md q0="`CScriptNum` `nMaxNumSize` 参数有什么作用？" a0="表示正在求值的 `CScriptNum` 堆栈元素的最大大小（以字节为单位）。默认设置为 4 字节" a0link="https://bitcoincore.reviews/29221#l-34"
 
   q1="哪 2 个操作码接受 5 字节的数字输入？"
   a1="`OP_CHECKSEQUENCEVERIFY` 和 `OP_CHECKLOCKTIMEVERIFY` 使用有符号整数表示时间戳。如果使用 4 个字节，则允许的日期上限范围为 2038 年。因此，这两个基于时间的操作码接受 5 字节输入。[代码中][docs 5byte carveout]记录了这一点。"
