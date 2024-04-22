@@ -128,7 +128,7 @@ _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning]
 [singh dsl]: https://delvingbitcoin.org/t/dsl-for-experimenting-with-contracts/748
 [linus dsl]: https://delvingbitcoin.org/t/dsl-for-experimenting-with-contracts/748/4
 [ruffing bip2]: https://gnusha.org/pi/bitcoindev/59fa94cea6f70e02b1ce0da07ae230670730171c.camel@timruffing.de/
-[news296 editors]: /zh/newsletters/2024/04/03/#choosing-new-bip-editors
+[news296 editors]: /zh/newsletters/2024/04/03/#choosing-new-bip-editors-bip
 [erhardt editors]: https://gnusha.org/pi/bitcoindev/c304a456-b15f-4544-8f86-d4a17fb0aa8c@murch.one/
 [lopp testnet]: https://gnusha.org/pi/bitcoindev/CADL_X_eXjbRFROuJU0b336vPVy5Q2RJvhcx64NSNPH-3fDCUfw@mail.gmail.com/
 [kim testnet]: https://gnusha.org/pi/bitcoindev/950b875a-e430-4bd8-870d-f9a9fab2493an@googlegroups.com/
