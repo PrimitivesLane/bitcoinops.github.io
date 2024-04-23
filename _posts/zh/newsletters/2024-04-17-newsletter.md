@@ -41,7 +41,7 @@ Daftuar 也考虑了族群交易池在 [RBF 交易替换][topic rbf]上的作用
 
 - **<!--stratum-v2-reference-implementation-v100-released-->Stratum V2 参考实现 v1.0.0 发布**：这个 [v1.0.0 版本][sri blog] “是工作团队通力合作及严格测试、优化了 Stratum V2 规范的结果。”
 
-- **<!--teleport-transactions-update-->Teleport Transsctions 更新**：[原版 Teleprot Transactions][news192 tt] 代码库的一个复刻[发布][tt tweet]，带有多项完整的更新和优化。
+- **<!--teleport-transactions-update-->Teleport Transactions 更新**：[原版 Teleprot Transactions][news192 tt] 代码库的一个复刻[发布][tt tweet]，带有多项完整的更新和优化。
 
 - **<!--bitcoin-keeper-v121-released-->Bitcoin Keeper v1.2.1 发布**：[v1.2.1 版本][bitcoin keeper v.1.2.1] 添加了对 [taproot][topic taproot] 钱包的支持。
 
