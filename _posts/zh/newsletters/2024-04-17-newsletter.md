@@ -18,18 +18,17 @@ lang: zh
 
   - *<!--cluster-mempool-was-just-as-good-for-miners-as-legacy-transaction-selection-->对矿工来说，族群交易池至少跟往常的交易选择程序一样好*：Daftuar 指出，至少当前是这样的，因为几乎每一笔交易最终都会进入区块，所以不论是 Bitcoin Core 当前的交易选择算法，还是基于族群交易池的交易选择算法，实际上收集到的手续费是一样多的。不过，在一项 Daftuar 警告可能夸大了结果的分析中，族群交易池捕捉到了比往常的交易选择程度多 73% 的手续费。往常的交易选择算法在大约 8% 的时间里表现更好。Daftuar 的结论是，“虽然基于 2023 年网络上的活动难以断定族群交易池是否显著优于基线，我的强烈印象是族群交易池不太可能在实际上更差。”
 
-Daftuar 也考虑了族群交易池在 [RBF 交易替换][topic rbf]上的作用。他首先很好地总结了 Bitcoin Core 当前的 RBF 行为与族群交易池模式下的 RBF 行为的差别：
+  Daftuar 也考虑了族群交易池在 [RBF 交易替换][topic rbf]上的作用。他首先很好地总结了 Bitcoin Core 当前的 RBF 行为与族群交易池模式下的 RBF 行为的差别：
 
-> *族群交易池 RBF 规则的核心是，替换发生之后，[交易池的手续费图是否会优化][feerate diagram]；而 Bitcoin Core 当前的 RBF 规则大致上是 BIP125 和[这份文档][rbf doc]说的那样。*
-> 
-> *不像 BIP125，提议中的【族群交易池】RBF 规则聚焦在替换的结果上。一笔交易可能仅在理论上更好，但在现实中不然：也许基于对什么事情对交易池好的理论理解，它 “应该” 被接纳，但如果最终的手续费率图因为某些原因（比如，因为线性化算法并不是最优的），那么我们就会拒绝这笔替换交易。*
-> 
+  > *族群交易池 RBF 规则的核心是，替换发生之后，[交易池的手续费图是否会优化][feerate diagram]；而 Bitcoin Core 当前的 RBF 规则大致上是 BIP125 和[这份文档][rbf doc]说的那样。*
+  >
+  > *不像 BIP125，提议中的【族群交易池】RBF 规则聚焦在替换的结果上。一笔交易可能仅在理论上更好，但在现实中不然：也许基于对什么事情对交易池好的理论理解，它 “应该” 被接纳，但如果最终的手续费率图因为某些原因（比如，因为线性化算法并不是最优的），那么我们就会拒绝这笔替换交易。*
 
-我们也要重复他在报告的这一节提出的结论，我们认为，他所提供的数据和分析作为充分支撑了这个结论：
+  我们也要重复他在报告的这一节提出的结论，我们认为，他所提供的数据和分析作为充分支撑了这个结论：
 
-> *总的来说，族群交易池和现有交易池策略在 RBF 上的区别并不是很大。在有差别的地方，新提议的 RBF 规则可以很大程度上保护交易池、不让激励不兼容的替代交易进入 —— 这是一个好的变化。但是，也要意识到，在理论上，我们可以看到在理想世界中应该被拒绝的替代交易【现在】被接纳，因为有时候，看起来好的替代交易可能触发次优的行为，并且这样的行为在以前无法被（BIP125 规则）检出，但可以被新规则检出和防止。
+  > *总的来说，族群交易池和现有交易池策略在 RBF 上的区别并不是很大。在有差别的地方，新提议的 RBF 规则可以很大程度上保护交易池、不让激励不兼容的替代交易进入 —— 这是一个好的变化。但是，也要意识到，在理论上，我们可以看到在理想世界中应该被拒绝的替代交易【现在】被接纳，因为有时候，看起来好的替代交易可能触发次优的行为，并且这样的行为在以前无法被（BIP125 规则）检出，但可以被新规则检出和防止。
 
-截至本刊撰写之时，尚未有回复。
+  截至本刊撰写之时，尚未有回复。
 
 ## 服务和客户端软件的变更
 
@@ -55,7 +54,7 @@ Daftuar 也考虑了族群交易池在 [RBF 交易替换][topic rbf]上的作用
 
 - [Bitcoin Core 27.0][] 是这个在网络中占据主流的全节点实现的下一个大版本。该新版本弃用了 libbitcoinconsensus（见周报 [#288][news288 libconsensus] 和 [#297][news297 libconsensus]）、默认启用 [#297][news297 libconsensus]（见[周报 #288][news288 v2 p2p]）、允许选择性使用 “确认之前拓扑受限（[TRUC][topic v3 transaction relay]）” 的交易转发规则（也称为 “*v3 交易转发*”）（见[周报 #289][news289 truc]），还添加了一种新的[钱币选择][topic coin selection]策略，可以用在高手续费时期（详见[周报 #290][news290 coingrinder]）。想要获得主要变更的完整清单，请看这个[更新公告][bcc27 rn]。
 
-- [BTCPay Server 1.13.1][] 是这个自主托管的支付处理器的最新版本。自我们上一次在[周报 #262][news262 btcpay] 介绍 BTCPay Server 的更新以来，他们已经让 “万维网钩子（webhooks）” [更易延展][btcpay server #5421]、为 [BIP129][] 多签名钱包导入功能（详见[周报 #281][news281 bip129]）增加了支持、优化了插件的灵活性并开始将所有的另类币支持迁移到插件中，还添加了对 BBQr 编码的 [PSBTs][topic psbt]（详见[周报 #295][news295 bbqr]）的支持。此外还有不计其数的新特性和 bug 修复。
+- [BTCPay Server 1.13.1][] 是这个自主托管的支付处理器的最新版本。自我们上一次在[周报 #262][news262 btcpay] 介绍 BTCPay Server 的更新以来，他们已经让 “网络钩子（webhooks）” [更易延展][btcpay server #5421]、为 [BIP129][] 多签名钱包导入功能（详见[周报 #281][news281 bip129]）增加了支持、优化了插件的灵活性并开始将所有的另类币支持迁移到插件中，还添加了对 BBQr 编码的 [PSBTs][topic psbt]（详见[周报 #295][news295 bbqr]）的支持。此外还有不计其数的新特性和 bug 修复。
 
 - [LDK 0.0.122][] 是这个用于开发内嵌闪电网络的应用的库的最新版本；它紧跟在修复了一项 DoS 漏洞的 [0.0.121][ldk 0.0.121] 之后发行。这个最新版本也修复了多个 bug。
 
@@ -72,14 +71,14 @@ Daftuar 也考虑了族群交易池在 [RBF 交易替换][topic rbf]上的作用
 [rbf doc]: https://github.com/bitcoin/bitcoin/blob/0de63b8b46eff5cda85b4950062703324ba65a80/doc/policy/mempool-replacements.md
 [daftuar cluster]: https://delvingbitcoin.org/t/research-into-the-effects-of-a-cluster-size-limited-mempool-in-2023/794
 [bcc27 rn]: https://github.com/bitcoin/bitcoin/blob/c7567d9223a927a88173ff04eeb4f54a5c02b43d/doc/release-notes/release-notes-27.0.md
-[news288 libconsensus]: /en/newsletters/2024/02/07/#bitcoin-core-29189
-[news297 libconsensus]: /en/newsletters/2024/04/10/#bitcoin-core-29648
-[news288 v2 p2p]: /en/newsletters/2024/02/07/#bitcoin-core-29347
-[news289 truc]: /en/newsletters/2024/02/14/#bitcoin-core-28948
-[news290 coingrinder]: /en/newsletters/2024/02/21/#bitcoin-core-27877
-[news281 bip129]: /en/newsletters/2023/12/13/#btcpay-server-5389
-[news295 bbqr]: /en/newsletters/2024/03/27/#btcpay-server-5852
-[news262 btcpay]: /en/newsletters/2023/08/02/#btcpay-server-1-11-1
+[news288 libconsensus]: /zh/newsletters/2024/02/07/#bitcoin-core-29189
+[news297 libconsensus]: /zh/newsletters/2024/04/10/#bitcoin-core-29648
+[news288 v2 p2p]: /zh/newsletters/2024/02/07/#bitcoin-core-29347
+[news289 truc]: /zh/newsletters/2024/02/14/#bitcoin-core-28948
+[news290 coingrinder]: /zh/newsletters/2024/02/21/#bitcoin-core-27877
+[news281 bip129]: /zh/newsletters/2023/12/13/#btcpay-server-5389
+[news295 bbqr]: /zh/newsletters/2024/03/27/#btcpay-server-5852
+[news262 btcpay]: /zh/newsletters/2023/08/02/#btcpay-server-1-11-1
 [ldk 0.0.122]: https://github.com/lightningdevkit/rust-lightning/releases/tag/v0.0.122
 [ldk 0.0.121]: https://github.com/lightningdevkit/rust-lightning/releases/tag/v0.0.121
 [btcpay server 1.13.1]: https://github.com/btcpayserver/btcpayserver/releases/tag/v1.13.1
