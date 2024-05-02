@@ -11,9 +11,9 @@ lang: zh
 
 ## 新闻
 
-- **<!--Weak-blocks-proof--of-concept-implementation-->弱块概念验证实现：** Greg Sanders 在 Delving Bitcoin 上[发文][sanders weak]，介绍了使用弱块来改善[致密区块中继][topic compact block relay]的做法，特别是在存在交易中继和挖矿规则分歧较多的情况下。弱块是一个区块的工作量证明（PoW）不足以成为区块链上的下一个区块，但在其他方面结构有效且交易集合有效。矿工会根据每个弱块所占所需 PoW 的百分比来产生弱块；例如，矿工平均每产生一个满足 PoW 的区块，就会产生 9 个 需要 10% PoW 的弱块。
+- **<!--Weak-blocks-proof--of-concept-implementation-->弱块概念验证实现：** Greg Sanders 在 Delving Bitcoin 上[发文][sanders weak]，介绍了使用弱块来改善[致密区块中继][topic compact block relay]的做法，特别是在存在交易中继和挖矿规则分歧较多的情况下。弱块是一个区块的工作量证明（PoW）不足以成为区块链上的下一个区块，但在其他方面结构有效且交易集合有效。矿工会根据弱块所需 PoW（与正常区块所需 PoW）的比例来产生弱块；例如，矿工平均每产生一个满足 PoW 的区块，就会产生 9 个 需要 10% PoW 的弱块。
 
-  矿工无法预知何时会产生弱块。他们尝试的每个候选区块都有相同的机会达到满足 PoW，但有些候选会最终变成弱块。产生弱块的唯一方式就是执行与产生满足 PoW 区块所需的完全相同的工作，这意味着弱块准确反映了矿工当时试图挖掘的交易。例如，将无效交易包含在弱块中的唯一方式是冒险创建同样包含该无效交易的满足 PoW 区块————这种无效区块将被完整节点拒绝，且矿工将无法获得任何区块奖励。当然，如果矿工不想公开自己试图挖掘的交易，可以选择不广播自己的弱块。
+  矿工无法预知何时会产生弱块。他们尝试的每个候选区块都有相同的机会达到满足 PoW，但有些候选会最终变成弱块。产生弱块的唯一方式就是执行与产生满足 PoW 区块所需的完全相同的工作，这意味着弱块准确反映了矿工当时试图挖掘的交易。例如，将无效交易包含在弱块中的唯一方式是冒险创建同样包含该无效交易的满足 PoW 区块————这种无效区块将被全节点拒绝，且矿工将无法获得任何区块奖励。当然，如果矿工不想公开自己试图挖掘的交易，可以选择不广播自己的弱块。
 
   产生 10% PoW 弱块的困难很高，而且用无效交易产生弱块的成本很高，因此弱块对那些试图浪费大量节点带宽、CPU 和内存的拒绝服务攻击具有很强的抵御能力。
 
@@ -35,7 +35,7 @@ lang: zh
 
   Sanders 已经写了一个“基础的[概念验证][sanders poc]，并进行了一些轻量级测试来展示这个想法的总体思路”。关于这个想法的讨论在写作时还在进行中。{% assign timestamp="0:56" %}
 
-- **<!--BIP-editors-update-->BIP 编辑更新：** 经过公开讨论 (见周报 [#292][news292 bips]、[#296][news296 bips]和[#297][news297 bips])，以下贡献者已被[任命为][chow editors] BIP 编辑：Bryan "Kanzure" Bishop、Jon Atack、Mark "Murch" Erhardt、Olaoluwa "Roasbeef" Osuntokun 和 Ruben Somsen。{% assign timestamp="20:08" %}
+- **<!--BIP-editors-update-->BIP 编辑更新：** 经过公开讨论 (见周报 [#292][news292 bips]、[#296][news296 bips]和[#297][news297 bips])，以下贡献者已被[推举为][chow editors] BIP 编辑：Bryan "Kanzure" Bishop、Jon Atack、Mark "Murch" Erhardt、Olaoluwa "Roasbeef" Osuntokun 和 Ruben Somsen。{% assign timestamp="20:08" %}
 
 ## Bitcoin Stack Exchange 精选问答
 
