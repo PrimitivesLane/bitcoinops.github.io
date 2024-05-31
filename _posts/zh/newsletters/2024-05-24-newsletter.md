@@ -17,23 +17,23 @@ lang: zh
   - *<!--changing-parameters-->改变参数*：目前，部分通道设定是由双方提前商定的，在通道的整个生命历程中都不能更改。参数更新功能将允许双方在后续时间里重新谈判。举个例子，节点可能希望改变他们开始[修剪 HTLC][topic trimmed htlc] 的金额门槛，或者是为了反激励对手使用旧状态关闭通道而要求对手保留的通道余额。
   - *<!--updating-commitments-->更新承诺交易形式*：闪电通道内的 *承诺交易* 允许参与者将最新的通道状态发布的链上。而[承诺交易形式更新][topic channel commitment upgrades]功能允许双方在基于 P2WSH 的通道中切换成使用 “[锚点输出][topic anchor outputs]” 和 “[v3 交易][topic v3 transaction relay]”、在 “[简单 taproot 通道][topic simple taproot channels]” 中切换成使用 “点时间锁合约（[PTLC][topic ptlc]）”。
   - *<!--replacing-funding-->替换注资输出*：闪电通道是以一笔 *注资交易* 的形式锚定在链上的，这笔交易的输出会在链下被承诺交易反复花费。一开始，所有的闪电注资交易都使用 P2WSH 输出；但是，更新的特性，例如 [PTLC][topic ptlc]，需要切换成使用 P2TR 输出。
-  
+
   Kirk-Cohen 对比三种此前出现的升级通道的想法：
-  
+
   - *<!--dynamic-commitments-->动态承诺交易*：如其[规范草案][BOLTs #1117]所述，该提议允许改变几乎所有的通道参数，并且通过一种新的 “kickoff” 交易提供了更新注资输出和承诺交易类型的通用路径。
   - *<!--splice-to-upgrade-->以拼接来升级*：这个想法允许一笔 “[通道拼接交易][topic splicing]”（它本就必然要更新一条通道的注资输出）来改变注资输出的类型，以及（可选）承诺交易的形式。它并不能直接处理改变参数的需要。
   - *<!--upgrade-on-re-establish-->在重建中升级*：也有自己的[规范草案][bolts #868]，该提议允许双方在重新建立数据连接的时候改变许多通道参数。也并不直接处理更新注资输出和承诺交易形式的需要。
-  
+
   展示完所有的选择之后，Kirk-Cohen 在一张表格中对比了它们的链上开销、优点和缺点；她也对比了不使用任何此类方案的链上开销。她给出了一些结论，包括：“我认为，明智的做法是现在开始开发 ‘[动态承诺交易][bolts #1117]’ 技术以更新参数和承诺交易的格式，但使之独立于升级到 taproot 通道的方法选择。因为它会给我们升级到 `option_zero_fee_htlc_tx` 锚点通道的办法，也提供了一种承诺交易格式的升级机制，可以用来升级到 V3 通道（只要后者形成了规范）。”
-  
-- **<!--challenges-in-rewarding-pool-miners-->保证参与矿池的矿工得到合理支付的挑战**：Ethan Tuttle 在 Delving Bitcoin 论坛中[发帖][tuttle poolcash]指出[矿池][topic pooled mining]可以按照挖矿 份额/分数 的比例用 [ecash][topic ecash] token 来奖励参与的矿工。然后矿工可以立即卖出或转移这些 token，或者可以等待矿池挖出区块，到某个时间点矿池会用聪来交换这些 token。
+
+- **<!--challenges-in-rewarding-pool-miners-->保证参与矿池的矿工得到合理支付的挑战**：Ethan Tuttle 在 Delving Bitcoin 论坛中[发帖][tuttle poolcash]指出[矿池][topic pooled mining]可以按照挖矿份额的比例用 [ecash][topic ecash] token 来奖励参与的矿工。然后矿工可以立即卖出或转移这些 token，或者可以等待矿池挖出区块，到某个时间点矿池会用聪来交换这些 token。
 
   对这个想法的批评和建议都出现了。我们发现尤有启发性的是 Matt Corallo 的[回复][corallo pooldelay]，他指出了一个底层问题：大型矿池所实现的标准化支付方法不允许矿工在短的时间间隔内计算自己应得的收益。两种常见的计酬方法是：
 
-  - *<!--pay-per-share-pps-->按 份额/分数 支付（PPS）*：这会按照矿工贡献的工作量向矿工支付，即使还没有找到区块。为区块补贴计算成比例的报酬是容易的，但为交易手续费计算合理的报酬就更难。Corallo 指出，大部分矿池似乎都使用这些挖矿分数在一天内收到的手续费作为平均值，也就是说，一个分数的报酬至少要在该分数挖出之后的一天之后才能计算出来。此外，许多矿池可能会使用自己的方法来调整手续费平均数。
+  - *<!--pay-per-share-pps-->按份额支付（PPS）*：这会按照矿工贡献的工作量向矿工支付，即使还没有找到区块。为区块补贴计算成比例的报酬是容易的，但为交易手续费计算合理的报酬就更难。Corallo 指出，大部分矿池似乎都使用这些挖矿份额在一天内收到的手续费作为平均值，也就是说，一个份额的报酬至少要在该份额挖出之后的一天之后才能计算出来。此外，许多矿池可能会使用自己的方法来调整手续费平均数。
   - *<!--pay-per-last-n-shares-pplns-->按最后 n 个份额支付（PPLNS）*：按照矿工在临近矿池挖出区块的时间贡献的份额来计算报酬。但是，一个矿工只有在自己挖出一个区块时，才能确切地知晓矿池一定挖出了一个区块。一个普通矿工（在短期内）没有办法知道矿池派发的是正确的收益。
 
-  信息的缺乏使得矿工无法快速切换到另一个矿池，即使他们的主要矿池已经开始欺骗他们。[Stratum v2][topic pooled mining] 也不能解决这个问题，虽然正直的矿池可以使用一种标准化的消息来告知矿工他们将停止得到支付。Corallo 链接了一个给 Startum V2 的[提议][corallo sv2 proposal]，允许矿工验证他们所有的分数都计算进了报酬中，从而至少矿工可以在一个稍长的时间（几小时到几天）之后检测出自己没有得到正确的支付。
+  信息的缺乏使得矿工无法快速切换到另一个矿池，即使他们的主要矿池已经开始欺骗他们。[Stratum v2][topic pooled mining] 也不能解决这个问题，虽然正直的矿池可以使用一种标准化的消息来告知矿工他们将停止得到支付。Corallo 链接了一个给 Startum V2 的[提议][corallo sv2 proposal]，允许矿工验证他们所有的份额都计算进了报酬中，从而至少矿工可以在一个稍长的时间（几小时到几天）之后检测出自己没有得到正确的支付。
 
   截至本刊出版之时，讨论还在继续。
 
@@ -64,22 +64,31 @@ lang: zh
 *在这个月度栏目中，我们点出比特币钱包和服务的有趣升级。*
 
 - **<!--silent-payment-resources-->关于静默支付的资源**：多项关于[静默支付][topic silent payments]的资源发布了，包括一个信息网站 [silentpayments.xyz][sp website]、[两个][bi ts sp] TypeScript [库][bw ts sp]、一个[基于 Go 语言的后端][gh blindbitd]、一个[网页版钱包][gh silentium]，[等等][sp website devs]。因为绝大部分软件都是新开发的，还未成熟，请谨慎使用。
+
 - **<!--cake-wallet-adds-silent-payments-->Cake Wallet 加入静默支付**：[Cake Wallet][cake wallet website]最近[宣布][cake wallet announcement]他们的最新 beta 版本支持了静默支付。
+
 - **<!--coordinatorless-coinjoin-poc-->无需协调员的 coinjoin 概念验证**：[Emessbee][gh emessbee] 是一个概念验证项目，可用来创建 [coinjoin][topic coinjoin] 交易，而无需引入一个中心协调员。
+
 - **<!--ocean-adds-bolt12-support-->OCEAN 矿池添加 BOLT12 支持**：OCEAN 矿池使用一种[签名消息][topic generic signmessage]将一个比特币地址与一个 [BOLT12 offer][topic offers] 关联起来，作为他们的[闪电网络付酬][ocean docs]方式的一部分。
+
 - **<!--coinbase-adds-lightning-support-->Coinbase 添加闪电网络支持**：使用来自 [Lightspark][lightspark website] 的基础设施，[Coinbase 交易所添加了闪电网络][coinbase blog]存取款支持。
+
 - **<!--bitcoin-escrow-tooling-announced-->比特币保管合约工具链发布**：[BitEscrow][bitescrow website]团队退出了一组[开发者工具][bitescrow docs]，用于实现非托管的比特币保管合约（escrow）。
+
 - **<!--blocks-call-for-mining-community-feedback-->Block 请求挖矿社区的反馈**：在[播报][block blog]他们的 3 纳米芯片的进展时，Block 请求挖矿社区给予对他们的硬件软件特性、维护状况和其它问题的反馈。
+
 - **<!--sentrum-wallet-tracker-released-->Sentrum 钱包跟踪器发布**：[Sentrum][gh sentrum] 是一种观察钱包，支持一系列的通知信道。
+
 - **<!--stack-wallet-adds-frost-support-->Stack Wallet 加入 FROST 支持**：[Stack Wallet v2.0.0][gh stack wallet] 使用 Rust 库 Modular FROST 添加了对 FROST（一种 Schnorr [门限][topic threshold signature]多签名技术）的支持。
+
 - **<!--transaction-broadcast-tool-announced-->交易广播工具发布**：[Pushtx][gh pushtx] 是一个简单的 Rust 程序，可以将交易直接广播到比特币点对点网络中。
-- 
 
 ## 新版本和候选版本
 
 *热门比特币基础设施项目的新版本和候选版本。请考虑升级到新版本或帮助测试候选版本。*
 
 - [Bitcoin Inquisition 27.0][] 是这个 Bitcoin Core 复刻的最新的大版本，它是专门用于在[signet][topic signet]上测试软分叉和其它重大协议变更的。本版本的新特性是在 signet 上强制执行由 [BIN24-1][] 和 [BIP347][] 指定的[OP_CAT][]。此外，“`bitcoin-util` 包含了一个新的子命令 `evalscript`，可以用来测试脚本操作码的动作”。已经放弃对 `annexdatacarrier` 和伪装的 “[临时锚点][topic ephemeral anchors]” 的支持（见周报 [#244][news244 annex] 和 [#248][news248 ephemeral]）。
+
 - [LND v0.18.0-beta.rc2][] 是这个热门的闪电节点实现的下一个大版本的候选发布。
 
 ## 重大的代码和文档变更
