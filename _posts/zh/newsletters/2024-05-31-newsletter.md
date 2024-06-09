@@ -38,25 +38,25 @@ lang: zh
 nswer -->{% endcomment %}
 {% assign bse = "https://bitcoin.stackexchange.com/a/" %}
 
-- [最小的 coinbase 交易/区块大小是多少？]({{bse}}122951)
+- [<!--what-s-the-smallest-possible-coinbase-transaction-block-size-->最小的 coinbase 交易/区块大小是多少？]({{bse}}122951)
   AAntoine Poinsot 解释了 coinbase 交易的最小限制，并得出当前区块高度下最小的有效比特币区块为 145 字节。
 
-- [理解脚本的数字编码，CScriptNum]({{bse}}122939)
+- [<!--understanding-script-s-number-encoding-cscriptnum-->理解脚本的数字编码，CScriptNum]({{bse}}122939)
   Antoine Poinsot 描述了 CScriptNum 如何在比特币的脚本中表示整数，提供了一些编码示例，并链接到两个序列化实现。
 
-- [有没有办法公开 BTC 钱包地址但隐藏其包含的 BTC 数量？]({{bse}}122786)
+- [<!--is-there-a-way-to-make-a-btc-wallet-address-public-but-hide-how-many-btc-it-contains-->有没有办法公开 BTC 钱包地址但隐藏其包含的 BTC 数量？]({{bse}}122786)
   Vojtěch Strnad 指出，[静默支付][topic silent payments]的可复用支付地址允许发布一个公开的支付标识符，而观察者无法将支付给该标识符的交易关联起来。
 
-- [在 regtest 中测试增加的费率]({{bse}}122837)
+- [<!--testing-increased-feerates-in-regtest-->在 regtest 中测试增加的费率]({{bse}}122837)
   在 regtest 中，Ava Chow 建议使用 Bitcoin Core 的测试框架，并设置 `-maxmempool` 为低值和 `-datacarriersize` 为高值，以帮助模拟高费率环境。
 
-- [为什么我的 P2P_V2 对等节点通过 v1 连接相连]({{bse}}122774)
+- [<!--why-is-my-p2p-v2-peer-connected-over-a-v1-connection-->为什么我的 P2P_V2 对等节点通过 v1 连接相连]({{bse}}122774)
   Pieter Wuille 推测是过时的对等节点地址信息导致用户看到支持 BIP324 [加密传输][topic v2 p2p transport]的对等节点通过 v1 非加密连接相连。
 
-- [P2PKH 交易是发送到未压缩公钥的哈希还是压缩公钥的哈希？]({{bse}}122875)
+- [<!--does-a-p2pkh-transaction-send-to-the-hash-of-the-uncompressed-key-or-the-compressed-key-->P2PKH 交易是发送到未压缩公钥的哈希还是压缩公钥的哈希？]({{bse}}122875)
   Pieter Wuille 指出，压缩和未压缩的公钥都可以使用，产生不同的 P2PKH 地址，并补充说，P2WPKH 只允许使用压缩公钥，P2TR 使用[x-only 公钥][topic X-only public keys]。
 
-- [广播区块到比特币网络的不同方式是什么？]({{bse}}122953)
+- [<!--what-are-different-ways-to-broadcast-a-block-to-the-bitcoin-network-->广播区块到比特币网络的不同方式是什么？]({{bse}}122953)
   Pieter Wuille 概述了在 P2P 网络上宣布区块的四种方式：使用[BIP130][]、使用 [BIP152][]、发送[未请求的 `block` 信息][unsolicited `block` messages]以及较旧的 `inv` / `getdata` / `block` 消息流。
 
 ## 版本和候选版本
@@ -82,7 +82,7 @@ _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning]
 
 - [Bitcoin Core #26606][] 引入了 `BerkeleyRODatabase`，这是一个独立实现的 Berkeley 数据库（BDB）文件解析器，提供对 BDB 文件的只读访问。现在可以在不需要重型 BDB 库的情况下提取传统钱包数据，以简化迁移到[描述符][topic descriptors]钱包。`wallettool` 工具的 `dump` 命令改为使用 `BerkeleyRODatabase`。
 
-- [BOLTs #1092][] 通过删除不再支持和未使用的功能 `initial_routing_sync` 和 `option_anchor_outputs` 来清理闪电网络（LN）规范。现在假定所有节点都具备三个功能：`var_onion_optin` 用于可变大小的[洋葱消息][topic onion messages]，以将任意数据中继到特定跳点，`option_data_loss_protect` 用于节点重新连接时发送其最新通道状态的信息，以及 `option_static_remotekey` 允许节点请求每个通道更新承诺以将节点的非 [HTLC][topic htlc] 资金发送到相同地址。对特定消息请求的`gossip_queries` 功能进行了更改，以便不支持该功能的节点不会被其他节点查询。见周报[#259][news259 cleanup]。 
+- [BOLTs #1092][] 通过删除不再支持和未使用的功能 `initial_routing_sync` 和 `option_anchor_outputs` 来清理闪电网络（LN）规范。现在假定所有节点都具备三个功能：`var_onion_optin` 用于可变大小的[洋葱消息][topic onion messages]，以将任意数据中继到特定跳点，`option_data_loss_protect` 用于节点重新连接时发送其最新通道状态的信息，以及 `option_static_remotekey` 允许节点请求每个通道更新承诺以将节点的非 [HTLC][topic htlc] 资金发送到相同地址。对特定消息请求的`gossip_queries` 功能进行了更改，以便不支持该功能的节点不会被其他节点查询。见周报[#259][news259 cleanup]。
 
 {% assign day_after_posting = page.date | date: "%s" | plus: 86400 | date: "%Y-%m-%d 14:30" %}
 {% include snippets/recap-ad.md when="2024-06-04 14:30" %}
@@ -107,5 +107,5 @@ _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning]
 [news52 asmap]: /en/newsletters/2019/06/26/#differentiating-peers-based-on-asn-instead-of-address-prefix
 [news83 asmap]: /en/newsletters/2020/02/05/#bitcoin-core-16702
 [news101 asmap]: /en/newsletters/2020/06/10/#bitcoin-core-0-20-0
-[news290 asmap]: /zh/newsletters/2024/02/21/#improved-reproducible-asmap-creation-process
-[news259 cleanup]: /zh/newsletters/2023/07/12/#ln-specification-clean-up-proposed
+[news290 asmap]: /zh/newsletters/2024/02/21/#improved-reproducible-asmap-creation-process-asmap
+[news259 cleanup]: /zh/newsletters/2023/07/12/#ln
