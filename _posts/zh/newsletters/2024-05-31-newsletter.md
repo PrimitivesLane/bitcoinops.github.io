@@ -26,9 +26,9 @@ lang: zh
   Usiwoma 的帖子提供了一个示例，并链接到之前的讨论和他创建的[参考实现][usiwoma poc]。
 
 - **<!--Should-overlapping-soft-fork-proposals-be-considered-mutually-exclusive-->应该认为重叠的软分叉提案是相互排斥的吗？**
-  Pierre Rochard [提问][rochard exclusive]，是否应认为在相似成本下能提供许多相同功能的软分叉提案是相互排斥的，是否有必要激活多个提案，让开发者使用他们偏爱的替代方案。
+  Pierre Rochard [提问][rochard exclusive]，是否应认为在相似成本下能提供许多相同特性的软分叉提案是相互排斥的，是否有必要激活多个提案，让开发者使用他们偏爱的替代方案。
 
-  Anthony Towns [回复][towns exclusive]了多个点，包括表示仅重叠功能本身不是问题，但如果没有人使用这些功能，因为每个人都喜欢替代方案，可能会产生几个问题。他建议任何支持特定提案的人在预生产软件中测试其功能以了解它们，特别是与可以添加到比特币的其他方式进行比较。
+  Anthony Towns [回复][towns exclusive]了多个点，包括表示仅重叠特性本身不是问题，但如果没有人使用这些特性是因为每个人都喜欢替代方案，这可能会产生几个问题。他建议任何支持特定提案的人在预生产软件中测试其特性以了解它们，特别是与可以添加到比特币的其他方式进行比较。
 
 ## Bitcoin Stack Exchange 的精选问答
 
@@ -42,7 +42,7 @@ nswer -->{% endcomment %}
   AAntoine Poinsot 解释了 coinbase 交易的最小限制，并得出当前区块高度下最小的有效比特币区块为 145 字节。
 
 - [<!--understanding-script-s-number-encoding-cscriptnum-->理解脚本的数字编码，CScriptNum]({{bse}}122939)
-  Antoine Poinsot 描述了 CScriptNum 如何在比特币的脚本中表示整数，提供了一些编码示例，并链接到两个序列化实现。
+  Antoine Poinsot 描述了 CScriptNum 如何在比特币的脚本中表示整数，提供了一些编码示例，并给出两个序列化实现的链接。
 
 - [<!--is-there-a-way-to-make-a-btc-wallet-address-public-but-hide-how-many-btc-it-contains-->有没有办法公开 BTC 钱包地址但隐藏其包含的 BTC 数量？]({{bse}}122786)
   Vojtěch Strnad 指出，[静默支付][topic silent payments]的可复用支付地址允许发布一个公开的支付标识符，而观察者无法将支付给该标识符的交易关联起来。
