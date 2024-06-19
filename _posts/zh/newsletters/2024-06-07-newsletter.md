@@ -74,7 +74,7 @@ lang: zh
 
 - [LDK #2931][] 增强了寻路期间的日志记录功能，以纳入有关直接通道的额外数据，例如这些通道是否缺失、其最小 [HTLC][topic htlc] 值和最大 HTLC 值。新增的日志记录功能旨在通过提供每个通道可用流动性和限制的可见性，更好地解决路由问题。
 
-- [Rust Bitcoin #2644][] 在 `bitcoin_hashes` 组件中添加了 HKDF（HMAC（基于哈希的消息认证码）提取和扩展密钥派生函数），以在 Rust Bitcoin 中实现 [BIP324][]。HKDK 用于以安全、标准化的方式从密钥材料源派生加密密钥。BIP324（也称为 [v2 P2P 传输][topic v2 p2p transport]）是一种允许比特币节点通过加密连接进行通信的方法（在 Bitcoin Core 中默认启用）。
+- [Rust Bitcoin #2644][] 在 `bitcoin_hashes` 组件中添加了 HKDF（HMAC（基于哈希的消息认证码）提取和扩展密钥派生函数），以在 Rust Bitcoin 中实现 [BIP324][]。HKDF 用于以安全、标准化的方式从密钥材料源派生加密密钥。BIP324（也称为 [v2 P2P 传输][topic v2 p2p transport]）是一种允许比特币节点通过加密连接进行通信的方法（在 Bitcoin Core 中默认启用）。
 
 - [BIPs #1541][] 添加了 [BIP431][]，其中包含“在确认前受拓扑限制”（[TRUC][topic v3 transaction relay]）交易（v3 交易）的规范，这些交易是标准交易的一个子集，附加规则旨在允许[交易替换][topic rbf]，同时最大限度地降低克服[交易钉死][topic transaction pinning]攻击的成本。
 
