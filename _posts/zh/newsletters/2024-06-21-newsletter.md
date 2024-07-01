@@ -69,7 +69,7 @@ _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning]
 Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、
 [Lightning BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。_
 
-- [Bitcoin Core #29325][] 开始将交易版本存储为无符号整数。自比特币 0.1 的原始版本以来，它们一直存储为有符号整数。[BIP68][] 软分叉开始将其视为无符号整数，但至少一个公开的比特币重新实现无法产生相同的动作，产生了共识故障的可能(见[周报 #286][news286 btcd])。通过始终以无符号整数存储和使用交易版本，希望基于阅读 Bitcoin Core 代码的任何未来比特币实现都能使用正确的类型。
+- [Bitcoin Core #29325][] 开始将交易版本存储为无符号整数。自比特币 0.1 的原始版本以来，它们一直存储为有符号整数。[BIP68][] 软分叉开始将其视为无符号整数，但至少一个公开的比特币重新实现无法产生相同的动作，产生了共识故障的可能（见[周报 #286][news286 btcd]）。通过始终以无符号整数存储和使用交易版本，希望基于阅读 Bitcoin Core 代码的任何未来比特币实现都能使用正确的类型。
 
 - [Eclair #2867][] 定义了一种新的 `EncodedNodeId` 类型，用于[盲化路径][topic rv routing]中的移动钱包。这允许钱包提供商收到通知，下一个节点是移动设备，从而使他们能够考虑特定于移动设备的条件。
 
@@ -79,7 +79,7 @@ Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (
 
 - [LDK #3078][] 添加了对 [BOLT12][topic offers] 发票异步支付的支持：一旦设置了配置选项 `manually_handle_bolt12_invoices`，则在接收发票时生成 `InvoiceReceived` 事件。在 `ChannelManager` 上公开一个新命令 `send_payment_for_bolt12_invoice` 以支付发票。这可以允许代码在决定是付款还是拒绝发票之前评估发票。
 
-- [LDK #3082][] 通过添加编码和解析接口以及构建方法来构建 BOLT12 静态发票以响应来自[要约（offer）][topic offers] 的 `InvoiceRequest`，来支持 BOLT12 静态发票（可复用支付请求）。 
+- [LDK #3082][] 通过添加编码和解析接口以及构建方法来构建 BOLT12 静态发票以响应来自[要约（offer）][topic offers] 的 `InvoiceRequest`，来支持 BOLT12 静态发票（可复用支付请求）。
 
 - [LDK #3103][] 开始在基准测试中使用基于实际支付路径频繁[探测][topic payment probes]的性能评分器。希望这能导致更现实的测试基准。
 
@@ -89,12 +89,12 @@ Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (
 {% include snippets/recap-ad.md when=four_days_after_posting %}
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="2867,8730,3098,3078,3082,3103,3037,29325" %}
-[news304 sp-psbt]: /zh/newsletters/2024/05/24/#discussion-about-psbts-for-silent-payments
+[news304 sp-psbt]: /zh/newsletters/2024/05/24/#discussion-about-psbts-for-silent-payments-psbt
 [news58 variable onions]: /en/newsletters/2019/08/07/#bolts-619
 [morehouse onion]: https://delvingbitcoin.org/t/dos-disclosure-lnd-onion-bomb/979
-[bcc 27.1]: /en/newsletters/2024/06/14/#bitcoin-core-27-1
+[bcc 27.1]: /zh/newsletters/2024/06/14/#bitcoin-core-27-1
 [bitcoin core 26.2rc1]: https://bitcoincore.org/bin/bitcoin-core-26.2/
-[news286 btcd]: /zh/newsletters/2024/01/24/#disclosure-of-fixed-consensus-failure-in-btcd
+[news286 btcd]: /zh/newsletters/2024/01/24/#disclosure-of-fixed-consensus-failure-in-btcd-btcd
 [casa blog]: https://blog.casa.io/introducing-wallet-descriptors/
 [specter-diy v1.9.0]: https://github.com/cryptoadvance/specter-diy/releases/tag/v1.9.0
 [cargo-checkct github]: https://github.com/Ledger-Donjon/cargo-checkct
@@ -104,7 +104,7 @@ Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (
 [ark github]: https://github.com/ark-network/ark/
 [ark developer hub]: https://arkdev.info/docs/
 [volt github]: https://github.com/Zero-1729/volt
-[news214 joinstr]: /zh/newsletters/2022/08/24/#proof-of-concept-coinjoin-implementation-joinstr
+[news214 joinstr]: /zh/newsletters/2022/08/24/#coinjoin-joinstr
 [joinstr blog]: https://uncensoredtech.substack.com/p/tutorial-electrum-plugin-for-joinstr
 [bitkit blog]: https://blog.bitkit.to/synonym-officially-launches-the-bitkit-wallet-on-app-stores-9de547708d4e
 [civkit tweet]: https://x.com/gregory_nico/status/1800818359946154471
