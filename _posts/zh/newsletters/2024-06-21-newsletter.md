@@ -13,7 +13,7 @@ lang: zh
 
 - **<!--Disclosure-of-vulnerability-affecting-old-versions-of-LND-->影响旧版本 LND 的漏洞纰漏：** Matt Morehouse 在 Delving Bitcoin 上[发布了][morehouse onion]一则关于影响 LND 0.17.0 之前版本的漏洞披露。LN 通过洋葱加密的包传递支付指令和[洋葱消息][topic onion messages]，这些包包含多个加密的有效负载。每个有效负载以其长度为前缀，[自 2019 年以来][news58 variable onions]，支付的有效负载[允许]的大小最大为 1300 字节。后来引入的洋葱消息，最大可以达到 32,768 字节。然而，有效负载大小前缀使用的数据类型允许指示的大小最大为 2<sup>64</sup> 字节。
 
-  LND 接受的有效负载指示大小最大为 4GB，并在进一步处理有效负载之前分配相应的内存。这足以耗尽某些 LND 节点的内存，导致它们崩溃或被操作系统终止，并且可以通过发送多个这种方式构造的洋葱包来使得具有更多内存的节点崩溃。崩溃的 LN 节点无法发送可能需要保护其资金的时间敏感型交易，可能导致资金被盗。
+  LND 接受的有效负载指示大小最大为 4GB，并在进一步处理有效负载之前分配相应的内存。这足以耗尽某些 LND 节点的内存，导致它们崩溃或被操作系统终止，并且可以通过发送多个这种方式构造的洋葱包来使得具有更多内存的节点崩溃。崩溃的 LN 节点无法发送可能必要的、用于保护其资金的时间敏感型交易，因此可能导致资金被盗。
 
   该漏洞通过将最大内存分配减少到 65,536 字节得以修复。
 
@@ -36,13 +36,13 @@ lang: zh
   [v1.9.0][specter-diy v1.9.0] 版本增加了对 taproot [miniscript][topic miniscript] 和 [BIP85][] 应用程序的支持，以及其他更改。
 
 - **<!--Constant-time-analysis-tool-cargo-checkct-announced-->恒定时间分析工具 cargo-checkct 公布：**
-  一篇 Ledger [的博客文章][ledger cargo-checkct blog]公布了 [cargo-checkct][cargo-checkct github]，这是一种评估 Rust 加密库是否以恒定时间运行以避免[时序旁路攻击][topic side channels]。
+  一篇 Ledger [的博客文章][ledger cargo-checkct blog]公布了 [cargo-checkct][cargo-checkct github]，这是一种评估 Rust 加密库是否以恒定时间运行以避免[时序旁路攻击][topic side channels]的工具。
 
 - **<!--Jade-adds-miniscript-support-->Jade 增加了 miniscript 支持：**
   Jade 硬件签名设备固件[现在支持][jade tweet] miniscript。
 
 - **<!--Ark-implementation-announced-->Ark 实现端发布：**
-  Ark Labs [发布了][ark labs blog]一些围绕 [Ark 协议][topic ark]的举措，包括 [Ark 实现端][ark github]和[开发者资源][ark developer hub]。
+  Ark Labs [发布了][ark labs blog]一些围绕 [Ark 协议][topic ark]的举措，包括 [Ark 实现][ark github]和[开发者资源][ark developer hub]。
 
 - **<!--Volt-Wallet-beta-announced-->Volt Wallet 测试版发布：**
   [Volt Wallet][volt github] 支持描述符、[taproot][topic taproot]、[PSBT][topic psbt] 和其他 BIP，以及闪电网络。
@@ -69,7 +69,7 @@ _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning]
 Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、
 [Lightning BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。_
 
-- [Bitcoin Core #29325][] 开始将交易版本存储为无符号整数。自比特币 0.1 的原始版本以来，它们一直存储为有符号整数。[BIP68][] 软分叉开始将其视为无符号整数，但没有一个比特币重新实现端能再现这种行为，导致可能的共识故障(见[周报 #286][news286 btcd])。通过始终以无符号整数存储和使用交易版本，以希望基于阅读 Bitcoin Core 代码的任何未来比特币实现都能使用正确的类型。
+- [Bitcoin Core #29325][] 开始将交易版本存储为无符号整数。自比特币 0.1 的原始版本以来，它们一直存储为有符号整数。[BIP68][] 软分叉开始将其视为无符号整数，但至少一个公开的比特币重新实现无法产生相同的动作，产生了共识故障的可能(见[周报 #286][news286 btcd])。通过始终以无符号整数存储和使用交易版本，希望基于阅读 Bitcoin Core 代码的任何未来比特币实现都能使用正确的类型。
 
 - [Eclair #2867][] 定义了一种新的 `EncodedNodeId` 类型，用于[盲化路径][topic rv routing]中的移动钱包。这允许钱包提供商收到通知，下一个节点是移动设备，从而使他们能够考虑特定于移动设备的条件。
 
@@ -77,7 +77,7 @@ Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (
 
 - [LDK #3098][] 更新了 LDK 的快速 Gossip 同步(RGS)到 v2，v2 通过增加了序列化结构中的附加字段扩展了 v1。这些新字段包括一个字节，以指示默认节点特征的数量、节点特征数组以及在每个节点公钥之后的补充特征或套接字地址信息。此更新与提议的 [BOLT7][] gossip 更新（同样称为 gossip v2）不同。
 
-- [LDK #3078][] 添加了对 [BOLT12][topic offers] 发票异步支付的支持，如果一旦设置了配置选项 `manually_handle_bolt12_invoices`，则在接收时生成 `InvoiceReceived` 事件。在 `ChannelManager` 上公开一个新命令 `send_payment_for_bolt12_invoice` 以支付发票。这可以允许代码在决定是付款还是拒绝发票之前评估发票。
+- [LDK #3078][] 添加了对 [BOLT12][topic offers] 发票异步支付的支持：一旦设置了配置选项 `manually_handle_bolt12_invoices`，则在接收发票时生成 `InvoiceReceived` 事件。在 `ChannelManager` 上公开一个新命令 `send_payment_for_bolt12_invoice` 以支付发票。这可以允许代码在决定是付款还是拒绝发票之前评估发票。
 
 - [LDK #3082][] 通过添加编码和解析接口以及构建方法来构建 BOLT12 静态发票以响应来自[要约（offer）][topic offers] 的 `InvoiceRequest`，来支持 BOLT12 静态发票（可复用支付请求）。 
 
