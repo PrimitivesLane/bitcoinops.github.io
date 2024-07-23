@@ -17,16 +17,16 @@ lang: zh
 
 *在这个月度部分，我们总结了 [Bitcoin Core PR 审核俱乐部][Bitcoin Core PR Review Club]会议，重点介绍了一些重要的问题和答案。单击下面的问题以查看会议答案的总结。*
 
-[包括 PoW 难度调整修复的 Testnet4][review club 29775]是 [Fabian Jahr][gh fjahr] 提出的 PR 引入的新的以取代 Testnet3 的测试网络，Testnet4 同时修复了长期存在的难度调整和时间扭曲漏洞。它是
+[包括 PoW 难度调整修复的 Testnet4][review club 29775]是 [Fabian Jahr][gh fjahr] 提出的 PR ，引入的新的测试网络以取代 Testnet3 。Testnet4 同时修复了长期存在的难度调整和时间扭曲漏洞。它是
 [邮件列表讨论的][ml testnet4]结果，并附有[BIP 提案][bip testnet4]。
 
 {% include functions/details-list.md
   q0="<!--aside-from-the-consensus-changes-what-differences-do-you-see-between-testnet-4-and-testnet-3-particularly-the-chain-params-->除了共识变化外，你在 Testnet 4 和 Testnet 3 之间看到的其他区别是什么，特别是在链参数方面？"
-  a0="过去软分叉的部署高度都设置为 1，这意味着它们从一开始就处于活跃状态。Testnet4 还使用不同的端口(`48333`)和消息开始，并且它有一个新的创世区块消息。"
+  a0="过去软分叉的部署高度都设置为 1，这意味着这些软分叉从一开始就处于激活状态。Testnet4 还使用不同的端口(`48333`)和消息开始(messagestart)，并且它有一个新的创世区块消息。"
   a0link="https://bitcoincore.reviews/29775#l-29"
 
   q1="<!--how-does-the-20-min-exception-rule-work-in-testnet-3-how-does-this-lead-to-the-block-storm-bug-->Testnet 3 中的 20 分钟例外规则如何工作？这如何导致区块风暴漏洞？"
-  a1="如果一个新区块的时间戳比上一个区块的时间戳提前超过 20 分钟，则允许其具有最低工作量证明难度。下一个区块再次受“真实”难度的约束，除非它也符合 20 分钟例外规则。这个例外是为了算力高度可变的环境中使链能够进展。由于 `GetNextWorkRequired()` 实现中的一个漏洞，当难度周期的最后一个区块是最低难度区块时，难度实际上会被重置(而不是仅对一个区块暂时降低)。"
+  a1="如果一个新区块的时间戳比上一个区块的时间戳晚出超过 20 分钟，则允许其具有最低工作量证明难度。下一个区块再次受“真实”难度的约束，除非它也符合 20 分钟例外规则。这个例外是为了在算力高度可变的环境中使链能够出块。由于 `GetNextWorkRequired()` 实现中的一个漏洞，当难度周期的最后一个区块是最低难度区块时，难度实际上会被重置(而不是仅对一个区块暂时降低)。"
   a1link="https://bitcoincore.reviews/29775#l-47"
 
   q2="<!--why-was-the-time-warp-fix-included-in-the-pr-how-does-the-time-warp-fix-work-->为什么在 PR 中包含了时间扭曲的修复？时间扭曲修复是如何工作的？"
