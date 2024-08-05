@@ -15,31 +15,31 @@ lang: zh
 - **<!--varied-discussion-of-free-relay-and-fee-bumping-upgrades-->关于免费转发和手续费追加法更新的广泛讨论**：Peter Todd 在 Bitcoin-Dev 邮件组中[发帖][todd fr-rbf]列出了他此前[尽责披露][topic responsible disclosures]给 Bitcoin Core 开发者的免费转发攻击总结。这引出了覆盖多个问题和拟议优化的纠缠讨论。部分议题总结如下：
 
   - *<!--free-relay-attacks-->免费转发攻击*：[免费转发][topic free relay]指的是一个全节点帮助转发未确认的交易时，其交易池内的手续费收益增幅低于节点转发交易的费率门槛值（默认是 1 聪/vbyte）。免费转发通常会消耗一些内存，所以技术上来说不是免费的，但这个代价远远低于诚实用户为转发支付的代价。
-  
+
     免费转发允许攻击者大大增加参与交易转发全节点的带宽使用量，这可能会减少转发节点的数量。如果独立运营的转发节点的数量变得太少，交易者等于是直接把交易提交给矿工，这就跟 “[暗中支付手续费][topic out-of-band fees]” 一样会带来中心化风险。
-  
+
     Todd 介绍的供给利用了矿工与用户的交易池规则差异。许多矿工倾向于开启 [full-RBF][topic rbf]，但 Bitcoin Core 并不默认开启（见[周报 #263][news263 full-rbf]）。这允许攻击者制作一笔交易的不同版本，使它们在 full-RBF 的矿工和非 full-RBF 的转发节点处得到不同待遇。转发节点可能最终会转发一笔交易的多个版本，但这些版本的确认机会都很小，这就浪费了带宽。
-  
+
     免费转发攻击不能让攻击者偷盗其他用户的资金，虽然一次突然的或长期持续的攻击可能会被用来分裂网络、让其它类型的攻击更容易发动。就我们所知，破坏性的免费转发攻击还没有出现过。
-  
-  - *<!--free-relay-and-replacebyfeerate-->免费转发与手续费率替换*：Peter Todd 之前提出过两种形式的 “手续费率替换（RBFR）”；详见[周报 #288][news288 rbfr]。对 RBFR 的一种批评是，它会带来免费转发。而相似量级的免费转发已经可以通过他本周介绍的攻击发送，因此他主张，对免费转发的顾虑不应阻塞添加一种可以缓解[交易钉死供给][topic transaction pinning]的有用特性。
-  
+
+  - *<!--free-relay-and-replacebyfeerate-->免费转发与手续费率替换*：Peter Todd 之前提出过两种形式的 “手续费率替换（RBFR）”；详见[周报 #288][news288 rbfr]。对 RBFR 的一种批评是，它会带来免费转发。而相似量级的免费转发已经可以通过他本周介绍的攻击发送，因此他主张，对免费转发的顾虑不应阻塞添加一种可以缓解[交易钉死攻击][topic transaction pinning]的有用特性。
+
     一个[回复][harding rbfr fundamental]指出，因 RBFR 而成为可能的免费转发是根植于 RBFR 的设计的，而 Bitcoin Core 设计中的其它免费转发问题是可以缓解的。Todd [不同意][todd unsolvable]。
-    
+
   - *<!--truc-utility-->* *TRUC 的用途*：Peter Todd 声称 “确认前拓扑受限的（[TRUC][topic v3 transaction relay]）” 交易是一个 “糟糕的提议”。他此前批评过这个协议（详见[周报 #283][news283 truc pin]）并具体批评 TRUC 的规范 [BIP431][] 利用对免费转发的顾虑来支持 TRUC、反对他的 RBFR 提议。
-  
+
     然而，BIP431 也出于别的理由反对 RBFR 的版本，例如 Todd 的一次性 RBFR，依赖于替代交易支付了足够高的手续费、使自身能成为接下来几个区块中最利于挖掘的交易之一，也就是进入交易池最顶部。Todd 和其他人都同意，在 Bitcoin Core 开始实现 “[族群交易池][topic cluster mempool]” 之后，这会被变得简单很多，但 Todd 依旧建议使用当前即可用的其它方法。TRUC 不需要关于交易池顶部区域的信息，所以不依赖于族群交易池或替代方案。
-  
+
     这种角度的批评的长篇形式在[周报 #288][news288 rbfr] 中得到了总结，而后续研究（总结见[周报 #290][news290 rbf]）表明，不管什么交易替换规则，想要总是作出能够提升挖矿利得的选择有多么难。相比于 RBFR，TRUC 并不改变 Bitcoin Core 的替换规则（除了总是允许考虑 TRUC 交易的替换交易），所以它应该不会让任何现有的替换交易激励兼容性问题恶化。
-  
+
   - *<!--path-to-cluster-mempool-->通往族群交易池的路径*：如[周报 #285][news285 cluster cpfp-co] 所属，[族群交易池][topic cluster mempool]提议需要禁用 [CPFP carve-out][topic cpfp carve out]（CPFP-CO），而这是当前闪电通道的 “[锚点输出][topic anchor outputs]” 用来保护支付通道内的大额资金的方法。在结合 “[交易包转发][topic package relay]”（具体来说是交易包的手续费替换）时，一次性的 RBFR 也许可以替代 CPFP-CO，而不要求闪电通道软件作任何变更（只要它们已经会不断 RBF 以为花费锚点输出的交易追加手续费）。但是，一次性的 RBFR 依赖于从别的东西（比如族群交易池）那里了解交易池顶部曲语的手续费率，所以 RBFR 和族群交易池将需要跟族群交易池（或替代方法）同时部署，以确定交易池顶部的费率。
-  
+
     相比之下，TRUC 也提供了一种到 CPFP-CO 的替代，不过这是一个可选的特性。所有的闪电通道软件都需要升级到支持 TRUC、所有现存的通道都需要执行一次 “[通道承诺交易形式升级][topic channel commitment upgrades]”。这可能会花费大量时间，而且直到有强烈证据表明所有闪电网络用户都已经升级之前，都无法禁用 CPFP-CO。在 CPFP-CO 禁用之前，族群交易池无法安全地广泛部署。
-  
+
     如之前的 Optech 周报 [周报 #286][news286 imbued]、[周报 #287][news287 sibling] 和 [周报 #289][news289 imbued] 所述，TRUC 缓慢采用与族群交易池迫切需要之间的矛盾可以通过 “*渗透式 TRUC*” 来解决，该提议的想法是在锚点闪电通道上自动应用 TRUC 和 “[亲属交易驱逐][topic kindred rbf]”。多位闪电网络开发者和渗透式 TRUC 提议的贡献者[表示][teinurier hacky]，他们[倾向于][daftuar prefer not]避免这个结果 —— 显式升级到 TRUC 在许多方面都更好，而且闪电网络开发者开发通道升级机制还有其它理由 —— 不过，如果族群交易池的开发进度超过了闪电通道升级机制的进度，也许渗透式 TRUC 会被再次考虑。
-  
+
     虽然渗透式 TRUC 和主动式 TRUC 的广泛采用都可以禁用 CPFP-CO，并因此让族群交易池的部署成为可能，但两种 TRUC 都不依赖于族群交易池，也不依赖于其它计算交易激励兼容性的新方法。这让 TRUC 比 RBFR 更容易在独立于族群交易池的情境下分析。
-  
+
   截至本刊撰写之时，邮件组中的讨论还在继续。
 
 ## Bitcoin Stack Exchange 的精选问答
@@ -95,7 +95,7 @@ lang: zh
 [news288 rbfr]: /zh/newsletters/2024/02/07/#proposal-for-replace-by-feerate-to-escape-pinning
 [news290 rbf]: /zh/newsletters/2024/02/21/#pure-replace-by-feerate-doesn-t-guarantee-incentive-compatibility
 [news285 cluster cpfp-co]: /zh/newsletters/2024/01/17/#cpfp-carve-out
-[news286 imbued]: /en/newsletters/2024/01/24/#imbued-v3-logic
+[news286 imbued]: /zh/newsletters/2024/01/24/#imbued-v3-logic-v3
 [news287 sibling]: /zh/newsletters/2024/01/31/#kindred-replace-by-fee
 [news289 imbued]: /zh/newsletters/2024/02/14/#what-would-have-happened-if-v3-semantics-had-been-applied-to-anchor-outputs-a-year-ago-v3
 [todd fr-rbf]: https://mailing-list.bitcoindevs.xyz/bitcoindev/Zpk7EYgmlgPP3Y9D@petertodd.org/
