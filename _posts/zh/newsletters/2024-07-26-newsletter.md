@@ -12,7 +12,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--varied-discussion-of-free-relay-and-fee-bumping-upgrades-->关于免费转发和手续费追加法更新的广泛讨论**：Peter Todd 在 Bitcoin-Dev 邮件组中[发帖][todd fr-rbf]列出了他此前[尽责披露][topic responsible disclosures]给 Bitcoin Core 开发者的面粉转发攻击总结。这引出了覆盖多个问题和拟议优化的纠缠讨论。部分议题总结如下：
+- **<!--varied-discussion-of-free-relay-and-fee-bumping-upgrades-->关于免费转发和手续费追加法更新的广泛讨论**：Peter Todd 在 Bitcoin-Dev 邮件组中[发帖][todd fr-rbf]列出了他此前[尽责披露][topic responsible disclosures]给 Bitcoin Core 开发者的免费转发攻击总结。这引出了覆盖多个问题和拟议优化的纠缠讨论。部分议题总结如下：
 
   - *<!--free-relay-attacks-->免费转发攻击*：[免费转发][topic free relay]指的是一个全节点帮助转发未确认的交易时，其交易池内的手续费收益增幅低于节点转发交易的费率门槛值（默认是 1 聪/vbyte）。免费转发通常会消耗一些内存，所以技术上来说不是免费的，但这个代价远远低于诚实用户为转发支付的代价。
   
@@ -53,7 +53,7 @@ lang: zh
 
 - [<!--defaultmaxpeerconnections-for-bitcoin-core-is-125-or-130-->Bitcoin Core 的默认最大对等节点连接数量是 125 还是 130？]({{bse}}123645) Lightlike 澄清了虽然自动的对等节点连接的数量上限是 125 个，节点运营者可以另外手动添加最多 8 个连接。
 
-- [<!--why-do-protocol-developers-work-on-maximizing-miner-revenue-->为什么协议开发者要开发最大化矿工收益的交易池策略？]({{bse}}123679) David A. Harding 列出了可以预测哪笔交易会进入下一个区块的几个优势（通过假设矿工会最大化手续费收益），他指出：“这让花费者可以估计合理的手续费率，让志愿服务的转发节点可以用最少的带宽和内存来提供服务，并且让小体量的分散矿工可以赚的跟大体量的矿工相当的手续费收益。”
+- [<!--why-do-protocol-developers-work-on-maximizing-miner-revenue-->为什么协议开发者要开发最大化矿工收益的交易池策略？]({{bse}}123679) David A. Harding 列出了可以预测哪笔交易会进入下一个区块的几个优势（通过假设矿工会最大化手续费收益），他指出：“这让花费者可以估计合理的手续费率，让志愿服务的转发节点可以用最少的带宽和内存来提供服务，并且让小体量的分散矿工可以赚到跟大体量的矿工相当的手续费收益。”
 
 - [<!--is-there-an-economic-incentive-to-use-p2wsh-over-p2tr-->会有 P2WSH 的经济性会有超过 P2TR 的情况吗？]({{bse}}123500) Vojtěch Strnad 指出，虽然在某些用法下 P2WSH 输出可能比 P2TR 输出更便宜，但在 P2WSH 的绝大部分用法（比如多签名和闪电通道）中，使用 [taproot][topic taproot] 来隐藏未使用的脚本路径以及使用 [schnorr 签名][topic schnorr signatures] 的公钥聚合方案（比如 [MuSig2][topic musig] 和 FROST）可以获得更便宜的手续费。
 
@@ -61,7 +61,7 @@ lang: zh
 
 - [<!--pkh-nested-in-tr-is-allowed-->可以在 tr() 中嵌入 pkh() 吗？]({{bse}}123568) Pieter Wuille 指出，根据 [BIP386][]“tr() 输出脚本描述符”，在 `tr()` 中嵌入 `pkh()` 并非有效的描述符，但在 [BIP379][]“Miniscirpt” 下，这样的构造是可以允许的，所以具体要看应用开发者决定遵循那一个 BIP。
 
-- [BIP386][] Murch 的结论是，这样的链顶端也可以被认为是有效的，但只要链顶端的时间戳停留在节点本地时间的 24 小时以前，节点就会保持在 “初始化区块下载” 的状态下。
+- [<!--can-a-block-more-than-a-week-old-be-considered-a-valid-chain-tip-->时间戳是一周以前的区块可以被当作有效的链顶端吗？]({{bse}}123671) Murch 的结论是，这样的链顶端也可以被认为是有效的，但只要链顶端的时间戳停留在节点本地时间的 24 小时以前，节点就会保持在 “初始化区块下载” 的状态下。
 
 - [<!--sighashanyonecanpay-mediated-tx-modification-->SIGHASH_ANYONECANPAY 接入交易的修改]({{bse}}123429) Murch 解释了在链上众筹中使用 `SIGHASH_ALL | SIGHASH_ANYONECANPAY` 的挑战，以及 [SIGHASH_ANYPREVOUT][topic sighash_anyprevout] 可以带来什么帮助。
 
