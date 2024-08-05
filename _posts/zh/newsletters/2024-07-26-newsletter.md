@@ -57,7 +57,7 @@ lang: zh
 
 - [<!--is-there-an-economic-incentive-to-use-p2wsh-over-p2tr-->会有 P2WSH 的经济性会有超过 P2TR 的情况吗？]({{bse}}123500) Vojtěch Strnad 指出，虽然在某些用法下 P2WSH 输出可能比 P2TR 输出更便宜，但在 P2WSH 的绝大部分用法（比如多签名和闪电通道）中，使用 [taproot][topic taproot] 来隐藏未使用的脚本路径以及使用 [schnorr 签名][topic schnorr signatures] 的公钥聚合方案（比如 [MuSig2][topic musig] 和 FROST）可以获得更便宜的手续费。
 
-- [<!--how-many-blocks-per-second-can-sustainably-be-created-using-a-time-warp-attack-->使用时间扭曲攻击的时候，可以持续以何种速度创建区块？]({{bse}}123698) Murch 计算得出，在 “[时间扭曲供给][topic time warp]” 的环境下，“攻击者可以维持每秒产生 6 个区块的速度而不会导致难度提高。”
+- [<!--how-many-blocks-per-second-can-sustainably-be-created-using-a-time-warp-attack-->使用时间扭曲攻击的时候，可以持续以何种速度创建区块？]({{bse}}123698) Murch 计算得出，在 “[时间扭曲攻击][topic time warp]” 的环境下，“攻击者可以维持每秒产生 6 个区块的速度而不会导致难度提高。”
 
 - [<!--pkh-nested-in-tr-is-allowed-->可以在 tr() 中嵌入 pkh() 吗？]({{bse}}123568) Pieter Wuille 指出，根据 [BIP386][]“tr() 输出脚本描述符”，在 `tr()` 中嵌入 `pkh()` 并非有效的描述符，但在 [BIP379][]“Miniscirpt” 下，这样的构造是可以允许的，所以具体要看应用开发者决定遵循那一个 BIP。
 
