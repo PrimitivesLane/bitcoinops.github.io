@@ -11,22 +11,22 @@ lang: zh
 
 ## 新闻
 
-- **<!--Disclosure-of-vulnerabilities-affecting-Bitcoin-Core-versions-before-22.0-->影响 Bitcoin Core 22.0 之前的早期版本的漏洞披露：**
-  Niklas Gögge 在 Bitcoin-Dev 邮件列表中[发布了][goegge disclosure]两个影响旧版 Bitcoin Core 的漏洞公告链接，这些版本自 2022 年 10 月以来就已经停止支持。此公告紧随上个月对旧版漏洞的披露(见[周报 #310][news310 disclosure])。我们在此总结了这些披露内容：
+- **<!--disclosure-of-vulnerabilities-affecting-bitcoin-core-versions-before-22-0-->影响 Bitcoin Core 22.0 之前的早期版本的漏洞披露：**
+  Niklas Gögge 在 Bitcoin-Dev 邮件列表中[发布了][goegge disclosure]两个影响旧版 Bitcoin Core 的漏洞公告链接，这些版本自 2022 年 10 月以来就已经停止支持。此公告紧随上个月对旧版漏洞的披露（见[周报 #310][news310 disclosure]）。我们在此总结了这些披露内容：
 
-  - [通过发送过多的 `addr` 消息导致的远程崩溃][]：在 Bitcoin Core 22.0(2021 年 9 月发布)之前，如果一个节点被告知超过 2<sup>32</sup> 个其他可能的节点，该节点会因 32 位计数器的耗尽而崩溃。攻击者可以通过发送大量 P2P `addr` 消息 (至少 400 万条消息)来实现这一点<!-- assuming 1,000 addresses per addr message -->。Eugene Siegel [负责任地披露了][topic responsible disclosures]该漏洞，并且在 Bitcoin Core 22.0 中包含了修复程序。在[周报 #159][news159 bcc22387]中，我们总结了该修复程序，当时并不知道它修复了一个漏洞。
+  - [通过发送过多的 `addr` 消息导致的远程崩溃][Remote crash by sending excessive `addr` messages]：在 Bitcoin Core 22.0(2021 年 9 月发布)之前，如果一个节点被告知超过 2<sup>32</sup> 个其他可能的节点，该节点会因 32 位计数器的耗尽而崩溃。攻击者可以通过发送大量 P2P `addr` 消息 (至少 400 万条消息)来实现这一点<!-- assuming 1,000 addresses per addr message -->。Eugene Siegel [负责任地披露了][topic responsible disclosures]该漏洞，并且在 Bitcoin Core 22.0 中包含了修复程序。在[周报 #159][news159 bcc22387]中，我们总结了该修复程序，当时并不知道它修复了一个漏洞。
 
-  - [在本地网络上启用 UPnP 时导致的远程崩溃][]：在 Bitcoin Core 22.0 之前，启用 [UPnP][] 来自动配置 [NAT 遍历][NAT traversal](默认情况下已禁用，因之前的漏洞，见[周报 #310][news310 miniupnpc])的节点易受本地网络上恶意设备反复发送 UPnP 消息变体的攻击。每条消息都可能导致内存的额外分配，直到节点崩溃或被操作系统终止。Bitcoin Core 的依赖项 miniupnpc 中的无限循环错误由 Ronald Huveneers 报告给 miniupnpc 项目，Michael Ford 发现并负责任地披露了如何利用此漏洞崩溃 Bitcoin Core。该漏洞的修复已包含在 Bitcoin Core 22.0 中。
+  - [在本地网络上启用 UPnP 时导致的远程崩溃][Remote crash on local network when UPnP enabled]：在 Bitcoin Core 22.0 之前，启用 [UPnP][] 来自动配置 [NAT 遍历][NAT traversal](默认情况下已禁用，因之前的漏洞，见[周报 #310][news310 miniupnpc])的节点易受本地网络上恶意设备反复发送 UPnP 消息变体的攻击。每条消息都可能导致内存的额外分配，直到节点崩溃或被操作系统终止。Bitcoin Core 的依赖项 miniupnpc 中的无限循环错误由 Ronald Huveneers 报告给 miniupnpc 项目，Michael Ford 发现并负责任地披露了如何利用此漏洞让 Bitcoin Core 崩溃。该漏洞的修复已包含在 Bitcoin Core 22.0 中。
 
   预计在几周内还会披露影响更新版本 Bitcoin Core 的其他漏洞。
 
-- **<!--Optimizing-block-building-with-cluster-mempool-->使用族群交易池优化区块构建：** Pieter Wuille 在 Delving Bitcoin 上[发表了][wuille selection]一篇关于确保矿工区块模板在使用[族群交易池][topic cluster mempool]时能包含最佳交易集的帖子。族群交易池的设计将相关交易的_族群_划分为有序的_块_列表，每个块遵循两个约束条件：
+- **<!--optimizing-block-building-with-cluster-mempool-->使用族群交易池优化区块构建：** Pieter Wuille 在 Delving Bitcoin 上[发表了][wuille selection]一篇关于确保矿工区块模板在使用[族群交易池][topic cluster mempool]时能包含最佳交易集的帖子。族群交易池的设计将相关交易的_族群_划分为有序的_块_列表，每个块遵循两个约束条件：
 
   1. 如果块中的任何交易依赖于其他未确认的交易，则这些其他交易必须是该块的一部分或出现在有序列表中更早的块中。
 
   2. 每个块必须具有在有序列表中与之后块的相同或更高的费率。
 
-  这样，交易池中的每个族群块都可以按费率顺序放入一个单一列表中————从最高费率到最低费率。面对按照费率顺序“块”化的交易池，矿工可以通过简单地遍历每个块并将其包含在模板中，直到达到其期望的最大区块大小(通常略低于 1 百万vbytes，以留出矿工的 coinbase 交易空间)来构建区块模板。
+  这样，交易池中的每个族群块都可以按费率顺序放入一个单一列表中————从最高费率到最低费率。面对按照费率顺序“块”化的交易池，矿工可以通过简单地遍历每个块并将其包含在模板中，直到达到其期望的最大区块大小(通常略低于 1 百万 vbytes，以留出矿工的 coinbase 交易空间)来构建区块模板。
 
   然而，族群和块的大小各不相同，Bitcoin Core 中的族群默认上限约为 100,000 vbytes。这意味着，如果一个矿工在目标 998,000 vbytes 时已填充了 899,001 vbytes，则可能会遇到一个 99,000 vbytes 的块无法容纳，从而使其区块空间约有 10% 未被使用。矿工无法简单地跳过这个 99,000 vbytes 的块并尝试包括下一个块，因为下一个块可能包含依赖于这个 99,000 vbytes 块的交易。如果矿工未能在区块模板中包括依赖交易，则他们生产的区块将是无效的。
 
@@ -34,11 +34,11 @@ lang: zh
 
   当矿工填充了所有可能的完整块后，可以为尚未包含在区块中的所有交易获取预先计算的吸收集，并按照费率顺序考虑它们。这样只需要对列表进行一次排序，列表中的元素数量与交易池中的交易数量相同(在当前默认情况下几乎总是少于 1 百万)。然后可以使用最佳费率的吸收集(块和子块) 来填补剩余的区块空间。这需要跟踪到目前为止已被包含的族群中的交易数量，并跳过任何不适合或已经有被包含一些交易的子块。
 
-  尽管可以将块与块之间进行比较以确定区块包含的最佳顺序，但块或子块内的个别交易可能不会按照最佳顺序排列，这可能导致在区块几乎填满时出现非最优选择。例如，当仅剩 300 vbytes 时，算法可能会选择一个 200 vbytes 的交易，费率为 5 sats/vbyte(总计 1000 sats)，而不是选择两个 150 vbytes 的交易，费率为 4 sats/vbyte(总计1200 sats)。
+  尽管可以将块与块之间进行比较以确定区块包含的最佳顺序，但块或子块内的个别交易可能不会按照最佳顺序排列，这可能导致在区块几乎填满时出现非最优选择。例如，当仅剩 300 vbytes 时，算法可能会选择一个 200 vbytes 的交易，费率为 5 sats/vbyte(总计 1000 sats)，而不是选择两个 150 vbytes 的交易，费率为 4 sats/vbyte(总计 1200 sats)。
 
   Wuille 描述了预先计算的吸收集在这种情况下的特别有用之处：因为它们只需要跟踪每个族群中已包含的交易数量，因此可以轻松恢复到模板填充算法的较早状态，并替换先前的选择以查看是否可以收集更多的总费用。这允许实现一个[分支定界法][branch-and-bound]搜索，可以尝试多种组合来填充最后一点区块空间，以期找到比简单算法更好的结果。
 
-- **比特币 P2P 网络事件模拟器 Hyperion：**
+- **<!--hyperion-network-event-simulator-for-the-bitcoin-p2p-network-->****比特币 P2P 网络事件模拟器 Hyperion：**
   Sergi Delgado 在 Delving Bitcoin 上[发布了][delgado hyperion]一篇关于[Hyperion][]帖子，这是一款他编写的网络模拟器，用于跟踪数据如何通过模拟的比特币网络传播。这个工作的初衷是为了比较比特币当前的交易公告传播方式 (`inv` 库存消息) 和提议的 [Erlay][topic erlay] 方法。
 
 ## 版本和候选版本
@@ -76,17 +76,17 @@ Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (
 {% include linkers/issues.md v=2 issues="30515,30126,30482,30275,30408,7474,8891,3139,3010" %}
 [BDK 1.0.0-beta.1]: https://github.com/bitcoindevkit/bdk/releases/tag/v1.0.0-beta.1
 [wuille selection]: https://delvingbitcoin.org/t/cluster-mempool-block-building-with-sub-chunk-granularity/1044
-[branch-and-bound]: https://en.wikipedia.org/wiki/Branch_and_bound
+[branch-and-bound]: https://zh.wikipedia.org/wiki/%E5%88%86%E6%94%AF%E5%AE%9A%E7%95%8C
 [delgado hyperion]: https://delvingbitcoin.org/t/hyperion-a-discrete-time-network-event-simulator-for-bitcoin-core/1042
 [hyperion]: https://github.com/sr-gi/hyperion
-[news310 disclosure]: /zh/newsletters/2024/07/05/#disclosure-of-vulnerabilities-affecting-bitcoin-core-versions-before-0-21-0
+[news310 disclosure]: /zh/newsletters/2024/07/05/#disclosure-of-vulnerabilities-affecting-bitcoin-core-versions-before-0210-0-21-0-bitcoin-core
 [Remote crash by sending excessive `addr` messages]: https://bitcoincore.org/en/2024/07/31/disclose-addrman-int-overflow/
 [news159 bcc22387]: /en/newsletters/2021/07/28/#bitcoin-core-22387
-[news310 miniupnpc]: /zh/newsletters/2024/07/05/#remote-code-execution-due-to-bug-in-miniupnpc
+[news310 miniupnpc]: /zh/newsletters/2024/07/05/#remote-code-execution-due-to-bug-in-miniupnpc-miniupnpc
 [Remote crash on local network when UPnP enabled]: https://bitcoincore.org/en/2024/07/31/disclose-upnp-oom/
-[upnp]: https://en.wikipedia.org/wiki/Universal_Plug_and_Play
-[nat traversal]: https://en.wikipedia.org/wiki/NAT_traversal
+[upnp]: https://zh.wikipedia.org/wiki/UPnP
+[nat traversal]: https://zh.wikipedia.org/wiki/NAT%E7%A9%BF%E9%80%8F
 [wuille cluster]: https://delvingbitcoin.org/t/introduction-to-cluster-linearization/1032
 [goegge disclosure]: https://mailing-list.bitcoindevs.xyz/bitcoindev/bf5287e8-0960-45e8-9c90-64ffc5fdc9aan@googlegroups.com/
-[news246 bipterminology]: /zh/newsletters/2023/04/12/#proposed-bip-for-transaction-terminology
+[news246 bipterminology]: /zh/newsletters/2023/04/12/#proposed-bip-for-transaction-terminology-bip
 [bolt12 pr]: https://github.com/lightning/bolts/pull/798
