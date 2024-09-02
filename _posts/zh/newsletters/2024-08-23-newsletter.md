@@ -27,28 +27,28 @@ lang: zh
 
 *在这个月度栏目中，我们会标出比特币钱包和服务的有趣更新。*
 
-- **<!--proton-wallet-announced-->Proton Wallet 宣布：**
+- **<!--proton-wallet-announced-->****Proton Wallet 宣布：**
   Proton [宣布][proton blog]其[开源][proton github]的 Proton Wallet，支持多个钱包、[bech32][topic bech32]、[批量][topic payment batching]发送、[BIP39][]助记词和与其电子邮件服务的集成。
 
-- **<!--cpunet-testnet-announced-->CPUNet testnet 宣布：**
+- **<!--cpunet-testnet-announced-->****CPUNet testnet 宣布：**
   来自 [braidpool][braidpool github] 矿[池][topic pooled mining]项目的贡献者[宣布了][cpunet post] [CPUNet][cpunet github] testnet。CPUNet 使用经过修改的工作量证明算法，旨在排除 ASIC 矿工，以实现比 [testnet][topic testnet] 更一致的区块率。
 
-- **<!--lightning.pub-launches-->Lightning.Pub 启动：**
+- **<!--lightning.pub-launches-->****Lightning.Pub 启动：**
   [Lightning.Pub][lightningpub github] 为 LND 提供节点管理功能，允许共享访问和协调通道流动性，使用 nostr 进行加密通信和基于密钥的账户身份验证。
 
-- **<!--taproot-assets-v0.4.0-alpha-released-->Taproot Assets v0.4.0-alpha 发布：**
+- **<!--taproot-assets-v0.4.0-alpha-released-->****Taproot Assets v0.4.0-alpha 发布：**
   [v0.4.0-alpha][taproot assets v0.4.0] 版本支持在主网上使用 [Taproot Assets][topic client-side validation]协议进行链上资产发行、使用 [PSBT][topic psbt] 进行原子互换以及通过闪电网络路由资产。
 
-- **<!--stratum v2-benchmarking-tool-released-->Stratum v2 基准测试工具发布：**
+- **<!--stratum v2-benchmarking-tool-released-->****Stratum v2 基准测试工具发布：**
   初始 [0.1.0 版本][sbm 0.1.0]支持在不同的挖矿场景中测试、报告和比较 Stratum v1 和 Stratum v2[协议][topic pooled mining]的性能。
 
-- **<!--stark-verification-poc-on-signet-->STARK 验证 PoC 在 signet 上运行：**
+- **<!--stark-verification-poc-on-signet-->****STARK 验证 PoC 在 signet 上运行：**
   StarkWare [宣布][starkware tweet]在 [signet][topic signet] 测试网络上使用 [OP_CAT][topic op_cat] 操作码验证了一个零知识证明的 [STARK 验证器][bcs github](见 [周报#304][news304 inquisition])。
 
-- **<!--seedsigner-0.8.0-released-->SeedSigner 0.8.0 发布：**
+- **<!--seedsigner-0.8.0-released-->****SeedSigner 0.8.0 发布：**
   比特币硬件签名设备项目 [SeedSigner][seedsigner website] 在[0.8.0][seedsigner 0.8.0]版本中增加了 P2PKH 和 P2SH 多重签名的签名功能，增加了对 [PSBT][topic psbt]的支持，并默认启用了[taproot][topic taproot] 支持。
 
-- **<!--floresta-0.6.0-released-->Floresta 0.6.0 发布：**
+- **<!--floresta-0.6.0-released-->****Floresta 0.6.0 发布：**
   在[0.6.0][floresta 0.6.0]版本中，Floresta 增加了对[致密区块过滤器][topic compact block filters]、signet 上的欺诈证明以及 [`florestad`][floresta blog]（一个可供现有钱包或客户端应用程序集成的守护进程）的支持。
 
 ## 版本和候选版本
@@ -113,7 +113,7 @@ Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、[Lightning BLIPs]
 [floresta 0.6.0]: https://github.com/vinteumorg/Floresta/releases/tag/0.6.0
 [floresta blog]: https://medium.com/vinteum-org/floresta-update-simplifying-bitcoin-node-integration-for-wallets-6886ea7c975c
 [auto sys]: https://en.wikipedia.org/wiki/Autonomous_system_(Internet)
-[news290 asmap]: /zh/newsletters/2024/02/21/#improved-reproducible-asmap-creation-process
+[news290 asmap]: /zh/newsletters/2024/02/21/#improved-reproducible-asmap-creation-process-asmap
 [news263 renepay]: /zh/newsletters/2023/08/09/#core-lightning-6376
 [alloy model]: https://alloytools.org/about.html
 [lnd linear]: https://github.com/lightningnetwork/lnd/blob/b7c59b36a74975c4e710a02ea42959053735402e/sweep/fee_function.go#L66-L109
