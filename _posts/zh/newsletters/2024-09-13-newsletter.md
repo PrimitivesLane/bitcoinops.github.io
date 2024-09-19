@@ -1,7 +1,7 @@
 ---
 title: 'Bitcoin Optech Newsletter #320'
 permalink: /zh/newsletters/2024/09/13/
-name: 2024-09-13-newsletter-zh    
+name: 2024-09-13-newsletter-zh
 slug: 2024-09-13-newsletter-zh
 type: newsletter
 layout: newsletter
@@ -11,9 +11,9 @@ lang: zh
 
 ## 新闻
 
-- **<!--mutation-testing-for-bitcoin-core-->Bitcoin Core 的突变测试：** Bruno Garcia 在 Delving Bitcoin 上[发帖][garcia announce]宣布了一款[工具][mutation-core]，该工具会自动修改（突变）PR 或 commit 中更改的代码，以确定这些突变是否导致现有测试失败。任何时候对代码的随机更改未产生失败结果时，这表明测试覆盖率可能不完整。Garcia 的自动突变工具忽略了代码注释和其他不会预期产生变化的代码行。
+- **<!--mutation-testing-for-bitcoin-core-->****Bitcoin Core 的突变测试：** Bruno Garcia 在 Delving Bitcoin 上[发帖][garcia announce]宣布了一款[工具][mutation-core]，该工具会自动修改（突变）PR 或 commit 中更改的代码，以确定这些突变是否导致现有测试失败。任何时候对代码的随机更改未产生失败结果时，这表明测试覆盖率可能不完整。Garcia 的自动突变工具忽略了代码注释和其他不会预期产生变化的代码行。
 
-- **<!--dlc-based-loan-contract-execution-->执行基于 DLC 的贷款合约：** Shehzan Maredia 在 Delving Bitcoin 上[发帖][maredia post]，宣布了 [Lava Loans][Lava Loans]，这是一种使用 [DLC][topic dlc] 断言机进行价格发现的比特币抵押贷款合约。例如，Alice 向 Bob 提供 100,000 美元的贷款，条件是 Bob 必须在存款地址中保持至少 2 倍的 100,000 美元 BTC。Alice 和 Bob 都信任的预言机定期发布签名，以承诺当前的 BTC/USD 价格。如果 Bob 的 BTC 抵押品低于约定金额，Alice 可以根据最高预言机签名的价格扣押价值 100,000 美元的 BTC。或者，Bob 可以在链上提供他已偿还贷款的证明（形式为 Alice 透露的哈希原象）以取回他的抵押品。如果双方不合作或一方变得无响应，还可以有其他解决方案。与任何 DLC 一样，断言机无法得知合约的详细信息，甚至不知道其价格信息正在合约中使用。
+- **<!--dlc-based-loan-contract-execution-->****执行基于 DLC 的贷款合约：** Shehzan Maredia 在 Delving Bitcoin 上[发帖][maredia post]，宣布了 [Lava Loans][Lava Loans]，这是一种使用 [DLC][topic dlc] 断言机进行价格发现的比特币抵押贷款合约。例如，Alice 向 Bob 提供 100,000 美元的贷款，条件是 Bob 必须在存款地址中保持至少 2 倍的 100,000 美元 BTC。Alice 和 Bob 都信任的预言机定期发布签名，以承诺当前的 BTC/USD 价格。如果 Bob 的 BTC 抵押品低于约定金额，Alice 可以根据最高预言机签名的价格扣押价值 100,000 美元的 BTC。或者，Bob 可以在链上提供他已偿还贷款的证明（形式为 Alice 透露的哈希原象）以取回他的抵押品。如果双方不合作或一方变得无响应，还可以有其他解决方案。与任何 DLC 一样，断言机无法得知合约的详细信息，甚至不知道其价格信息正在合约中使用。
 
 ## Bitcoin Core PR 审核俱乐部
 
@@ -21,13 +21,13 @@ lang: zh
 
 [Bitcoin Core 28.0 候选版本的测试][review club v28-rc-testing]不是一次审核特定 PR 的审核俱乐部的会议，而是一次集体测试活动。
 
-在每次 [Bitcoin Core 主要版本发布][]之前，社区的广泛测试被认为是至关重要的。因此，一位志愿者会为[候选版本][release candidate]编写测试指南，以便尽可能多的人能够高效地测试，而不必独立确认新内容或更改，并重新发明测试这些功能或更改的各种设置步骤。
+在每次 [Bitcoin Core 主要版本发布][major Bitcoin Core release]之前，社区的广泛测试被认为是至关重要的。因此，一位志愿者会为[候选版本][release candidate]编写测试指南，以便尽可能多的人能够高效地测试，而不必独立确认新内容或更改，并重新发明测试这些功能或更改的各种设置步骤。
 
 测试可能很困难，因为当遇到意外行为时，通常不清楚是由于实际错误还是测试人员犯了错误。报告不是真正错误的问题会浪费开发人员的时间。为减轻这些问题并促进测试工作，针对特定候选版本会举办 Review Club 会议，此次为 28.0rc1。
 
 [28.0 候选版本的测试指南][28.0 testing]由 rkrux 编写，他还主持了审核俱乐部会议。
 
-与会者还被鼓励通过阅读 [28.0 版本说明][] 获得测试灵感。
+与会者还被鼓励通过阅读 [28.0 版本说明][28.0 release notes] 获得测试灵感。
 
 本次审核俱乐部涵盖了[testnet4][topic testnet]([Bitcoin Core #29775][])的引入、[TRUC (v3) 交易][topic v3 transaction relay] ([Bitcoin Core #28948][])、[包 RBF][topic rbf] ([Bitcoin Core #28984][]) 和冲突交易池交易 ([Bitcoin Core #27307][])。指南中提到的其他主题但未在会议上讨论的内容包括：默认启用 `mempoolfullrbf` ([Bitcoin Core #30493][])、[`PayToAnchor`][topic ephemeral anchors] 花费 ([Bitcoin Core #30352][])和新的 `dumptxoutset` 格式 ([Bitcoin Core #29347][])。
 
