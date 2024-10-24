@@ -42,7 +42,7 @@ lang: zh
 
 - **<!--guide-for-wallet-developers-using-bitcoin-core-28-0-->****使用 Bitcoin Core 28.0 的钱包指南：** 如[上周的周报][news323 bcc28]所提到的，新发布的 Bitcoin Core 28.0 版本包含了几个 P2P 网络的新功能，包括一父一子（1P1C）[包中继][topic package relay]、确认前拓扑受限（[TRUC][topic v3 transaction relay]）的交易中继、[包 RBF][topic rbf] 和[亲属间驱逐][topic kindred rbf]，以及标准的支付到锚点（[P2A][topic ephemeral anchors]）输出脚本类型。这些新功能可以显著提高几个常见用例的安全性和可靠性。
 
-  Gregory Sanders 为 Optech 编写了一份[指南][sanders guide]，针对使用 Bitcoin Core 创建或广播交易的钱包和其他软件的开发者。该指南介绍了几个功能的使用，并描述了这些功能如何对多个协议有用，包括简单支付和 RBF 费用提升、闪电网络承诺和 [HTLC][topic htlc]、[Ark][topic ark] 和[闪电网络拼接][topic splicing]。
+  Gregory Sanders 为 Optech 编写了一份[指南][sanders guide]，针对使用 Bitcoin Core 创建或广播交易的钱包和其他软件的开发者。该指南介绍了几个功能的使用，并描述了这些功能如何对多个协议有用，包括简单支付和 RBF 费用提升、闪电网络承诺交易和 [HTLC][topic htlc] 交易、[Ark][topic ark] 和[闪电通道拼接][topic splicing]。
 
 ## Bitcoin Core PR 审核俱乐部
 
@@ -61,7 +61,7 @@ lang: zh
   a2="非字符串 RPC 参数必须添加到 `src/rpc/client.cpp` 中的 `vRPCConvertParams` 列表中，以确保类型转换正确。"
   a2link="https://bitcoincore.reviews/30793#l-72"
   q3="<!--what-is-the-maximum-size-of-the-result-from-this-rpc-is-there-a-limit-to-how-many-orphans-are-retained-is-there-a-limit-to-how-long-orphans-can-stay-in-the-orphanage-->这个 RPC 返回的大小最大是多少？可保留的孤儿交易数量是否有限制？孤儿交易在孤儿交易池中停留的时间是否有限制？"
-  a3="孤立交易的最大数量是 100（`DEFAULT_MAX_ORPHAN_TRANSACTIONS`）。在 `verbosity=0` 时，每个 txid 是一个 32 字节的二进制值，但当为 JSON-RPC 结果进行十六进制编码时，它变成一个 64 字符的字符串（因为每个字节由两个十六进制字符表示）。这意味着最大结果大小约为 6.4 kB（100 个 txid * 64 字节）。<br><br>
+  a3="孤儿交易的最大数量是 100（`DEFAULT_MAX_ORPHAN_TRANSACTIONS`）。在 `verbosity=0` 时，每个 txid 是一个 32 字节的二进制值，但当为 JSON-RPC 结果进行十六进制编码时，它变成一个 64 字符的字符串（因为每个字节由两个十六进制字符表示）。这意味着最大结果大小约为 6.4 kB（100 个 txid * 64 字节）。<br><br>
   在 `verbosity=2` 时，十六进制编码的交易是结果中最大的字段，所以为了简单起见，我们在这个计算中忽略其他字段。交易的最大序列化大小可以达到 400 kB（在近乎不可能的极端情况下，它只包含见证数据），或者十六进制编码后为 800 kB。因此，最大结果大小约为 80 MB（100 个交易 * 800 kB）。<br><br>
   孤儿交易有时间限制，20 分钟后会被移除，这由 `ORPHAN_TX_EXPIRE_TIME` 定义。"
   a3link="https://bitcoincore.reviews/30793#l-94"
