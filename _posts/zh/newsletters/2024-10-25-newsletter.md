@@ -15,9 +15,9 @@ lang: zh
 
   另一个最近讨论的新增功能(见[周报 #325][news325 chanann])是允许公告包含 SPV 证明，以便任何拥有完整工作量证明区块头的客户端都能验证该通道的注资交易是否已包含在一个区块中。目前，轻客户端必须下载整个区块，才能对通道公告进行同等程度的验证。
 
-  Mouton 的帖子还简要讨论了现有简单 Taproot 通道的选择性公告功能。由于目前不支持非 P2WSH 通道的公告，所有现有的 Taproot 通道都是[未公告（私有）的][topic unannounced channels]。可以添加到提案中的一个可能功能是允许节点向其对等节点发出信号，表明它们想要将未公告的通道转换为公共通道。
+  Mouton 的帖子还简要讨论了现有简单 Taproot 通道的选择性公告功能。由于目前不支持非 P2WSH 通道的公告，所有现有的 Taproot 通道都是[未公告（私有）的][topic unannounced channels]。可以添加到提案中的一个可能功能是允许节点向其对等节点发出信号，表明它们想要将未公告的通道转换为公开通道。
 
-- **<!--draft-bip-for-sending-silent-payments-with-psbts-->通过 PSBT 发送静默支付的 BIP 草案：** Andrew Toth 在 Bitcoin-Dev 邮件列表中[发布了][toth sp-psbt]一项 BIP 草案，允许钱包和签名设备使用 [PSBT][topic psbt] 来协调创建[静默支付][topic silent payments]。这是对之前 BIP 草案持续讨论的延续，见周报[#304][news304 sp]和[#308][news308 sp]。如之前的那些内容所述，静默支付相较于大多数其他 PSBT 协调的交易的特殊需求在于，若对未完全签名交易的输入进行任何修改，则需要重新调整输出。
+- **<!--draft-bip-for-sending-silent-payments-with-psbts-->通过 PSBT 发送静默支付的 BIP 草案：** Andrew Toth 在 Bitcoin-Dev 邮件列表中[发布了][toth sp-psbt]一项 BIP 草案，允许钱包和签名设备使用 [PSBT][topic psbt] 来协调创建[静默支付][topic silent payments]。这是对之前 BIP 草案持续讨论的延续，见周报[#304][news304 sp]和[#308][news308 sp]。如之前的那些内容所述，静默支付相较于大多数其他 PSBT 协调的交易的特殊需求在于，对未完全签名交易的输入进行任何修改都要求重新调整输出。
 
   该草案仅涵盖了签名者拥有交易中所有输入的私钥的最常见情况。对于多重签名这样的少数情况，Toth 表示“这将在后续的 BIP 中详细说明”。
 
@@ -32,7 +32,7 @@ lang: zh
   Pieter Wuille 解释道，除了当前的最佳区块链之外，区块数据文件还可以包含废弃的区块或重复的区块数据。
 
 - [<!--how-was-the-structure-of-pay-to-anchor-decided-->支付到锚点(P2A)的结构是如何决定的？]({{bse}}124383)
-  Antoine Poinsot 描述了 Bitcoin Core 28.0 [规则变更][bcc28 guide]中包含的[支付到锚点(P2A)][topic ephemeral anchors]输出的结构。[bech32m][topic bech32]编码、2-字节长度、v1 见证程序被选择作为 `bc1pfeessrawgf` “靓号”地址。
+  Antoine Poinsot 描述了 Bitcoin Core 28.0 [规则变更][bcc28 guide]中包含的[支付到锚点(P2A)][topic ephemeral anchors]输出的结构。一个经过 [bech32m][topic bech32]编码、2-字节长度的 v1 见证程序被选择作为 `bc1pfeessrawgf` “靓号”地址。
 
 - [<!--what-are-the-benefits-of-decoy-packets-in-bip324-->BIP324 中使用诱导包的好处是什么？]({{bse}}124301)
   Pieter Wuille 概述了 [BIP324][] 规范中[包含诱导包][bip324 decoy packets]的设计决策。可选的诱导包可用于混淆流量模式，从而防止观察者在密钥交换、应用和协议的版本协商阶段识别出模式。
@@ -41,7 +41,7 @@ lang: zh
   Vojtěch Strnad 指出，中本聪在 2010 年的代码更改，原意是将操作码限制为 200，但由于实现错误，实际限制为 201。
 
 - [<!--will-my-node-relay-a-transaction-if-it-is-below-my-minimum-tx-relay-fee-->如果交易低于我的最低交易转发费率，我的节点是否会转发交易？]({{bse}}124387)
-  Murch 指出，节点只会转发其自己交易池接受的交易。尽管用户可以降低自己节点的 `minTxRelayFee` 值以接受本地交易池的低费率交易，但要将低费率交易包含在区块中，最终仍需要矿工也使用类似的设置，并且平均费率趋于该低费率。
+  Murch 指出，节点只会转发其自己交易池接受的交易。尽管用户可以调低自己节点的 `minTxRelayFee` 值以让本地交易池接受低费率交易，但要将低费率交易包含在区块中，最终仍需要矿工也使用类似的设置，并且平均费率趋于该低费率。
 
 - [<!--why-doesn-t-the-bitcoin-core-wallet-support-bip69-->为什么 Bitcoin Core 钱包不支持 BIP69？]({{bse}}124382)
   Murch 认为 [BIP69][]的交易输入/输出排序规范如果能得到广泛采用，将有助于减轻[钱包指纹][ishaana fingerprinting]识别。但他指出，鉴于普遍采用的可能性较低，实现 BIP69 本身可能会成为一个指纹识别漏洞。
@@ -49,14 +49,14 @@ lang: zh
 - [<!--how-can-i-enable-testnet4-when-using-bitcoin-core-28-0-->如何在使用 Bitcoin Core 28.0 时启用 testnet4？]({{bse}}124443)
   Pieter Wuille 提到启用 [BIP94][] 的 [testnet4][topic testnet]的两个配置选项：`chain=testnet4` 和 `testnet4=1`。
 
-- [<!--what-are-the-risks-of-broadcasting-a-transaction-that-reveals-a-scriptpubkey-using-a-low-entropy-key-->广播暴露低熵密钥的 `scriptPubKey` 的交易有哪些风险？]({{bse}}124296)
+- [<!--what-are-the-risks-of-broadcasting-a-transaction-that-reveals-a-scriptpubkey-using-a-low-entropy-key-->广播暴露使用低熵密钥的 `scriptPubKey` 的交易有哪些风险？]({{bse}}124296)
   用户 Quuxplusone 链接了一个最近的交易案例，这个交易与 2015 年的一系列比特币密钥破解[“谜题”][puzzle bitcointalk]有关，[据推测][puzzle stackernews]，该交易被一个监控交易池中低熵密钥的机器人[所替换][topic rbf]。
 
 ## 版本和候选版本
 
 _热门的比特币基础设施项目的新版本和候选版本。请考虑升级到新版本或帮助测试候选版本。_
 
-- [Core Lightning 24.08.2][] 是这个热们的闪电网络实现的维护版本，包含“一些崩溃修复和一项用于记住和更新通道提示的改进”。
+- [Core Lightning 24.08.2][] 是这个热门的闪电网络实现的维护版本，包含“一些崩溃修复和一项用于记住和更新通道提示的改进”。
 
 ## 重大的代码和文档变更
 
