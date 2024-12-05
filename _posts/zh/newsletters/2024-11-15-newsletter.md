@@ -1,7 +1,7 @@
 ---
 title: 'Bitcoin Optech Newsletter #329'
 permalink: /zh/newsletters/2024/11/15/
-name: 2024-11-15-newsletter-zh  
+name: 2024-11-15-newsletter-zh
 slug: 2024-11-15-newsletter-zh
 type: newsletter
 layout: newsletter
@@ -11,7 +11,7 @@ lang: zh
 
 ##  新闻
 
-- **基于 MAD 的链下支付解决协议 (OPR)：** John Law 在 Delving Bitcoin 的[发帖][law opr]中描述了一种小额支付协议，该协议要求双方为一笔保证金共同出资，并且任何一方都可以随时有效地销毁保证金。这种机制的核心是创造一种“互相确保毁灭”（Mutually Assured Destruction，MAD）的威慑，促使双方努力满足对方需求，否则将面临保证金损失的风险。
+- **<!--mad-based-offchain-payment-resolution-opr-protocol-->****基于 MAD 的链下支付解决协议 (OPR)：** John Law 在 Delving Bitcoin 的[发帖][law opr]中描述了一种小额支付协议，该协议要求双方为一笔保证金共同出资，并且任何一方都可以随时有效地销毁保证金。这种机制的核心是创造一种“互相确保毁灭”（Mutually Assured Destruction，MAD）的威慑，促使双方努力满足对方需求，否则将面临保证金损失的风险。
 
   这种方法与理想的免信任协议不同。在免信任协议中，如果发生协议违约，只有违约方会损失资金。然而，在实际应用中，像 LN 这样的免信任协议通常要求守约方支付链上交易费用，以从违约中恢复资金。Law 利用这一事实提出了一些 MAD 协议的潜在优势：
 
@@ -27,7 +27,7 @@ lang: zh
 
   截至撰写时，讨论仍在进行中。
 
-- **关于 LN 支付在 IP 层审查的论文：** Charmaine Ndolo 在 Delving Bitcoin 上[总结了][ndolo censor][两篇][atvrevelio]关于 LN 支付隐私性降低及潜在审查的最新[论文][nt censor]。这些论文指出，包含 LN 协议消息的 TCP/IP 数据包的元数据（例如数据包数量和总数据量）可以轻松推断出这些消息的负载类型(如新的 [HTLC][topic htlc])。如果攻击者控制了一个包含多个节点的网络，他可能观察到消息在节点间的传递。如果攻击者同时控制了其中一个 LN 节点，则可以获取有关传递消息的一些信息(例如支付金额或消息类型为[洋葱消息][topic onion messages])。这可能被用于选择性地阻止某些支付成功，甚至阻止支付快速失败——从而防止立即重试，并可能迫使通道链上关闭。
+- **<!--papers-about-ip-layer-censorship-of-ln-payments-->****关于 LN 支付在 IP 层审查的论文：** Charmaine Ndolo 在 Delving Bitcoin 上[总结了][ndolo censor][两篇][atv revelio]关于 LN 支付隐私性降低及潜在审查的最新[论文][nt censor]。这些论文指出，包含 LN 协议消息的 TCP/IP 数据包的元数据（例如数据包数量和总数据量）可以轻松推断出这些消息的负载类型(如新的 [HTLC][topic htlc])。如果攻击者控制了一个包含多个节点的网络，他可能观察到消息在节点间的传递。如果攻击者同时控制了其中一个 LN 节点，则可以获取有关传递消息的一些信息(例如支付金额或消息类型为[洋葱消息][topic onion messages])。这可能被用于选择性地阻止某些支付成功，甚至阻止支付快速失败——从而防止立即重试，并可能迫使通道链上关闭。
 
   截至撰写时，此讨论尚未有回复。
 
