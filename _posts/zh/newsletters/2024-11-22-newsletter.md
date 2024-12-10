@@ -7,11 +7,11 @@ type: newsletter
 layout: newsletter
 lang: zh
 ---
-本周的周报总结了闪电网络规范的一项拟议更改，该更改允许可插拔通道工厂；链接到一份报告和一个新网站，用于检查默认 signet 上使用提议的软分叉的交易；描述了 LNHANCE 多方软分叉提案的更新；并讨论了一篇关于基于研磨而非共识更改的限制条款的论文。此外还包括我们的常规部分，总结了服务、客户端软件和流行比特币基础设施软件的最新变更。
+本周的周报总结了闪电网络规范的一项拟议更改，该更改允许可插拔通道工厂；链接到一份报告和一个新网站，用于检查默认 signet 上使用提议的软分叉的交易；描述了 LNHANCE 多模块软分叉提案的更新；并讨论了一篇关于基于研磨而非共识更改的限制条款的论文。此外还包括我们的常规部分，总结了服务、客户端软件和流行比特币基础设施软件的最新变更。
 
 ## 新闻
 
-- **<!--pluggable-channel-factories-->可插拔通道工厂：** ZmnSCPxj 在 Delving Bitcoin 上[发布][zmnscpxj plug]了一项提案，建议对 [BOLT][bolts repo] 规范进行一系列小的更改，以允许现有的闪电网络软件通过软件插件在通道工厂内管理 [LN-Penalty][topic ln-penalty] 的支付通道。这些规范更改将允许工厂管理者（例如闪电服务提供商，LSP）向闪电节点发送消息，这些消息将传递给本地工厂插件。许多工厂操作与[通道拼接][topic splicing]操作类似，允许插件重用大量代码。工厂内的 LN-Penalty 通道操作类似于[零确认通道][topic zero-conf channels]，因此也可以重用现有代码。
+- **<!--pluggable-channel-factories-->可插拔通道工厂：** ZmnSCPxj 在 Delving Bitcoin 上[发布][zmnscpxj plug]了一项提案，建议对 [BOLT][bolts repo] 规范进行一系列小的更改，以允许现有的闪电网络软件通过软件插件管理通道工厂内的 [LN-Penalty][topic ln-penalty] 支付通道。这些规范更改将允许工厂管理者（例如闪电服务提供商，LSP）向闪电节点发送消息，这些消息将传递给本地工厂插件。许多工厂操作与[通道拼接][topic splicing]操作类似，允许插件重用大量代码。工厂内的 LN-Penalty 通道操作类似于[零确认通道][topic zero-conf channels]，因此也可以重用现有代码。
 
   ZmnSCPxj 的设计主要针对 SuperScalar 风格的工厂（参见[周报 #327][news327 superscalar]），但可能与其他工厂风格（以及可能的其他多方合约协议）兼容。Rene Pickhardt [回复][pickhardt plug]询问是否可以进行额外的规范更改，以允许工厂内的通道进行[公告][topic channel announcements]，但 ZmnSCPxj [表示][zmnscpxj plug2]他在设计中故意不考虑这些，以便规范更改能够尽快被采用。
 
@@ -49,7 +49,7 @@ _本周的重大变更有：[Bitcoin Core][bitcoin core repo]、[Core Lightning]
 
 - [Bitcoin Core #30666][] 添加了 `RecalculateBestHeader()` 函数，通过迭代区块索引重新计算最佳区块头，当使用 `invalidateblock` 和 `reconsiderblock` RPC 命令时，或当区块索引中的有效区块头在完整验证期间被发现无效时，会自动触发。这修复了这些事件后该值设置错误的问题。此 PR 还把从无效区块延伸出的区块头标记为 `BLOCK_FAILED_CHILD`，防止认定它们为 `m_best_header`。
 
-- [Bitcoin Core #30239][] 使[临时粉尘][topic ephemeral anchors]输出成为标准，允许具有[粉尘][topic uneconomical outputs]输出的零手续费交易出现在交易池中，前提是它们在交易[包][topic package relay]中同时被花费。这一变更改善了高级构造的可用性，如连接器输出、有密钥和无密钥（[P2A][topic ephemeral anchors]）锚点，这些可以使闪电网络、[Ark][topic ark]、[超时树][topic timeout trees]、[BitVM2][topic acc] 等协议的扩展受益。此更新建立在现有功能之上，如 1P1C 中继、[TRUC][topic v3 transaction relay] 交易和[亲属间驱逐][topic kindred rbf]（参见[周报 #328][news328 ephemeral]）。
+- [Bitcoin Core #30239][] 使[临时粉尘][topic ephemeral anchors]输出成为标准输出，允许具有一个[粉尘][topic uneconomical outputs]输出的零手续费交易出现在交易池中，前提是它们在交易[包][topic package relay]中同时被花费。这一变更改善了高级构造的可用性，如连接器输出、有密钥和无密钥（[P2A][topic ephemeral anchors]）锚点，这些可以使闪电网络、[Ark][topic ark]、[超时树][topic timeout trees]、[BitVM2][topic acc] 等协议的扩展受益。此更新建立在现有功能之上，如 1P1C 中继、[TRUC][topic v3 transaction relay] 交易和[亲属间驱逐][topic kindred rbf]（参见[周报 #328][news328 ephemeral]）。
 
 - [Core Lightning #7833][] 默认启用了 [offer][topic offers] 协议，移除了其之前的实验性状态。这是在其 PR 合并到 BOLTs 仓库后的举措（参见[周报 #323][news323 offers]）。
 
