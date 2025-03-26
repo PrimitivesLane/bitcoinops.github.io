@@ -87,7 +87,7 @@ _以下是[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning re
 
 - [BDK #1839][] 通过引入新的 `TxUpdate::evicted_ats` 字段来支持检测和处理已取消（双重支付）的交易，该字段更新 `TxGraph` 中的 `last_evicted` 时间戳。如果交易的 `last_evicted` 时间戳超过其 `last_seen` 时间戳，则认为该交易已被驱逐。正统化算法（参见周报 [#335][news335 algorithm]）已更新，忽略被驱逐的交易，除非基于传递性规则存在正统后代。
 
-- [BOLTs #1233][] 更新了节点行为，规定如果节点知道原像，就永远不要在上游失败 [HTLC][topic htlc]，确保 HTLC 可以正确结算。此前的建议是，如果已确认的承诺中缺少未完成的 HTLC，即使知道原像也要在上游失败。LND 0.18 版本之前的一个错误导致节点在遭受 DoS 攻击后重启时，尽管知道原像但仍在上游失败 HTLC，导致 HTLC 价值损失（参见周报 [#344][news344 lnd]）。
+- [BOLTs #1233][] 更新了节点行为，规定如果节点知道原像，就永远向上游回传 [HTLC][topic htlc] 失败的信息，确保 HTLC 可以正确结算。此前的建议是，如果已确认的承诺中缺少未完成的 HTLC，即使知道原像也要向上游回传失败信息。LND 0.18 版本之前的一个错误导致节点在遭受 DoS 攻击后重启时，尽管知道原像但仍向上游回传 HTLC 失败信息，导致 HTLC 价值损失（参见周报 [#344][news344 lnd]）。
 
 {% include snippets/recap-ad.md when="2025-03-25 15:30" %}
 {% include references.md %}
