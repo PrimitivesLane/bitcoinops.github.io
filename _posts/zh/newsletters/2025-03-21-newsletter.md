@@ -75,7 +75,7 @@ _以下是[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning re
 
 - [Bitcoin Core #31649][] 移除了所有检查点逻辑，这在几年前实现的区块头预同步步骤（参见周报 [#216][news216 presync]）之后已不再必要。该预同步使节点在初始区块下载（IBD）期间能够通过将区块头链的总工作量与预定义的阈值 `nMinimumChainWork` 进行比较来确定其有效性。只有总工作量超过此值的链才被认为有效并存储，有效防止了低工作量区块头的内存 DoS 攻击。这消除了对检查点的需求，检查点经常被视为一个中心化元素。
 
-- [Bitcoin Core #31283][] 在 `BlockTemplate` 接口中引入了新的 `waitNext()` 方法，该方法仅在链上的小费发生变化或交易池手续费超过 `MAX_MONEY` 阈值时才返回新模板。此前，矿工每次请求都会收到新模板，导致不必要的模板生成。这一变更符合 [Stratum V2][topic pooled mining] 协议规范。
+- [Bitcoin Core #31283][] 在 `BlockTemplate` 接口中引入了新的 `waitNext()` 方法，该方法仅在链顶端区块发生变化或交易池手续费超过 `MAX_MONEY` 阈值时才返回新模板。此前，矿工每次请求都会收到新模板，导致不必要的模板生成。这一变更符合 [Stratum V2][topic pooled mining] 协议规范。
 
 - [Eclair #3037][] 增强了 `listoffers` 命令（参见周报 [#345][news345 offers]），返回所有相关的 [offer][topic offers]数据，包括 `createdAt` 和 `disabledAt` 时间戳，而不仅仅是原始的类型-长度-值（TLV）数据。此外，这个 PR 修复了尝试再次注册相同 offer 时导致节点崩溃的错误。
 
