@@ -40,7 +40,7 @@ _在这个月度部分，我们总结了关于更改比特币共识规则的提�
     Nagaev Boris [询问][boris timelock]是否超过升级截止日期的[时间锁定][topic timelocks]的 UTXO 也应该被销毁。Lopp 指出了长时间锁定的现有陷阱，并表示他个人对“锁定资金超过一两年感到有点紧张”。
 
   - *通过揭示 SHA256 原象安全地证明 UTXO 所有权：*
-    Martin Habovštiak 在 Bitcoin-Dev 邮件列表上[发布][habovstiak gfsig]了一个想法，即使 ECDSA 和[施诺尔签名][topic schnorr signatures]不安全（例如，在快速量子计算机存在之后），也可以允许某人证明他们控制了一个 UTXO。如果 UTXO 包含一个 SHA256 承诺（或其他抗量子承诺）到一个以前从未被揭示的原象，那么揭示该原象的多步协议可以与共识更改相结合，以防止量子盗窃。这在本质上与 Tim Ruffing 的[先前的提案][ruffing gfsig]相同（见[周报 #141][news141 gfsig]），他了解到这通常被称为 [Guy Fawkes 签名方案][Guy Fawkes signature scheme]。它也是 Adam Back 在 2013 年发明的一个[方案][back crsig]的变体，旨在提高对矿工审查的抵抗力。简而言之，该协议可以这样工作：
+    Martin Habovštiak 在 Bitcoin-Dev 邮件列表上[发布][habovstiak gfsig]了一个想法，即使 ECDSA 和[schnorr 签名][topic schnorr signatures]不安全（例如，在快速量子计算机存在之后），也可以允许某人证明他们控制了一个 UTXO。如果 UTXO 包含一个 SHA256 承诺（或其他抗量子承诺）到一个以前从未被揭示的原象，那么揭示该原象的多步协议可以与共识更改相结合，以防止量子盗窃。这在本质上与 Tim Ruffing 的[先前的提案][ruffing gfsig]相同（见[周报 #141][news141 gfsig]），他了解到这通常被称为 [Guy Fawkes 签名方案][Guy Fawkes signature scheme]。它也是 Adam Back 在 2013 年发明的一个[方案][back crsig]的变体，旨在提高对矿工审查的抵抗力。简而言之，该协议可以这样工作：
 
     1. Alice 接收到一个以某种方式进行 SHA256 承诺的输出的资金。这可以是直接哈希输出，如 P2PKH、P2SH、P2WPKH 或 P2WSH，或者是带有脚本路径的 [P2TR][topic taproot] 输出。
 
