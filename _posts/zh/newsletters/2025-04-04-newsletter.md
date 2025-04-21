@@ -31,7 +31,7 @@ _在这个月度部分，我们总结了关于更改比特币共识规则的提�
 
     - *<!--argument-from-minimal-benefit-->基于最小收益的论点：* 虽然允许盗窃可能会用于资助量子计算的发展，但盗取币并不为比特币协议的诚实参与者提供任何直接利益。
 
-    - *<!--argument-from-clear-deadlines-->基于明确截止日期的论点：* 没有人能够提前很久知道某人拥有量子计算机可以开始盗取比特币的日期，但可以提前很久以完美的精确度宣布量子易受攻击的币将被销毁的特定日期。这个明确的截止日期将为用户提供更多激励，以确保及时重新保护他们的比特币，确保更少的总币量损失。
+    - *<!--argument-from-clear-deadlines-->基于明确截止日期的论点：* 没有人能够提前很久知道某人拥有量子计算机可以开始盗取比特币的日期，但可以提前很久以完美的精确度宣布易受量子攻击的币将被销毁的特定日期。这个明确的截止日期将为用户提供更多激励，以确保及时重新保护他们的比特币，确保更少的总币量损失。
 
     - *<!--argument-from-miner-incentives-->基于矿工激励的论点：* 如上所述，量子盗窃可能会减少矿工收入。持续多数的算力可以审查易受量子攻击的比特币的支出，即使其他比特币用户更喜欢不同的结果，他们也可能这样做。
 
@@ -77,7 +77,7 @@ _在这个月度部分，我们总结了关于更改比特币共识规则的提�
 
       Olaoluwa Osuntokun [为][osuntokun enum] CTV 的动机辩护，认为使用它的脚本仍然是“完全枚举的”和“没有动态状态”的。这似乎类似于 CTV 的作者（Jeremy Rubin）在 2022 年提出的一个[论点][rubin enumeration]，他称 Towns 设计的自我支付限制条款类型为“递归但完全枚举”。Towns [反驳][towns enum]说，添加 CSFS 削弱了完全枚举的声称好处。他要求 CTV 或 CSFS 的 BIP 更新，以描述“那些既可怕又仍然被 CTV 和 CSFS 的组合所阻止的用例”。这可能已经在 BIP119 的最近更新中[完成][ctv spookchain]，其中描述了一个“自我复制的自动机（俗称 SpookChains）”，这在使用 [SIGHASH_ANYPREVOUT][topic sighash_anyprevout] 时是可能的，但在使用 CTV+CSFS 时是不可能的。
 
-    - *<!--tooling-for-ctv-and-csfs-->**CTV 和 CSFS 的工具：* Towns [指出][towns ctvmot]，他发现使用现有工具开发上述递归脚本很困难，表明部署准备不足。Osuntokun [表示][osuntokun enum]他使用的工具“相当直接”。Towns 和 Osuntokun 都没有提到他们使用了什么工具。Nadav Ivgi [提供][ivgi minsc]了一个使用他的 [Minsc][] 语言的例子，并表示他“一直在努力改进 Minsc，使这类事情更容易。它支持 Taproot、CTV、PSBT、描述符、Miniscript、原始脚本、BIP32 等”。尽管他承认“其中很多仍未被记录”。
+    - *<!--tooling-for-ctv-and-csfs-->**CTV 和 CSFS 的工具：* Towns [指出][towns ctvmot]，他发现使用现有工具开发上述递归脚本很困难，表明部署准备不足。Osuntokun [表示][osuntokun enum]他使用的工具“相当直接”。Towns 和 Osuntokun 都没有提到他们使用了什么工具。Nadav Ivgi [提供][ivgi minsc]了一个使用他的 [Minsc][] 语言的例子，并表示他“一直在努力改进 Minsc，使这类事情更容易。它支持 Taproot、CTV、PSBT、描述符、Miniscript、原始脚本、BIP32 等”。尽管他承认“其中很多仍未形成文档”。
 
     - *<!--alternatives-->**替代方案：* Towns 将 CTV+CSFS 与他的基本比特币 Lisp 语言（[bll][topic bll]）和 [Simplicity][topic simplicity] 进行了比较，这两者都将提供替代的脚本语言。Antoine Poinsot [建议][poinsot alt]，一种易于推理的替代语言可能比对当前系统的小改动风险更小，而当前系统很难推理。开发者 Moonsettler [认为][moonsettler express]，逐步引入新功能到比特币脚本中使得以后添加更多功能更安全，因为每次增加表达能力都会降低我们遇到意外的可能性。
 
@@ -89,15 +89,15 @@ _在这个月度部分，我们总结了关于更改比特币共识规则的提�
 
     - *<!--vaults-->保管库：* CTV 简化了今天在比特币上使用预签名交易和（可选）私钥删除可能实现的[保管库][topic vaults]的实现。Anthony Towns [认为][towns vaults]这种类型的保管库不是很有趣。James O'Beirne [反驳][obeirne ctv-vaults]说，CTV 或类似的东西是构建更高级类型保险库的先决条件，例如他的 [BIP345][] `OP_VAULT` 保险库。
 
-    - *<!--accountable-computing-contracts-->可问责计算合约：* CSFS 可以通过替代当前需要执行基于脚本的 lamport 签名的需求，消除 [BitVM][topic acc] 等可问责计算合约中的许多步骤。CTV 可能能够减少一些额外的签名操作。Poinsot 再次[询问][poinsot ctvcsfs1]是否对 BitVM 有显著需求。Gregory Sanders [回复][sanders bitvm]说，他会发现它对于代币的双向桥接作为屏蔽[客户端验证][topic client-side validation]的一部分很有趣（参见[周报 #322][news322 csv-bitvm]）。然而，他还指出，CTV 和 CSFS 都不会显著改善 BitVM 的信任模型，而其他变更可能能够以其他方式减少信任或减少昂贵操作的数量。
+    - *<!--accountable-computing-contracts-->可问责计算合约：* CSFS 可以通过替代当前需要执行基于脚本的 lamport 签名的需求，消除 [BitVM][topic acc] 等可问责计算合约中的许多步骤。CTV 可能能够减少一些额外的签名操作。Poinsot 再次[询问][poinsot ctvcsfs1]是否对 BitVM 有显著需求。Gregory Sanders [回复][sanders bitvm]说，他会发现它对于代币的双向桥接作为 “暗影[客户端验证][topic client-side validation]” 的一部分很有趣（参见[周报 #322][news322 csv-bitvm]）。然而，他还指出，CTV 和 CSFS 都不会显著改善 BitVM 的信任模型，而其他变更可能能够以其他方式减少信任或减少昂贵操作的数量。
 
     - *<!--improvement-in-liquid-timelock-script-->**改进 Liquid 时间锁定脚本：* James O'Beirne [转述][obeirne liquid]了两位 Blockstream 工程师的评论，用他的话说，CTV 将“极大地改善 [Blockstream] Liquid 时间锁定回退脚本，该脚本要求定期[移动]币”。在要求澄清后，前 Blockstream 工程师 Sanket Kanjalkar [解释][kanjalkar liquid]说，好处可能是显著节省链上交易费用。O'Beirne 还[分享][poelstra liquid]了 Blockstream 研究总监 Andrew Poelstra 的额外细节。
 
     - *<!--ln-symmetry-->**LN-Symmetry：* CTV 和 CSFS 一起可以用来实现 [LN-Symmetry][topic eltoo] 的一种形式，它消除了 LN 中当前使用的 [LN-Penalty][topic ln-penalty] 通道的一些缺点，并可能允许创建具有两个以上参与方的通道，这可能改善流动性管理和链上效率。Gregory Sanders，他使用 [SIGHASH_ANYPREVOUT][topic sighash_anyprevout]（APO）实现了 LN-Symmetry 的实验版本（参见[周报 #284][news284 lnsym]），[指出][sanders versus]CTV+CSFS 版本的 LN-Symmetry 不如 APO 版本功能丰富，并且需要做出权衡。Anthony Towns [补充][towns nonrepo]说，据所知，没有人更新 Sanders 的 APO 实验代码以在现代软件上运行并使用最近引入的中继功能，如 [TRUC][topic v3 transaction relay] 和[临时锚点][topic ephemeral anchors]，更不用说有人将代码移植到使用 CTV+CSFS，这限制了我们评估该组合用于 LN-Symmetry 的能力。
 
-      Poinsot [询问][poinsot ctvcsfs1]如果软分叉使其成为可能，实现 LN-Symmetry 是否会成为 LN 开发者的优先事项。来自两位 Core Lightning 开发者（也是引入我们现在称为 LN-Symmetry 的论文的共同作者）的引述表明，这对他们来说是一个优先事项。相比之下，LDK 首席开发者 Matt Corallo [之前表示][corallo eltoo]，“我不认为 [LN-Symmetry] 在'我们需要完成这个'方面有那么有趣”。
+      Poinsot [询问][poinsot ctvcsfs1]如果软分叉使其成为可能，实现 LN-Symmetry 是否会成为 LN 开发者的优先事项。来自两位 Core Lightning 开发者（也是引入我们现在称为 LN-Symmetry 的论文的共同作者）的引述表明，这对他们来说是一个优先事项。相比之下，LDK 首席开发者 Matt Corallo [之前表示][corallo eltoo]，“我不认为 [LN-Symmetry] 有趣到 ‘我们得马上行动’”。
 
-    - *<!--ark-->**Ark：* Roose 是一家构建 [Ark][topic ark] 实现的企业的 CEO。他说，“CTV 对 Ark 来说是一个游戏规则改变者 [...] CTV 对用户体验的好处是不可否认的，毫无疑问，两种 [Ark] 实现都将在 CTV 可用后立即使用它。”Towns [指出][towns nonrepo]，没有人用 APO 或 CTV 实现 Ark 进行测试；Roose 随后编写了[代码][roose ctv-ark]，称其“非常直接”，并表示它通过了现有实现的集成测试。他量化了一些改进：“如果我们切换到 CTV，我们可以净减少约 900 行代码 [...] 并将我们自己的回合协议减少到[两个]而不是三个，[加上]不必传递签名随机数和部分签名的带宽改进。"
+    - *<!--ark-->**Ark：* Roose 是一家构建 [Ark][topic ark] 实现的企业的 CEO。他说，“CTV 对 Ark 来说是如虎添翼 [...] CTV 对用户体验的好处是不可否认的，毫无疑问，两种 [Ark] 实现都将在 CTV 可用后立即使用它。”Towns [指出][towns nonrepo]，没有人用 APO 或 CTV 实现 Ark 进行测试；Roose 随后编写了[代码][roose ctv-ark]，称其“非常直接”，并表示它通过了现有实现的集成测试。他量化了一些改进：“如果我们切换到 CTV，我们可以净减少约 900 行代码 [...] 并将我们自己的回合协议减少到[两个]而不是三个，[加上]不必传递签名随机数和部分签名的带宽改进。"
 
       Roose 后来开始了一个单独的帖子，讨论 CTV 对 Ark 用户的好处（见下面我们的总结）。
 
@@ -105,15 +105,15 @@ _在这个月度部分，我们总结了关于更改比特币共识规则的提�
 
     Ark 的一个设计目标是允许[异步支付][topic async payments]：在接收者离线时进行的支付。在 clArk 中，这是通过支付者加上 Ark 服务器扩展支出者现有的预签名交易链来实现的，允许接收者最终接受对资金的独占控制。该支付被称为 Ark [out-of-round][oor doc] 支付（_arkoor_）。当接收者上线时，他们可以选择他们想要做什么：
 
-    - *<!--exit-after-a-delay-->延迟后退出：* 广播整个预签名交易链，退出[joinpool][topic joinpools]（称为 _Ark_）。这需要等待支付者同意的时间锁到期。当预签名交易被确认到适当深度时，接收者可以确定他们对资金免信任控制。然而，他们失去了作为 joinpool 一部分的好处，如快速结算和源自 UTXO 共享的较低费用。他们可能还需要支付交易费用来确认交易链。
+    - *<!--exit-after-a-delay-->延迟后退出：* 广播整个预签名交易链，退出这个 [joinpool][topic joinpools]（这个 joinpool 就叫 _Ark_）。这需要等待支付者同意的时间锁到期。当预签名交易被确认到适当深度时，接收者可以确定他们对资金免信任控制。然而，他们失去了作为 joinpool 一部分的好处，如快速结算和源自 UTXO 共享的较低费用。他们可能还需要支付交易费用来确认交易链。
 
-    - *<!--nothing-->什么都不做：* 在正常情况下，交易链中的预签名交易最终会到期，允许服务器索取资金。这不是盗窃——这是协议的预期部分——服务器可能选择以某种方式将部分或全部索取的资金返还给用户。在到期临近之前，接收者可以只是等待。
+    - *<!--nothing-->什么都不做：* 在正常情况下，交易链中的预签名交易最终会到期，允许服务商索取资金。这不是盗窃——这是协议的预期部分——服务商可能选择以某种方式将部分或全部索取的资金返还给用户。在到期临近之前，接收者可以只是等待。
 
-      在病态情况下，服务器和支付者可以（在任何时候）勾结签署替代交易链以窃取发送给接收者的资金。注意：比特币的隐私属性允许服务器和支付者是同一个人，所以甚至可能不需要勾结。然而，如果接收者保留了服务器共同签署的交易链的副本，他们可以证明服务器窃取了资金，这可能足以阻止其他人使用该服务器。
+      在病态情况下，服务商和支付者可以（在任何时候）勾结签署另一条交易链以窃取发送给接收者的资金。注意：比特币的隐私属性允许服务商和支付者是同一个人，所以甚至可能不需要勾结。然而，如果接收者保留了服务商共同签署的交易链的副本，他们可以证明服务商窃取了资金，这可能足以阻止其他人使用该服务商。
 
-    - *<!--refresh-->刷新：* 在服务器合作的情况下，接收者可以原子地将支出者共同签署的交易中的资金所有权转移到另一个以接收者为共同签署者的预签名交易。这延长了到期日期，并消除了服务器和先前支付者勾结窃取先前发送资金的能力。然而，刷新需要服务器持有刷新的资金直到它们到期，减少了服务器的流动性，所以服务器向接收者收取利率直到到期（由于到期时间是固定的，所以预先支付）。
+    - *<!--refresh-->刷新：* 在服务器合作的情况下，接收者可以原子地将支出者共同签署的交易中的资金所有权转移到另一个以接收者为共同签署者的预签名交易。这延长了到期日期，并消除了服务商和先前支付者勾结窃取先前发送资金的能力。然而，刷新需要服务商持有刷新的资金直到它们到期，减少了服务商的流动性，所以服务商向接收者收取利率直到到期（由于到期时间是固定的，所以是预先支付）。
 
-    Ark 的另一个设计目标是允许参与者接收 LN 支付。在他的原始帖子和[回复][roose ctv-ark-ln]中，Roose 描述了现有参与者如果已经在 joinpool 中有资金，如果他们未能执行接收 LN 支付所需的交互，可能会被处罚高达链上交易成本。然而，那些在 joinpool 中还没有资金的人不能被处罚，所以他们可以拒绝执行交互步骤，无成本地为诚实参与者创造问题。这似乎有效地阻止了 Ark 用户接收 LN 支付，除非他们已经在他们想要使用的 Ark 服务器上存入了适量的资金。
+    Ark 的另一个设计目标是允许参与者接收 LN 支付。在他的原始帖子和[回复][roose ctv-ark-ln]中，Roose 描述了现有参与者如果已经在 joinpool 中有资金，如果他们未能执行接收 LN 支付所需的交互，可能会被处罚高达链上交易成本。然而，那些在 joinpool 中还没有资金的人不能被处罚，所以他们可以拒绝执行交互步骤，无成本地为诚实参与者创造问题。这似乎在实质上地阻止了 Ark 用户接收 LN 支付，除非他们已经在他们想要使用的 Ark 服务商处存入了适量的资金。
 
     Roose 然后描述了 CTV 的可用性如何允许改进协议。主要变化是 Ark 轮次的创建方式。_Ark 轮次_由一个小型链上交易组成，该交易承诺了一棵链下交易树。在 clArk 的情况下，这些是预签名交易，需要该轮次中的所有支付者都可进行签名。如果 CTV 可用，交易树中的每个分支都可以使用 CTV 承诺其后代，无需签名。这允许即使在创建轮次时参与者不可用，也能创建交易，带来以下好处：
 
@@ -125,7 +125,7 @@ _在这个月度部分，我们总结了关于更改比特币共识规则的提�
 
     - *<!--fewer-rounds-fewer-signatures-and-less-storage-->更少的轮次、更少的签名和更少的存储：* clArk 使用 [MuSig2][topic musig]，每个参与方需要参与多个轮次，生成多个部分签名，并存储完全的签名。使用 CTV，需要生成和存储的数据更少，所需的交互也更少。
 
-- **<!--op-checkcontractverify-semantics-->****OP_CHECKCONTRACTVERIFY 语义：** Salvatore Ingala 在 Delving Bitcoin 上[发布][ingala ccv]了对提议的 [OP_CHECKCONTRACTVERIFY][topic matt]（CCV）操作码语义的描述，链接到一个[首个 BIP 草案][ccv bip]，以及链接到 Bitcoin Core 的[实现草案][bitcoin core #32080]。他的描述从 CCV 行为的概述开始：它允许检查公钥是否承诺了任意数据。它可以检查正在花费的 [taproot][topic taproot] 输出的公钥或正在创建的 taproot 输出的公钥。这可以用来确保从正在花费的输出中的数据被传递到正在创建的输出。在 taproot 中，输出的调整可以承诺 tapleaves，如 [tapscripts][topic tapscript]。如果调整承诺了一个或多个 tapscripts，它会在输出上放置一个 _encumbrance_（花费条件），允许放置在正在花费的输出上的条件被转移到正在创建的输出上——在比特币术语中通常（但[有争议地][towns anticov]）称为[限制条款][topic covenants]。限制条款可能允许满足或修改 encumbrance，这将（分别）终止限制条款或修改其未来迭代的条款。Ingala 描述了这种方法的一些优点和缺点：
+- **<!--op-checkcontractverify-semantics-->****OP_CHECKCONTRACTVERIFY 语义：** Salvatore Ingala 在 Delving Bitcoin 上[发布][ingala ccv]了对提议的 [OP_CHECKCONTRACTVERIFY][topic matt]（CCV）操作码语义的描述，链接到一个[首个 BIP 草案][ccv bip]，以及链接到 Bitcoin Core 的[实现草案][bitcoin core #32080]。他的描述从 CCV 行为的概述开始：它允许检查公钥是否承诺了任意数据。它可以检查正在花费的 [taproot][topic taproot] 输出的公钥或正在创建的 taproot 输出的公钥。这可以用来确保从正在花费的输出中的数据被传递到正在创建的输出。在 taproot 中，输出的调整项可以承诺 tapleave，从而可以携带 [tapscripts][topic tapscript]。如果调整项承诺了一个或多个 tapscripts，它会在输出上放置一个 _encumbrance_（花费条件），（然后 CCV 就）允许放置在正在花费的输出上的条件被转移到正在创建的输出上——在比特币术语中通常（但[有争议地][towns anticov]）称为[限制条款][topic covenants]。这种限制条款可能允许满足或修改 encumbrance，这将（分别）终止限制条款或修改其未来迭代的条款。Ingala 描述了这种方法的一些优点和缺点：
 
   - *<!--benefits-->优点：* taproot 原生，不增加 UTXO 集里 taproot 条目的大小，不需要额外数据的花费路径不需要在其见证栈中包含它（所以在这种情况下没有额外成本）。
 
