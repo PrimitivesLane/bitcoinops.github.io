@@ -21,7 +21,7 @@ lang: zh
 _在这个月度部分，我们总结了关于更改比特币共识规则的提案和讨论。_
 
 - **<!--multiple-discussions-about-quantum-computer-theft-and-resistance-->关于量子计算机盗窃和抵抗的多项讨论：**
-  几场对话探讨了比特币人如何应对量子计算机变得足够强大以允许盗取比特币的情况。
+  几场对话探讨了比特币人如何应对量子计算机强大到足以盗取比特币的情况。
 
   - *<!--should-vulnerable-bitcoins-be-destroyed-->应该销毁易受攻击的比特币吗？* Jameson Lopp 在 Bitcoin-Dev 邮件列表上[发布][lopp destroy]了几个支持在采用[抗量子][topic quantum resistance]升级路径并且用户有时间采用解决方案后销毁易受量子盗窃的比特币的论点。一些论点包括：
 
