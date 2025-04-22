@@ -17,13 +17,13 @@ lang: zh
 
   执行 SwiftSync 的用户下载 hints 文件，并在处理终端 SwiftSync 区块之前的每个区块时使用它，仅当 hints 文件指示该输出在到达终端 SwiftSync 区块时仍将保留在 UTXO 集中时，才将输出存储在 UTXO 数据库中。这大大减少了 IBD 期间添加到 UTXO 数据库然后又被删除的条目数量。
 
-  为了确保 hints 文件的正确性，每个未存储在 UTXO 数据库中的已创建输出都会被添加到一个[密码学累加器][cryptographic accumulator]中。每个已花费的输出都会从累加器中移除。当节点到达终端 SwiftSync 区块时，它会确保累加器为空，这意味着所有看到的输出后来都被花费了。如果失败，则意味着 hints 文件不正确，需要从头开始重新执行 IBD 而不使用 SwiftSync。通过这种方式，用户无需信任 hints 文件的创建者——恶意文件不会导致错误的 UTXO 状态；它最多只能浪费用户几个小时的计算资源。
+  为了确保 hints 文件的正确性，每个创建出来但不存储在最终 UTXO 数据库中的输出，都会被添加到一个[密码学累加器][cryptographic accumulator]中。而花掉的输出都会从这个累加器中移除。当节点到达终点 SwiftSync 区块时，它会确保累加器为空，这意味着所有看到的输出后来都被花费了。如果失败，则意味着 hints 文件不正确，需要从头开始重新执行 IBD 而不使用 SwiftSync。通过这种方式，用户无需信任 hints 文件的创建者——恶意文件不会导致错误的 UTXO 状态；它最多只能浪费用户几个小时的计算资源。
 
-  SwiftSync 另一个尚未实现的特性是允许在 IBD 期间并行验证区块。这是可能的，因为 assumevalid 不检查旧区块的脚本，在终端 SwiftSync 区块之前永远不会从 UTXO 数据库中删除条目，并且使用的累加器仅跟踪输出被添加（创建）和移除（花费）的净效果。这消除了终端 SwiftSync 区块之前区块之间的任何依赖关系。由于类似的原因，IBD 期间的并行验证也是 [Utreexo][topic utreexo] 的一个特性。
+  SwiftSync 另一个尚未实现的特性是允许在 IBD 期间并行验证区块。这是可能的，因为 assumevalid 不检查旧区块的脚本，在终点 SwiftSync 区块之前永远不会从 UTXO 数据库中删除条目，并且使用的累加器仅跟踪输出被添加（创建）和移除（花费）的净效果。这消除了终点 SwiftSync 区块之前区块之间的任何依赖关系。由于类似的原因，IBD 期间的并行验证也是 [Utreexo][topic utreexo] 的一个特性。
 
   该讨论检视了该提案的几个方面。Falbesoner 的原始实现使用了 [MuHash][] 累加器（参见[周报 #123][news123 muhash]），[已被证明][wuille muhash]可以抵抗[广义生日攻击][generalized birthday attack]。Somsen [描述][somsen ss1]了一种可能更快的替代方法。由于它很简单，Falbesoner 质疑该替代方法是否具有密码学安全性，但还是实现了它，并进一步发现它可加速 SwiftSync。
 
-  James O'Beirne [提问][obeirne ss]鉴于 assumeUTXO 提供了更大的加速，SwiftSync 是否还有用。Somsen [回复][somsen ss2]说 SwiftSync 加速了 assumeUTXO 的后台验证，使其成为 assumeUTXO 用户的一个很好的补充。他进一步指出，任何下载 assumeUTXO 所需数据（特定区块的 UTXO 数据库）的人，如果使用同一区块作为终端 SwiftSync 区块，则不需要单独的 hints 文件。
+  James O'Beirne [提问][obeirne ss]鉴于 assumeUTXO 提供了更大的加速，SwiftSync 是否还有用。Somsen [回复][somsen ss2]说 SwiftSync 加速了 assumeUTXO 的后台验证，使其成为 assumeUTXO 用户的一个很好的补充。他进一步指出，任何下载 assumeUTXO 所需数据（特定区块时刻的 UTXO 数据库）的人，如果使用同一区块作为终端 SwiftSync 区块，则不需要单独的 hints 文件。
 
   Vojtěch Strnad、0xB10C 和 Somsen [讨论][b10c ss]了压缩 hint 文件数据，预计可节省约 75%，将测试 hints 文件（针对区块 850,900）的大小减少到约 88 MB。
 
