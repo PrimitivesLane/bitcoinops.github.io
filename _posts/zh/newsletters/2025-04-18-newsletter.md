@@ -44,7 +44,7 @@ lang: zh
 
 - [LND 0.19.0-beta.rc2][] 是这个流行的闪电节点的候选发行。可能需要测试的其中一个主要提升是合作关闭场景中，新的基于 RBF 的手续费追加。
 
-## 重大的代码和说明书变更
+## 重大的代码和文档变更
 
 *本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、[Lightning BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。*
 
@@ -58,7 +58,7 @@ lang: zh
 
 - *<!--no-cryptographic-accumulator-used-->并未使用密码学累加器*：我们说 SwiftSync 正在使用一种密码学累加器，这是不正确的。如果是密码学累加器，它会允许测试一个交易输出（TXO）是否在集合中。但 SwiftSync 并不需要这个特性。相反，它只需要在一个 TXO 被创建出来的时候，向一个聚合值添加一个代表该 TXO 的数值，然后在该 TXO 被花费的时候从聚合值中减去同一个数值。在对 SwiftSync 终点区块之前被花费掉的所有 TXO 都执行一遍这样的操作之后，节点会检查聚合值是不是 0 —— 意味着所有创建出来的 TXO 后面都被花费掉了。
 
-- *<!--parallel-block-validation-does-not-require-assumevalid-->* *并行区块验证特性不需要 assumevalid*：我们描述了并行验证可以跟 SwiftSync 配合的一种方式，就是在终点区块之前，不验证脚本 —— 类似于今天的 Bitcoin Core 在使用 *assumevalid* 模式的初始化同步中那样。然而，在 SwiftSync 中，也可以验证以往的脚本，虽然者可能需要改变 Bitcoin P2P 协议，从而可选在区块中加入额外数据。Bitcoin Core 节点已经为本地存储的所有区块存储了这些额外数据，所以我们不认为加入一种 P2P 消息插件会很困难 —— 只要我们预计会有许多人想要使用 SwiftSync，同时禁用  assumevalid。
+- *<!--parallel-block-validation-does-not-require-assumevalid-->* *并行区块验证特性不需要 assumevalid*：我们描述了并行验证可以跟 SwiftSync 配合的一种方式，就是在终点区块之前，不验证脚本 —— 类似于今天的 Bitcoin Core 在使用 *assumevalid* 模式的初始化同步中那样。然而，在 SwiftSync 中，也可以验证以往的脚本，虽然者可能需要改变 Bitcoin P2P 协议，从而可选在区块中加入额外数据。Bitcoin Core 节点已经为本地存储的所有区块存储了这些额外数据，所以我们不认为加入一种 P2P 消息插件会很困难 —— 只要我们预计会有许多人想要使用 SwiftSync，同时禁用 assumevalid。
 
 - *<!--parallel-block-validation-is-for-different-reasons-than-utreexo-->* *Utreexo 可实现并行区块验证的原理完全不同*：我们还说 SwiftSync 能够并行验证区块的原理类似于 [Utreexo][topic utreexo]，但实际上，它们采用了不同的方法。Utreexo 验证一个区块（或出于效率理由而验证一串区块）的时候，它会从一个对 UTXO 集的承诺开始，执行完对 UTXO 集的所有变更之后，产生一个对新的 UTXO 集的承诺。因此，验证工作可以基于 CPU 线程的数量来分割；比如说：一个线程验证某 1000 个区块，另一个线程验证随后的 1000 个区块。在验证结束的时候，节点可以检查验证完头 1000 个区块之后的承诺，跟它验证随后 1000 个区块的初始承诺相同。
 
