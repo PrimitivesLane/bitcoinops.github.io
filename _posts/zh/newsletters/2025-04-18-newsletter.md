@@ -19,13 +19,21 @@ lang: zh
 *在这个月度栏目中，我们列举出比特币钱包和服务的有趣更新。*
 
 - **<!--bitcoin-knots-version-281knots20250305-released-->** **Bitcoin Knots 版本 28.1.knots20250305 发行**：本次的 Bitcoin Knots [发行版][knots 28.1]包含了对隔离见证和 taproot 地址的[签名消息][topic generic signmessage]的支持，同时支持验证 [BIP137][]、[BIP322][]和 Electrum 签名的消息，还有其它变更。
+
 - **<!--psbtv2-explorer-announced-->** **PSBTv2 浏览器发布**：[Bitcoin PSBTv2 Explorer][bip370 website]可以校验以版本 2 数据格式编码的 [PSBTs][topic psbt]。
+
 - **<!--lnbits-v100-released-->** **LNbits v1.0.0 发行**：[LNbits][lnbits github] 软件在多种底层的闪电网络钱包之上提供了记账功能和其它功能。
+
 - **<!--the-mempool-open-source-project®-v320-released-->** **Mempool Open Source Project® v3.2.0 发布**：[v3.2.0 版本][mempool 3.2.0] 添加了对 “[v3 交易][topic v3 transaction relay]”、锚点输出和 “[1P1C 交易包][topic package relay]” 广播、Stratum 矿池任务可视化的支持，还添加了其它特性。
+
 - **<!--coinbase-mpc-library-released-->** **Coinbase MPC 库发布**：[Coinbase MPC][coinbase mpc blog] 项目是一个 [C++ 语言的库][coinbase mpc github]，用于保管用在多方计算（MPC）方案中的密钥，还包含了一种定制化的 secp256k1 实现。
+
 - **<!--lightning-network-liquidity-tool-released-->闪电网络流动性工具发布**：[Hydrus][hydrus github]使用闪电网络的状态（包括以往的表现），在 LND 客户端上自动化开启和关闭闪电通道。它也支持[批处理][topic payment batching]。
+
 - **<!--versioned-storage-service-announced-->** **Versoined Storage Service 发布**：[Versioned Storage Service (VSS)][vss blog] 框架是一种开源的云存储解决方案，用于保存闪电钱包和比特币钱包的状态数据，专注于非托管的钱包。
+
 - **<!--fuzz-testing-tool-for-bitcoin-nodes-->比特币节点的模糊测试工具**：[Fuzzamoto][fuzzamoto github]是一种使用模糊测试来发现不同比特币协议实现的 bug 的框架，它使用外部接口，比如 P2P 和 RPC。
+
 - **<!--bitcoin-control-board-components-opensourced-->比特币控制板模块开源**：Braiins [宣布][braiins tweet]他们的 BCB100 挖矿控制板已经有部分硬件和软件模块开源了。
 
 ## 新版本和候选版本
@@ -33,6 +41,7 @@ lang: zh
 *热门比特币基础设施项目的新版本和候选版本。请考虑升级到新版本或帮助测试候选版本。*
 
 - [Bitcoin Core 29.0][] 是这个网络主流全节点实现的最新主要版本。其[发行说明][bcc rn]介绍了多项重大提升：使用一个 NAT-PMP 选项（同样默认关闭）取代了默认关闭的 UPnP 特性（过去多项安全漏洞都与此有关），加强了孤儿交易的父交易的调取能力（或能提高 Bitcoin Core 当前的[交易包][topic package relay]支持的可靠性），默认区块模板将可获得稍微多一些空间（也许可能提高挖矿收益），增强了避免矿工意外触发[时间扭曲攻击][topic time warp]的动作（如果时间扭曲在[未来的一次软分叉][topic consensus cleanup]中被禁止，可能会造成意外的收益损失），并且，将编译系统从 autotools 迁移到 cmake。
+
 - [LND 0.19.0-beta.rc2][] 是这个流行的闪电节点的候选发行。可能需要测试的其中一个主要提升是合作关闭场景中，新的基于 RBF 的手续费追加。
 
 ## 重大的代码和说明书变更
@@ -40,6 +49,7 @@ lang: zh
 *本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、[Lightning BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。*
 
 - [LDK #3593][] 允许用户通过在 `PaymentSent` 事件中包含 BOLT12 发票来提供一个 [BOLT12][topic offers] 支付证据（需在支付完成之前）。这是通过在 `PendingOutboundPayment::Retryable` 枚举中添加 `bolt12` 字段来实现的；该枚举可在稍后附加到 `PaymentSent` 事件中。
+
 - [BOLTs #1242][] 让 “支付秘密值（[payment secret][topic payment secrets]）” 变成 [BOLT11][] 发票支付的强制要求：如果发票的读取者（支付者）发现发票的 `s` （支付秘密值）字段为空，就终止支付。以往，规范仅仅要求发票的编写者（接收者）强制编写支付秘密值，但读取者可以忽略掉长度不正确的 `s` 字段（详见周报 [#163][news163 secret]）。这一 PR 也在 [BOLT9][] 中将支付秘密值特性的状态更新为 `ASSUMED`。
 
 ## 勘误
@@ -62,7 +72,7 @@ lang: zh
 [bcc29 testing guide]: https://github.com/bitcoin-core/bitcoin-devwiki/wiki/29.0-Release-Candidate-Testing-Guide
 [lnd 0.19.0-beta.rc2]: https://github.com/lightningnetwork/lnd/releases/tag/v0.19.0-beta.rc2
 [sources]: /en/internal/sources/
-[news349 ss]: /zh/newsletters/2025/04/11/#swiftsync-speedup-for-initial-block-download
+[news349 ss]: /zh/newsletters/2025/04/11/#swiftsync-speedup-for-initial-block-download-swiftsync
 [bcc rn]: https://bitcoincore.org/en/releases/29.0/
 [knots 28.1]: https://github.com/bitcoinknots/bitcoin/releases/tag/v28.1.knots20250305
 [bip370 website]: https://bip370.org/
@@ -74,4 +84,4 @@ lang: zh
 [vss blog]: https://lightningdevkit.org/blog/announcing-vss/
 [fuzzamoto github]: https://github.com/dergoegge/fuzzamoto
 [braiins tweet]: https://x.com/BraiinsMining/status/1904601547855573458
-[news163 secret]: /en/newsletters/2021/08/25/#bolts-887
+[news163 secret]: /zh/newsletters/2021/08/25/#bolts-887
