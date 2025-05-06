@@ -11,7 +11,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--interactive-aggregate-signatures-compatible-with-secp256k1-->与 secp256k1 兼容的交互式聚合签名：** Jonas Nick、Tim Ruffing 和 Yannick Seurin 在 Bitcoin-Dev 邮件列表上[发布][nrs dahlias]了他们撰写的一篇[论文][dahlias paper]，内容是关于创建与比特币已使用的密码学原语兼容的 64 字节聚合签名。聚合签名是[跨输入签名聚合][topic cisa]（CISA）的密码学要求，这是一个为比特币提议的功能，可以减少具有多个输入的交易的大小，从而降低多种不同类型花费的成本——包括通过[coinjoin][topic coinjoin]和[payjoin][topic payjoin]实现的增强隐私的花费。
+- **<!--interactive-aggregate-signatures-compatible-with-secp256k1-->****与 secp256k1 兼容的交互式聚合签名：** Jonas Nick、Tim Ruffing 和 Yannick Seurin 在 Bitcoin-Dev 邮件列表上[发布][nrs dahlias]了他们撰写的一篇[论文][dahlias paper]，内容是关于创建与比特币已使用的密码学原语兼容的 64 字节聚合签名。聚合签名是[跨输入签名聚合][topic cisa]（CISA）的密码学要求，这是一个为比特币提议的功能，可以减少具有多个输入的交易的大小，从而降低多种不同类型花费的成本——包括通过 [coinjoin][topic coinjoin] 和 [payjoin][topic payjoin] 实现的增强隐私的花费。
 
   除了作者提出的 DahLIAS 这样的聚合签名方案外，为比特币添加 CISA 支持还需要共识变更，以及签名聚合与其他提议的共识变更之间可能的交互，这些变更可能需要进一步研究。
 
@@ -31,19 +31,19 @@ lang: zh
   Vojtěch Strnad [链接][op_return tx]到一个 Runes [元协议][topic client-side validation]交易，其 `OP_RETURN` 大小为 79870 字节，是最大的。
 
 - [<!--non-ln-explanation-of-pay-to-anchor-->对 pay-to-anchor 的非闪电网络解释？]({{bse}}126098)
-  Murch 详细说明了[pay-to-anchor (P2A)][topic ephemeral anchors]输出脚本的原理和结构。
+  Murch 详细说明了 [pay-to-anchor (P2A)][topic ephemeral anchors]输出脚本的原理和结构。
 
 - [<!--up-to-date-statistics-about-chain-reorganizations-->关于链重组的最新统计数据？]({{bse}}126019)
-  0xb10c 和 Murch 指出了重组数据的来源，包括[stale-blocks][stale-blocks github]库、[forkmonitor.info][]网站和[fork.observer][]网站。
+  0xb10c 和 Murch 指出了重组数据的来源，包括 [stale-blocks][stale-blocks github] 库、[forkmonitor.info][] 网站和 [fork.observer][] 网站。
 
 - [<!--are-lightning-channels-always-p2wsh-->闪电网络通道总是 P2WSH 吗？]({{bse}}125967)
   Polespinasa 指出了 P2TR [简单 taproot 通道][topic simple taproot channels]的持续开发，并总结了各闪电网络实现的当前支持情况。
 
 - [<!--child-pays-for-parent-as-a-defense-against-a-double-spend-->子为父偿作为防御双重花费的手段？]({{bse}}126056)
-  Murch 列出了使用高手续费的[CPFP][topic cpfp]子交易来激励区块链重组以防御已确认的双重花费输出的复杂性。
+  Murch 列出了使用高手续费的 [CPFP][topic cpfp] 子交易来激励区块链重组以防御已确认的双重花费输出的复杂性。
 
 - [<!--what-values-does-checktemplateverify-hash-->CHECKTEMPLATEVERIFY 哈希哪些值？]({{bse}}126133)
-  Average-gray 概述了[OP_CHECKTEMPLATEVERIFY][topic op_checktemplateverify]承诺的字段：nVersion、nLockTime、输入数量、序列哈希、输出数量、输出哈希、输入索引，以及在某些情况下的 scriptSig 哈希。
+  Average-gray 概述了 [OP_CHECKTEMPLATEVERIFY][topic op_checktemplateverify] 承诺的字段：nVersion、nLockTime、输入数量、序列哈希、输出数量、输出哈希、输入索引，以及在某些情况下的 scriptSig 哈希。
 
 - [<!--why-can-t-lightning-nodes-opt-to-reveal-channel-balances-for-better-routing-efficiency-->为什么闪电网络节点不能选择透露通道余额以提高路由效率？]({{bse}}125985)
   Rene Pickhardt 解释了对数据的陈旧性和可信度的担忧、隐私影响，并指出了 2020 年的一个[类似提案][BOLTs #780]。
@@ -55,7 +55,7 @@ lang: zh
 
 *热门的比特币基础设施项目的新版本和候选版本。请考虑升级到新版本或帮助测试候选版本。*
 
-- [LND 0.19.0-beta.rc3][] 是这个流行的闪电网络节点的候选版本。可能需要测试的主要改进之一是合作关闭场景中新的基于 RBF 的手续费提升。{% assign timestamp="1:07:39" %}
+- [LND 0.19.0-beta.rc3][] 是这个流行的闪电网络节点的候选版本。可能需要测试的主要改进之一是合作关闭场景中新的基于 RBF 的手续费提升。
 
 ## 重大代码和文档变更
 
