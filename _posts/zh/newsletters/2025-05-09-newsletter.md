@@ -12,7 +12,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--bip30-consensus-failure-vulnerability-->** **BIP30 共识失败漏洞**：Ruben Somsen 在 Bitcoin-Dev 邮件组中[发帖][somsen bip30]提出了一个现在（检查点已经从 Bitcoin Core 中移除，详见[周报 #346][news346 checkpoints]）可能发生的理论上的共识故障。简而言之，区块高度 9172 和 91812 的 coinbase 交易跟 91880 和 91842 的分别[重合][topic duplicate transactions]。[BIP30][] 指定这两个区块的处理方式应该跟历史版本的 Bitcoin Core 在 2010 年的处理方式一致，就是在 UTXO 集中用后来出现的重合交易覆盖掉更早的 coinbase 条目。然而，Somsen 指出，影响其中一个（或两个）区块的重组可能导致重合条目从 UTXO 集中移除，而因为先前的覆盖操作，较早的那个条目也不会留下来；但是，一个新启动的节点从未看到过覆盖交易，就依然会保留更早的交易，从而产生不一样的 UTXO 集。如果某一比交易被花费，这可能会导致共识故障。
+- **<!--bip30-consensus-failure-vulnerability-->** **BIP30 共识失败漏洞**：Ruben Somsen 在 Bitcoin-Dev 邮件组中[发帖][somsen bip30]提出了一个现在（检查点已经从 Bitcoin Core 中移除，详见[周报 #346][news346 checkpoints]）可能发生的理论上的共识故障。简而言之，区块高度 9172 和 91812 的 coinbase 交易跟 91880 和 91842 的分别[重合][topic duplicate transactions]。[BIP30][] 指定这两个区块的处理方式应该跟历史版本的 Bitcoin Core 在 2010 年的处理方式一致，就是在 UTXO 集中用后来出现的重合交易覆盖掉更早的 coinbase 条目。然而，Somsen 指出，影响其中一个（或两个）区块的重组可能导致重合条目从 UTXO 集中移除，而因为先前的覆盖操作，较早的那个条目也不会留下来；但是，一个新启动的节点从未看到过覆盖交易，就依然会保留更早的交易，从而产生不一样的 UTXO 集。如果某一笔交易被花费，这可能会导致共识故障。
 
   在 Bitcoin Core 还有检查点的时候，这不是个问题，因为检查点要求上述四个区块都出现在最佳区块链上。这不会立即变成问题 —— 只是在理论上，如果比特币的工作量证明安全机制崩溃的话，才会变成现实。人们讨论了多种可能的解决方案，比如为这两个例外硬编码额外的特例逻辑。
 
@@ -26,19 +26,18 @@ lang: zh
 
 “[添加可执行的 bitcoin 封装器][review club 31375]” 是由 [ryanofsky][gh ryanofsky] 发起的一项 PR，引入了一种新的 `bitcoin` 二进制文件，可以用来发现和启动多种 Bitcoin Core 二进制文件。
 
-Bitcoin Core v29 发行了 7 种二进制文件（比如，`bitcoind`、`bitcoin-qt` 和 `bitcoin-cli`），但这个数量在未来可能还会[增加][Bitcoin Core #30983]，在 [multiprocess][multiprocess design] 二进制文件们真正推出的时候。新的 `bitcoin` 封装器会把命令（例如 `gui`）映射成正确的整体程序（`bitcoin-qt`）或者多线程（`bitocin-gui`）二进制文件。除了探测能力，这个封装器还提供了前向兼容性（forward compatibility），所以二级制文件可以重新组织，而用户界面无需改变。
+Bitcoin Core v29 发行了 7 种二进制文件（比如，`bitcoind`、`bitcoin-qt` 和 `bitcoin-cli`），但这个数量在未来可能还会[增加][Bitcoin Core #30983]，在 [multiprocess][multiprocess design] 二进制文件们真正推出的时候。新的 `bitcoin` 封装器会把命令（例如 `gui`）映射成正确的整体程序（`bitcoin-qt`）或者多线程（`bitocin-gui`）二进制文件。除了探测能力，这个封装器还提供了向前兼容性（forward compatibility），所以二级制文件可以重新组织，而用户界面无需改变。
 
 有了这项 PR，用户可以用 `bitcoin daemon` 或者 `bitcoin gui` 来启动 Bitcoin Core。直接启动 `bitcoind` 或者 `bitcoin-qt` 二进制文件都依然是可行的，不受本 PR 的影响。
 
 {% include functions/details-list.md
   q0="<!--from-issue-30983-four-packaging-strategies-were-listed-which-specific-drawbacks-of-the-side-binaries-approach-does-this-pr-address-->从 Issue #30983 的描述来看，有四种封装策略。这个 PR 所采用的 “side-binaries” 有什么缺点？"
-  a0="本 PR 所假设的 side-binaries 方法要求随附现有的整体程序二进制文件发行新的多线程二进制文件。当二进制文件变得这么多，用户可能就会犯难，不知道哪个二进制文件才是自己要的。本 PR 通过提供一个单一的入口来消除大部分混淆，入口可以提供选项的概述和帮助文本。其中一个审核员建议加入模糊搜索，以进一步增加它的作用。"
+  a0="本 PR 所假设的 side-binaries 方法要求随附现有的整体程序二进制文件发行新的多进程二进制文件。当二进制文件变得这么多，用户可能就会犯难，不知道哪个二进制文件才是自己要的。本 PR 通过提供一个单一的入口来消除大部分混淆，入口可以提供选项的概述和帮助文本。其中一个审核员建议加入模糊搜索，以进一步增加它的作用。"
   a0link="https://bitcoincore.reviews/31375#l-40"
   q1="<!--getexepath-does-not-use-readlink-proc-self-exe-on-linux-even-though-it-would-be-more-direct-what-advantages-does-the-current-implementation-have-what-corner-cases-might-it-miss-->在 Linx 系统中，`GetExePath()` 不会使用 `readlink(\"/proc/self/exe\")` ，即使这样更加直接。那么当前的实现有什么好处？它会不会忽略了什么东西？"
   a1="可能有其它非 Windows 操作系统也没有 proc 文件系统。除此之外，作者和客座都无法找出使用 procfs 的任何缺点。"
   a1link="https://bitcoincore.reviews/31375#l-71"
-  q2="<!--in-execcommand-explain-the-purpose-of-the-fallback-os-search-boolean-under-what-circumstances-is-it-better-to-avoid-letting-the-os-search-for-the-binary-on-the-path-->在 `ExecCommand` 中， `fallback_os_search`
- 布尔值有什么用？在什么情况下，最好避免让操作系统在 `PATH` 中搜索二进制文件？"
+  q2="<!--in-execcommand-explain-the-purpose-of-the-fallback-os-search-boolean-under-what-circumstances-is-it-better-to-avoid-letting-the-os-search-for-the-binary-on-the-path-->在 `ExecCommand` 中，`fallback_os_search` 布尔值有什么用？在什么情况下，最好避免让操作系统在 `PATH` 中搜索二进制文件？"
   a2="如果可执行的封装器看起来是通过路径（例如 “/build/bin/bitcoin”）而不是搜索（例如 “bitcoin”）调用的，那么它就会假设用户在使用一个本地的编译，然后 `fallback_os_search` 就会设为 `false`。引入这个布尔值是为了避免以外混淆来自不同来源的二进制文件。举个例子，如果用户并没有在本地编译 `gui`，那么 `/build/bin/bitcoin/gui` 就不应该回调系统安装好的 `bitcoin-gui`。作者正在考虑完全移除 `PATH` 搜索，如果能得到用户的反馈意见就好了。"
   a2link="https://bitcoincore.reviews/31375#l-75"
   q3="<!--the-wrapper-searches-prefix-libexec-only-when-it-detects-that-it-is-running-from-an-installed-bin-directory-why-not-always-search-libexec-->封装器仅会在它检测到它从安装好的 `bin` 目录运行时才会搜索。为什么不是总是搜索 `libexec` 呢？"
@@ -73,7 +72,7 @@ Bitcoin Core v29 发行了 7 种二进制文件（比如，`bitcoind`、`bitcoin
 
 - [BIPs #1835][] 更新了 [BIP48][]（详见周报 [#135][news135 bip48]），以在使用 m/48' 前缀的确定性多签名钱包中为 [taproot][topic taproot]（P2TR）派生保留脚本类型数值 3；现有的其它保留数值有：P2SH-P2WSH（1'）和 P2WSH（2'）。
 
-- [BIPs #1800][] 合并了 [BIP54][]，该 BIP 详述了修复比特币协议中一系列长期存在的漏洞的 [共识清理软分叉][topic consensus cleanup]。关于这个 BIP 的详细描述，请看周报 [#348][news348 cleanup]。
+- [BIPs #1800][] 合并了 [BIP54][]，该 BIP 详述了修复比特币协议中一系列长期存在的漏洞的[共识清理软分叉][topic consensus cleanup]。关于这个 BIP 的详细描述，请看周报 [#348][news348 cleanup]。
 
 - [BOLTs #1245][] 通过禁止在发票中使用非最短长度编码（non-minimal length encodings），收紧了 [BOLT11][]：expiry 字段（x）、最后一跳的 [CLTV 过期差值][topic cltv expiry delta]字段（c），以及特性比特字段（9），都必须以不使用 0 开头的最短长度序列化，而读取者也应该拒绝任何包含 0 开头的发票。这一变更的动机是模糊测试发现，当 LDK 重新序列化非最短的发票为最短发票（删去额外的 0）时，发票的 ECDSA 签名无法通过验证。
 
