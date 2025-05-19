@@ -26,7 +26,7 @@ lang: zh
 
 “[添加可执行的 bitcoin 封装器][review club 31375]” 是由 [ryanofsky][gh ryanofsky] 发起的一项 PR，引入了一种新的 `bitcoin` 二进制文件，可以用来发现和启动多种 Bitcoin Core 二进制文件。
 
-Bitcoin Core v29 发行了 7 种二进制文件（比如，`bitcoind`、`bitcoin-qt` 和 `bitcoin-cli`），但这个数量在未来可能还会[增加][Bitcoin Core #30983]，在 [multiprocess][multiprocess design] 二进制文件们真正推出的时候。新的 `bitcoin` 封装器会把命令（例如 `gui`）映射成正确的整体程序（`bitcoin-qt`）或者多线程（`bitocin-gui`）二进制文件。除了探测能力，这个封装器还提供了向前兼容性（forward compatibility），所以二级制文件可以重新组织，而用户界面无需改变。
+Bitcoin Core v29 发行了 7 种二进制文件（比如，`bitcoind`、`bitcoin-qt` 和 `bitcoin-cli`），但在未来[多进程][multiprocess design]二进制文件推出的时候，这个数量还会[增加][Bitcoin Core #30983]。新的 `bitcoin` 封装器会把命令（例如 `gui`）映射成正确的整体程序（`bitcoin-qt`）或者多线程（`bitocin-gui`）二进制文件。除了探测能力，这个封装器还提供了向前兼容性（forward compatibility），所以二级制文件可以重新组织，而用户界面无需改变。
 
 有了这项 PR，用户可以用 `bitcoin daemon` 或者 `bitcoin gui` 来启动 Bitcoin Core。直接启动 `bitcoind` 或者 `bitcoin-qt` 二进制文件都依然是可行的，不受本 PR 的影响。
 
