@@ -11,17 +11,17 @@ lang: zh
 
 ## 新闻
 
-- **<!--vulnerability-disclosure-affecting-old-versions-of-bitcoin-core-->影响旧版本 Bitcoin Core 的漏洞披露：** Antoine Poinsot 在 Bitcoin-Dev 邮件列表上[发布][poinsot addrvuln]了一个影响 29.0 之前版本 Bitcoin Core 的漏洞公告。该漏洞最初由 Eugene Siegel [负责任地披露][topic responsible disclosures]，同时还有另一个在[周报 #314][news314 excess addr]中描述的密切相关的漏洞。攻击者可以发送过多的节点地址广告，迫使 32 位标识符溢出，导致节点崩溃。这一问题部分通过限制每个对等节点每十秒钟只能更新一次来缓解，对于默认约 125 个对等节点的限制，除非节点被持续攻击超过 10 年，否则不会发生溢出。<!-- 2**32 * 10 / 125 / (60 * 60 * 24 * 365) --> 该漏洞已在上个月发布的 Bitcoin Core 29.0 中通过使用 64 位标识符完全修复。
+- **<!--vulnerability-disclosure-affecting-old-versions-of-bitcoin-core-->****影响旧版本 Bitcoin Core 的漏洞披露：** Antoine Poinsot 在 Bitcoin-Dev 邮件列表上[发布][poinsot addrvuln]了一个影响 29.0 之前版本 Bitcoin Core 的漏洞公告。该漏洞最初由 Eugene Siegel [负责任地披露][topic responsible disclosures]，同时还有另一个在[周报 #314][news314 excess addr]中描述的密切相关的漏洞。攻击者可以发送过多的节点地址广告，迫使 32 位标识符溢出，导致节点崩溃。这一问题部分通过限制每个对等节点每十秒钟只能更新一次来缓解，对于默认约 125 个对等节点的限制，除非节点被持续攻击超过 10 年，否则不会发生溢出。<!-- 2**32 * 10 / 125 / (60 * 60 * 24 * 365) --> 该漏洞已在上个月发布的 Bitcoin Core 29.0 中通过使用 64 位标识符完全修复。
 
 ## 共识变更
 
 _每月一次的总结比特币共识规则变更提案和讨论的栏目。_
 
-- **<!--proposed-bip-for-64-bit-arithmetic-in-script-->Script 中 64 位算术的 BIP 提案：** Chris Stewart 向 Bitcoin-Dev 邮件列表[发布][stewart bippost]了一个[草案 BIP][64bit bip]，提议将比特币现有的操作码升级为支持 64 位数值操作。这是他之前研究的延续（参见周报 [#285][news285 64bit]、[#290][news290 64bit] 和 [#306][news306 64bit]）。与早期讨论的一些变化不同，新提案使用与比特币当前使用的相同 compactSize 数据格式的数字。相关的额外[讨论][stewart inout]发生在 Delving Bitcoin 上的两个[主题][stewart overflow]中。
+- **<!--proposed-bip-for-64-bit-arithmetic-in-script-->****Script 中 64 位算术的 BIP 提案：** Chris Stewart 向 Bitcoin-Dev 邮件列表[发布][stewart bippost]了一个[草案 BIP][64bit bip]，提议将比特币现有的操作码升级为支持 64 位数值操作。这是他之前研究的延续（参见周报 [#285][news285 64bit]、[#290][news290 64bit] 和 [#306][news306 64bit]）。与早期讨论的一些变化不同，新提案使用与比特币当前使用的相同 compactSize 数据格式的数字。相关的额外[讨论][stewart inout]发生在 Delving Bitcoin 上的两个[主题][stewart overflow]中。
 
-- **<!--proposed-opcodes-for-enabling-recursive-covenants-through-quines-->通过自我复制脚本启用递归限制条款的操作码提案：** Bram Cohen 在 Delving Bitcoin 上[发布][cohen quine]了一组简单操作码的建议，这些操作码将通过自我复制脚本（[quines][]）实现递归[限制条款][topic covenants]的创建。Cohen 描述了如何使用这些操作码创建一个简单的[保管库][topic vaults]，并提到了他正在开发的一个更高级的系统。
+- **<!--proposed-opcodes-for-enabling-recursive-covenants-through-quines-->****通过自我复制脚本启用递归限制条款的操作码提案：** Bram Cohen 在 Delving Bitcoin 上[发布][cohen quine]了一组简单操作码的建议，这些操作码将通过自我复制脚本（[quines][]）实现递归[限制条款][topic covenants]的创建。Cohen 描述了如何使用这些操作码创建一个简单的[保管库][topic vaults]，并提到了他正在开发的一个更高级的系统。
 
-- **<!--description-of-benefits-to-bitvm-from-op-ctv-and-op-csfs-->BitVM 从 `OP_CTV` 和 `OP_CSFS` 获得的好处描述：** Robin Linus 在 Delving Bitcoin 上[发布][linus bitvm-sf]了关于如果在软分叉中向比特币添加提议的 [OP_CTV][topic op_checktemplateverify] 和 [OP_CSFS][topic op_checksigfromstack] 操作码，[BitVM][topic acc] 可能获得的几项改进。他描述的好处包括增加操作符数量而没有缺点，“将交易大小减少约 10 倍”（降低最坏情况下的成本），以及允许某些合约的非交互式 peg-in。
+- **<!--description-of-benefits-to-bitvm-from-op-ctv-and-op-csfs-->****BitVM 从 `OP_CTV` 和 `OP_CSFS` 获得的好处描述：** Robin Linus 在 Delving Bitcoin 上[发布][linus bitvm-sf]了关于如果在软分叉中向比特币添加提议的 [OP_CTV][topic op_checktemplateverify] 和 [OP_CSFS][topic op_checksigfromstack] 操作码，[BitVM][topic acc] 可能获得的几项改进。他描述的好处包括增加操作符数量而没有缺点，“将交易大小减少约 10 倍”（降低最坏情况下的成本），以及允许某些合约的非交互式 peg-in。
 
 ## 版本和候选版本
 
@@ -52,17 +52,17 @@ _每月一次的总结比特币共识规则变更提案和讨论的栏目。_
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="32155,28710,8272,8330,4458,1848,1841,1821" %}
 [lnd 0.19.0-beta.rc4]: https://github.com/lightningnetwork/lnd/releases/tag/v0.19.0-beta.rc4
-[news314 excess addr]: /zh/newsletters/2024/08/02/#remote-crash-by-sending-excessive-addr-messages
+[news314 excess addr]: /zh/newsletters/2024/08/02/#addr
 [stewart bippost]: https://groups.google.com/g/bitcoindev/c/j1zEky-3QEE
 [64bit bip]: https://github.com/Christewart/bips/blob/2025-03-17-64bit-pt2/bip-XXXX.mediawiki
-[news285 64bit]: /zh/newsletters/2024/01/17/#proposal-for-64-bit-arithmetic-soft-fork
-[news290 64bit]: /zh/newsletters/2024/02/21/#continued-discussion-about-64-bit-arithmetic-and-op-inout-amount-opcode
+[news285 64bit]: /zh/newsletters/2024/01/17/#proposal-for-64-bit-arithmetic-soft-fork-64
+[news290 64bit]: /zh/newsletters/2024/02/21/#continued-discussion-about-64-bit-arithmetic-and-op-inout-amount-opcode-64-op-inout-amount
 [news306 64bit]: /zh/newsletters/2024/06/07/#updates-to-proposed-soft-fork-for-64-bit-arithmetic
 [stewart inout]: https://delvingbitcoin.org/t/op-inout-amount/549/4
 [stewart overflow]: https://delvingbitcoin.org/t/overflow-handling-in-script/1549
 [poinsot addrvuln]: https://mailing-list.bitcoindevs.xyz/bitcoindev/EYvwAFPNEfsQ8cVwiK-8v6ovJU43Vy-ylARiDQ_1XBXAgg_ZqWIpB6m51fAIRtI-rfTmMGvGLrOe5Utl5y9uaHySELpya2ojC7yGsXnP90s=@protonmail.com/
 [cohen quine]: https://delvingbitcoin.org/t/a-simple-approach-to-allowing-recursive-covenants-by-enabling-quines/1655/
 [linus bitvm-sf]: https://delvingbitcoin.org/t/how-ctv-csfs-improves-bitvm-bridges/1591/
-[quines]: https://en.wikipedia.org/wiki/Quine_(computing)
+[quines]: https://zh.wikipedia.org/wiki/%E8%87%AA%E7%94%A2%E7%94%9F%E7%A8%8B%E5%BC%8F
 [news305 bdb]: /zh/newsletters/2024/05/31/#bitcoin-core-26606
 [obeirne vaultwithdraw]: https://delvingbitcoin.org/t/withdrawing-op-vault-bip-345/1670/
