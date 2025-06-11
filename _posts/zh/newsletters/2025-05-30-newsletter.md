@@ -14,7 +14,7 @@ lang: zh
 
 - **<!--do-attributable-failures-reduce-ln-privacy-->故障归因机制会削弱闪电网络的隐私性吗？**Carla Kirk-Cohen 在 Delving Bitcoin 论坛[发布][kirkcohen af]了一份分析，讨论了如果闪电网络采用了故障归因机制（[attributable failures][topic attributable failures]）（尤其是告知发送者转发支付的每一跳花费了多少时间），对发送者和接收者的隐私性可能有什么样的影响。她引用了多份论文，介绍了两种去匿名化攻击：
 
-  * 攻击者操作一个或多个转发节点，使用时机数据来确定一笔支付（[HTLC][topic htlc]）使用了多少跳；再结合对公开网络的拓扑的只是，就可以缩小可能的接收者的范围。
+  * 攻击者操作一个或多个转发节点，使用时机数据来确定一笔支付（[HTLC][topic htlc]）使用了多少跳；再结合对公开网络的拓扑的知识，就可以缩小可能的接收者的范围。
 
   * 攻击者使用一个 IP 网络流量转发器（自治系统，[autonomous system][]）从而被动地监控流量，然后结合对节点之间 IP 网络时延知识（比如说它们的 ping 时间）以及对闪电网络公开拓扑（以及其它特征）的知识。
 
