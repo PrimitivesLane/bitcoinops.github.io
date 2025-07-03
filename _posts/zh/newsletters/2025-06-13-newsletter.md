@@ -12,7 +12,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--calculating-the-selfish-mining-danger-threshold-->计算自私挖矿的危险阈值：** Antoine Poinsot 在 Delving Bitcoin 上[发帖][poinsot selfish]，扩展了 2013 年[论文][es selfish]中的数学内容。该论文使[自私挖矿攻击][topic selfish mining]得以命名（尽管该攻击在 2010 年就[被描述过][bytecoin selfish]）。Antoine 还提供了一个简化的挖矿和区块传播[模拟器][darosior/miningsimulation]，允许对该攻击进行实验。他专注于重现 2013 年论文的一个结论：控制总网络算力 33% 的不诚实矿工（或联系紧密的矿工卡特尔），在没有额外优势的情况下，可以在长期基础上比控制 67% 算力的矿工获得边际更高的利润。这是通过 33% 矿工选择性地延迟宣布其发现的一些新区块来实现的。随着不诚实矿工的算力增加到 33% 以上，它变得更加有利可图，直到超过 50% 算力并可以阻止其竞争对手在最佳区块链上保留任何新区块。
+- **<!--calculating-the-selfish-mining-danger-threshold-->计算自私挖矿的危险阈值：** Antoine Poinsot 在 Delving Bitcoin 上[发帖][poinsot selfish]，扩展了 2013 年[论文][es selfish]中的数学内容。该论文使[自私挖矿攻击][topic selfish mining]得以命名（尽管该攻击在 2010 年就[被描述过][bytecoin selfish]）。Antoine 还提供了一个简化的挖矿和区块传播[模拟器][darosior/miningsimulation]，允许对该攻击进行实验。他专注于重现 2013 年论文的一个结论：控制总网络算力 33% 的不诚实矿工（或联系紧密的矿工卡特尔），在没有额外优势的情况下，可以在长期基础上比总计控制 67% 算力的其他单打独斗的矿工获得边际更高的利润。这是通过 33% 矿工选择性地延迟宣布其发现的一些新区块来实现的。随着不诚实矿工的算力增加到 33% 以上，它变得更加有利可图，直到超过 50% 算力，其可以阻止竞争对手在最佳区块链上留下任何新区块。
 
   我们没有仔细审查 Poinsot 的帖子，但他的方法对我们来说似乎是合理的，我们建议任何有兴趣验证数学或更好地理解它的人阅读。
 
@@ -56,7 +56,7 @@ Club]会议，高亮了一些重要的问题和答案。点击下面的问题查
   a2link="https://bitcoincore.reviews/32317#l-97"
 
   q3="<!--the-first-commits-in-this-pr-refactor-ccoinsviewcache-out-of-the-function-signature-of-a-couple-of-validation-functions-does-ccoinsviewcache-hold-the-entire-utxo-set-why-is-that-not-a-problem-does-this-pr-change-that-behaviour-->此 PR 中的前几个提交将 `CCoinsViewCache` 从几个验证函数的函数签名中重构出来。`CCoinsViewCache` 是否持有整个 UTXO 集合？为什么这（不）是一个问题？这个 PR 是否改变了这种行为？"
-  a3="`CCoinsViewCache` 不持有整个 UTXO 集合；它是一个内存缓存，位于 `CCoinsViewDB` 前面，后者在磁盘上存储完整的 UTXO 集合。如果请求的币不在缓存中，必须从磁盘获取。此 PR 本身不改变这种缓存行为。通过从函数签名中移除 `CCoinsViewCache`，它使 UTXO 依赖变得明确，要求调用者在调用验证函数之前获取币。"
+  a3="`CCoinsViewCache` 不持有整个 UTXO 集合；它是一个内存缓存，位于 `CCoinsViewDB` 前面，后者在磁盘上存储完整的 UTXO 集合。如果请求的币不在缓存中，就必须从磁盘获取。此 PR 本身不改变这种缓存行为。通过从函数签名中移除 `CCoinsViewCache`，它使 UTXO 依赖变得明确，要求调用者在调用验证函数之前获取币。"
   a3link="https://bitcoincore.reviews/32317#l-116"
 %}
 
@@ -72,17 +72,17 @@ Club]会议，高亮了一些重要的问题和答案。点击下面的问题查
 
 *[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[硬件钱包接口 (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[比特币改进提案 (BIPs)][bips repo]、[闪电网络 BOLTs][bolts repo]、[闪电网络 BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo] 的近期显著变更。*
 
-- [Bitcoin Core #32406][] 取消了 `OP_RETURN` 输出大小限制（标准性规则），将默认 `-datacarriersize` 设置从 83 字节提高到 100,000 字节（最大交易大小限制）。`-datacarrier` 和 `-datacarriersize` 选项仍然存在，但被标记为已弃用，预计在未确定的未来版本中被移除。此外，此 PR 还取消了对 OP_RETURN 输出的每交易一个策略限制，现在大小限制在交易中的所有此类输出之间分配。有关此变更的更多关联内容，请参见[周报 #352][news352 opreturn]。
+- [Bitcoin Core #32406][] 取消了 `OP_RETURN` 输出大小限制（标准性规则），将默认 `-datacarriersize` 设置从 83 字节提高到 100,000 字节（最大交易大小限制）。`-datacarrier` 和 `-datacarriersize` 选项仍然存在，但被标记为已弃用，预计在未确定的未来版本中被移除。此外，此 PR 还取消了一笔交易只允许一个 OP_RETURN 输出的转发限制，现在交易中的所有此类输出共享同一个大小限制。有关此变更的更多关联内容，请参见[周报 #352][news352 opreturn]。
 
-- [LDK #3793][] 添加了一个新的 `start_batch` 消息，向对等节点发出信号，将接下来的 `n`（`batch_size`）个消息作为单个逻辑单元处理。它还更新了 `PeerManager` 以在[拼接][topic splicing]期间依赖于此来处理 `commitment_signed` 消息，而不是向批次中的每个消息添加 TLV 和 `batch_size` 字段。这是尝试允许额外的闪电网络协议消息被批处理，而不仅仅是 `commitment_signed` 消息，这是闪电网络规范中定义的唯一批处理。
+- [LDK #3793][] 添加了一个新的 `start_batch` 消息，向对等节点发出信号，将接下来的 `n`（`batch_size`）个消息作为单个逻辑单元处理。它还更新了 `PeerManager` 以在[拼接][topic splicing]期间依赖于此来处理 `commitment_signed` 消息，而不是向批次中的每个消息添加 TLV 和 `batch_size` 字段。这是尝试允许额外的闪电网络协议消息被批处理，而不仅仅是 `commitment_signed` 消息（它是闪电网络规范中定义的唯一批处理）。
 
-- [LDK #3792][] 引入了对 [v3 承诺交易][topic v3 commitments]（参见[周报 #325][news325 v3]）的初始支持，这些交易依赖于 [TRUC 交易][topic v3 transaction relay] 和[临时锚点][topic ephemeral anchors]，在测试标志后面。节点现在拒绝任何设置非零手续费率的 `open_channel` 提议，确保它自己永远不会发起这样的通道，并停止自动接受 v3 通道以首先为后续手续费追加保留 UTXO。该 PR 还将每通道 [HTLC][topic htlc] 限制从 483 降低到 114，因为 TRUC 交易必须保持在 10 kvB 以下。
+- [LDK #3792][] 引入了对 [v3 承诺交易][topic v3 commitments]（参见[周报 #325][news325 v3]）的初始支持，这些交易依赖于 [TRUC 交易][topic v3 transaction relay] 和[临时锚点][topic ephemeral anchors]；此特性需要在启动时设置测试标签才能动用。节点现在拒绝任何设置非零手续费率的 `open_channel` 提议，确保它自己永远不会发起这样的通道，并停止自动接受 v3 通道以首先为后续手续费追加保留 UTXO。该 PR 还将每通道 [HTLC][topic htlc] 限制从 483 降低到 114，因为 TRUC 交易必须保持在 10 kvB 以下。
 
 - [LND #9127][] 为 `lncli addinvoice` 命令添加了 `--blinded_path_incoming_channel_list` 选项，允许接收者嵌入一个或多个（用于多跳）首选通道 ID，供付款人尝试在[盲路径][topic rv routing]上转发。
 
 - [LND #9858][] 开始为 [RBF][topic rbf] 合作式关闭流程（参见[周报 #347][news347 rbf]）发出生产功能位 61 信号，以正确启用与 Eclair 的互操作性。它保留了暂存位 161 以维持与测试该功能的节点的互操作性。
 
-- [BOLTs #1243][] 更新了 [BOLT11][] 规范，指出如果强制字段（如 p（支付哈希）、h（描述哈希）或 s（秘密））长度不正确，读取者（发送者）不得支付发票。以前，节点可以忽略这个问题。此 PR 还在示例部分添加了一个注释，解释即使 [Low R 签名][topic low-r grinding] 节省一个字节的空间，在规范中也不强制执行。
+- [BOLTs #1243][] 更新了 [BOLT11][] 规范，指出如果强制字段（如 p（支付哈希）、h（描述哈希）或 s（秘密））长度不正确，读取者（发送者）不得支付发票。以前，节点可以忽略这个问题。此 PR 还在示例部分添加了一个注释：规范不强制执行 [Low R 签名][topic low-r grinding]，尽管它可以节省一个字节的空间。
 
 {% include snippets/recap-ad.md when="2025-06-17 16:30" %}
 {% include references.md %}
