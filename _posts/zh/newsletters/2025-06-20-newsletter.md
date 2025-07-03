@@ -33,8 +33,11 @@ lang: zh
 *在这个月度栏目中，我们会列出比特币钱包和服务的有趣更新。*
 
 - **<!--cove-v100-released-->** **Cove v1.0.0 发布**：Cove 的[最新版本][cove github]加入了钱币控制功能以及 [BIP329][] 钱包标签特性。
+
 - **<!--liana-v110-released-->** **Liana v11.0 发布**：Liana 的[最新版本][liana github]加入了多钱包特性、钱币控制特性以及对更多硬件签名器的支持；此外还新增了别的特性。
+
 - **<!--stratum-v2-stark-proof-demo-->** **Stratum v2 STARK 证明演示**：StarkWare [演示][starkware tweet]了一个[修改后的 Stratum v2 挖矿客户端][starkware sv2]，使用一个 SATRK 证据来证明属于一个有效的区块模板的手续费，而不必揭开这个区块中的交易。
+
 - **<!--breez-sdk-adds-bolt12-and-bip353-->** **Breez SDK 加入了 BOLT12 和 BIP353**：Breez SDK Nodeless [0.9.0][breez github] 添加了使用 [BOLT12][] 和 [BIP353][] 来收款的特性。
 
 ## 新版本和候选版本
@@ -48,10 +51,15 @@ lang: zh
 *本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、[Lightning BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。*
 
 - [Eclair #3110][] 将标记一条通道为关闭的时延从其注资输出被花费之后的 12 个区块（详见周报 [#337][news337 delay]）提高到 72 个区块，如 [BOLTs #1270][] 所指定的，以允许[拼接][topic splicing]更新的传播。提高这一数值，是因为一些实现在发送 `splice_locked` 之前默认要等待 8 个区块，而且允许节点运营者提高这个门槛，所以 12 个区块已经被证明是太短了。当前，这一数值在测试用途中是可以配置的，以允许节点运营者等待更长时间。
+
 - [Eclair #3101][] 引入了 `parseoffer` PRC，它会解码 [BOLT12 offer][topic offers] 为明文可读的格式，从而用户可以在将 offer 传递给 `payoffer` PRC 之前看到支付的数额。后者已经扩展成接受以法币单位指定的数额。
+
 - [LDK #3817][] 撤回了对 “[可归因故障][topic attributable failures]”（详见周报 [#349][news349 attributable]）的支持，仅在 test-only 的启动标签下才可使用。这禁用了对等节点的惩罚逻辑，并从传递故障的[洋葱消息][topic onion messages]中移除了特性 TLV。尚未升级的节点被错误地惩罚了，表明更广泛的网络采用是这种技术正常工作的前提。
+
 - [LDK #3623][] 拓展了[对等节点存储协议][topic peer storage]（详见周报 [#342][news342 peer]）以提供自动化的、加密的对等节点备份。每过一个区块，`ChainMonitor` 都会将来自一个带有版本、时间戳且被序列化的 `ChannelMonitor` 结构体的数据打包成一个 `OurPeerStorage` 包裹。然后，它会加密这个数据，并唤起一个 `SendPeerStorage` 事件、将这个包裹作为一条 `peer_storage` 消息转发给每一条通道的对等节点。此外，`ChannelManager` 更新为通过触发一次新的包裹发送来处理 `peer_storage_retrieval` 请求。
+
 - [BTCPay Server #6755][] 强化了钱币控制的用户界面：添加了新的最小数额和最大数额过滤器、创建 早于/晚于 某日期过滤器、这些过滤器的帮助选项、UTXO “全选” 选择框，以及页面大小选择（100 条、200 条或 500 条 UTXO）。
+
 - [Rust libsecp256k1 #798][] 在库中完成了 [MuSig2][topic musig] 实现，为下游项目给出了使用一种健壮的[无脚本多签名][topic multisignature]协议的方法。
 
 {% include references.md %}
@@ -64,13 +72,13 @@ lang: zh
 [rubin garbled]: https://rubin.io/bitcoin/2025/04/04/delbrag/
 [pickhardt rebalance]: https://delvingbitcoin.org/t/research-update-a-geometric-approach-for-optimal-channel-rebalancing/1768
 [rust libsecp256k1 #798]: https://github.com/rust-bitcoin/rust-secp256k1/pull/798
-[news54 foaf rebalance]: /en/newsletters/2019/07/10/#brainstorming-just-in-time-routing-and-free-channel-rebalancing
+[news54 foaf rebalance]: /zh/newsletters/2019/07/10/#brainstorming-just-in-time-routing-and-free-channel-rebalancing
 [yanofsky priv]: https://github.com/bitcoin-core/meta/issues/19#issuecomment-2961177626
 [cove github]: https://github.com/bitcoinppl/cove/releases
 [liana github]: https://github.com/wizardsardine/liana/releases
 [breez github]: https://github.com/breez/breez-sdk-liquid/releases/tag/0.9.0
 [starkware tweet]: https://x.com/dimahledba/status/1935354385795592491
 [starkware sv2]: https://github.com/keep-starknet-strange/stratum
-[news337 delay]: /en/newsletters/2025/01/17/#eclair-2936
-[news349 attributable]: /en/newsletters/2025/04/11/#ldk-2256
-[news342 peer]:/en/newsletters/2025/02/21/#ldk-3575
+[news337 delay]: /zh/newsletters/2025/01/17/#eclair-2936
+[news349 attributable]: /zh/newsletters/2025/04/11/#ldk-2256
+[news342 peer]:/zh/newsletters/2025/02/21/#ldk-3575
