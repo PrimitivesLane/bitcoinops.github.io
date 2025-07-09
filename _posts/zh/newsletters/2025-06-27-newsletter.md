@@ -11,11 +11,11 @@ lang: zh
 
 ## 新闻
 
-- **<!--fingerprinting-nodes-using-addr-messages-->使用 `addr` 消息对节点进行指纹识别：** Daniela Brozzoni 在 Delving Bitcoin 上[发布][brozzoni addr]了她与开发者 Naiyoma 进行的研究，该研究关于使用节点发送的 `addr` 消息在多个网络上识别同一个节点。节点向其对等节点发送 P2P 协议 `addr`（地址）消息来广告其他潜在节点，允许对等节点使用去中心化的 gossip 系统找到彼此。然而，Brozzoni 和 Naiyoma 能够使用其特定地址消息的详细信息对单个节点进行指纹识别，使他们能够识别在多个网络（如 IPv4 和 [Tor][topic anonymity networks]）上运行的同一个节点。
+- **<!--fingerprinting-nodes-using-addr-messages-->****使用 `addr` 消息对节点进行指纹识别：** Daniela Brozzoni 在 Delving Bitcoin 上[发布][brozzoni addr]了她与开发者 Naiyoma 进行的研究，该研究关于使用节点发送的 `addr` 消息在多个网络上识别同一个节点。节点向其对等节点发送 P2P 协议 `addr`（地址）消息来广告其他潜在节点，允许对等节点使用去中心化的 gossip 系统找到彼此。然而，Brozzoni 和 Naiyoma 能够使用其特定地址消息的详细信息对单个节点进行指纹识别，使他们能够识别在多个网络（如 IPv4 和 [Tor][topic anonymity networks]）上运行的同一个节点。
 
   研究人员建议了两种可能的缓解措施：从地址消息中移除时间戳，或者如果保留时间戳，则稍微随机化它们以使其对特定节点的特异性降低。
 
-- **<!--does-any-software-use-h-in-descriptors-->是否有软件在描述符中使用 `H`？** Ava Chow 在 Bitcoin-Dev 邮件列表上[发布][chow hard]询问是否有任何软件生成使用大写 H 来表示强化 [BIP32][topic bip32] 密钥派生步骤的描述符。如果没有，[输出脚本描述符][topic descriptors]的 [BIP380][] 规范可能会被修改为只允许使用小写 h 和 `'` 来表示强化。Chow 指出，虽然 BIP32 允许大写 H，但 BIP380 规范之前包含了一个禁止使用大写 H 的测试，并且 Bitcoin Core 目前不接受大写 H。
+- **<!--does-any-software-use-h-in-descriptors-->****是否有软件在描述符中使用 `H`？** Ava Chow 在 Bitcoin-Dev 邮件列表上[发布][chow hard]询问是否有任何软件生成使用大写 H 来表示强化 [BIP32][topic bip32] 密钥派生步骤的描述符。如果没有，[输出脚本描述符][topic descriptors]的 [BIP380][] 规范可能会被修改为只允许使用小写 h 和 `'` 来表示强化。Chow 指出，虽然 BIP32 允许大写 H，但 BIP380 规范之前包含了一个禁止使用大写 H 的测试，并且 Bitcoin Core 目前不接受大写 H。
 
 ## Bitcoin Stack Exchange 的精选问答
 
@@ -27,7 +27,7 @@ lang: zh
 - [<!--is-there-any-way-to-block-bitcoin-knots-nodes-as-my-peers-->有什么方法可以阻止 Bitcoin Knots 节点作为我的对等节点吗？]({{bse}}127456)
   Vojtěch Strnad 提供了一种基于用户代理字符串使用两个 Bitcoin Core RPC 阻止对等节点的方法，但不鼓励这种方法，并指向了一个相关的 [Bitcoin Core GitHub issue][Bitcoin Core #30036]，其中也有类似的不鼓励意见。
 
-- [<!--what-does-op-cat-do-with-integers-->OP_CAT 对整数做什么？]({{bse}}127436)
+- [<!--what-does-op-cat-do-with-integers-->OP_CAT 对整数如何操作？]({{bse}}127436)
   Pieter Wuille 解释说 Bitcoin Script 堆栈元素不包含数据类型信息，不同的操作码以不同的方式解释堆栈元素的字节。
 
 - [<!--async-block-relaying-with-compact-block-relay-bip152-->使用致密区块中继的异步区块中继（BIP152）]({{bse}}127420)
