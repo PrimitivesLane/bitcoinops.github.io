@@ -16,20 +16,20 @@ _本周在我们的[来源][sources]中没有发现重大新闻。_
 
 *在这个月度专题中，我们会重点介绍比特币钱包和服务的有趣更新。*
 
-- **Floresta v0.8.0 发布：**
+- **<!--floresta-v0-8-0-released-->****Floresta v0.8.0 发布：**
   [Floresta v0.8.0][floresta v0.8.0] 版本的这个 [Utreexo][topic utreexo] 节点增加了对 [P2P 传输协议第 2 版 (BIP324)][topic v2 p2p transport]、[testnet4][topic testnet] 的支持，增强了指标和监控功能，以及其他功能和错误修复。
 
-- **RGB v0.12 发布：**
+- **<!--rgb-v0-12-announced-->****RGB v0.12 发布：**
   RGB v0.12 [博客文章][rgb blog] 宣布发布了 RGB 的共识层，用于比特币测试网和主网上的 RGB [客户端验证][topic client-side validation] 智能合约。
 
-- **FROST 签名设备可用：**
+- **<!--frost-signing-device-available-->****FROST 签名设备可用：**
   [Frostsnap][frostsnap website] 签名设备支持使用 FROST 协议的 k-of-n [阈值签名][topic threshold signature]，在链上只需一个签名。
 
-- **Gemini 增加 taproot 支持：**
+- **<!--gemini-adds-taproot-support-->****Gemini 增加 taproot 支持：**
   Gemini 交易所和 Gemini 托管服务增加了对发送（提款）到 [taproot][topic taproot] 地址的支持。
 
-- **Electrum 4.6.0 发布：**
-  [Electrum 4.6.0][electrum 4.6.0] 增加了对 [潜水艇互换][topic submarine swaps] 的支持，使用 nostr 进行发现。
+- **<!--electrum-4-6-0-released-->****Electrum 4.6.0 发布：**
+  [Electrum 4.6.0][electrum 4.6.0] 增加了对[潜水艇互换][topic submarine swaps] 的支持，使用 nostr 进行发现。
 
 ## 新版本和候选版本
 
