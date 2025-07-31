@@ -55,7 +55,7 @@ _本周在我们的[来源][sources]中没有发现重大新闻。_
 
 - [LDK #3890][] 改变了其路径查找算法中的路由评分方式，考虑总成本除以通道金额限制（每可用容量 sat 的成本），而不是仅考虑原始总成本。这使选择偏向于更高容量的路由，并减少了过度的 [MPP][topic multipath payments] 分片，从而提高了支付成功率。尽管这一变化过度惩罚了小通道，但与之前的过度分片相比，这种权衡是更可取的。
 
-- [LND #10001][] 在生产环境中启用了静默协议（参见周报 [#332][news332 quiescence]），并添加了一个新的配置值 `--htlcswitch.quiescencetimeout`，该值指定通道可以保持静默状态的最大持续时间。该值确保依赖的协议，如[动态承诺][topic channel commitment upgrades]，在超时期限内完成。默认值为 60 秒，最小值为 30 秒。
+- [LND #10001][] 在生产环境中启用了 “通道静默（quiescence）” 协议（参见周报 [#332][news332 quiescence]），并添加了一个新的配置值 `--htlcswitch.quiescencetimeout`，该值指定通道可以保持静默状态的最大持续时间。该值确保依赖的协议，如[动态承诺][topic channel commitment upgrades]，在超时期限内完成。默认值为 60 秒，最小值为 30 秒。
 
 {% include snippets/recap-ad.md when="2025-07-22 16:30" %}
 {% include references.md %}
