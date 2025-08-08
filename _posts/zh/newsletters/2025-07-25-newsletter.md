@@ -88,4 +88,4 @@ _最近在 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning r
 [news349 attributable]: /zh/newsletters/2025/04/11/#ldk-2256
 [news295 dual]: /zh/newsletters/2024/03/27/#ldk-2419
 [news165 type]: /zh/newsletters/2021/09/08/#bolts-880
-[news362 orphan]: /zh/newsletters/2025/07/11/#bitcoin-core-pr-review-club
+[news362 orphan]: /zh/newsletters/2025/07/11/#bitcoin-core-rp-审核俱乐部
