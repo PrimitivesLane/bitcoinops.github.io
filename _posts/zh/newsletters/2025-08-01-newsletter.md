@@ -26,7 +26,7 @@ lang: zh
 
 *这个月度栏目会总结关于变更比特币共识规则的提议和讨论。*
 
-- **<!--migration-from-quantumvulnerable-outputs-->从量子敏感的输出迁移**：Jameson Lopp 在 Bitcoin-Dev 邮件组中[发帖][lopp qmig]，提出了一个分成三个步骤、逐渐取消[量子敏感输出][topic quantum resistance]的提议。
+- **<!--migration-from-quantumvulnerable-outputs-->从量子脆弱的输出迁移**：Jameson Lopp 在 Bitcoin-Dev 邮件组中[发帖][lopp qmig]，提出了一个分成三个步骤、逐渐取消[量子脆弱输出][topic quantum resistance]的提议。
 
   * 在 [BIP360][] 量子抗性签名方案（或替代性方案）激活共识的三年之后，激活一个软分叉，从此拒绝支付到量子敏感地址的交易。只能支付给量子抗性输出。
 
