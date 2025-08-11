@@ -50,7 +50,7 @@ lang: zh
 
   Brandon Black 在[回复][black th]中将该提议与他早先的 LNHANCE 捆绑提议（详见[周报 #285][news285 ik]）相比较，发现两者在绝大部分方面是类型的，虽然他指出，该提议在 *拥堵控制*（一种形式的推迟[支付批量处理][topic payment batching]）用法中链上空间效率较差。
 
-- **<!--proposal-to-allow-longer-relative-timelocks-->允许更长见识的相对时间锁**：开发者 Pyth 在 Delving Bitcoin 论坛中[发帖][pyth timelock]建议允许 [BIP68][] 相对时间锁的最大长度从当前的 1 年延长到大约 10 年。这将需要一次软分叉，还要在交易输入的 *sequence* 字段使用额外的一个比特。
+- **<!--proposal-to-allow-longer-relative-timelocks-->允许更长时间的相对时间锁**：开发者 Pyth 在 Delving Bitcoin 论坛中[发帖][pyth timelock]建议允许 [BIP68][] 相对时间锁的最大长度从当前的 1 年延长到大约 10 年。这将需要一次软分叉，还要在交易输入的 *sequence* 字段使用额外的一个比特。
 
   Fabian Jahr [回复][jahr timelock]了让[时间锁][topic timelocks]变得太长可能导致资金损失的顾虑，比如，因为量子计算机的开发（或者，我们补充一句，因为上文所述的 Jameson Lopp 的量子抵抗协议的开发）。Steven Roose [指出][roose timelock]，长时间时间锁已经能够使用其它时间锁机制来做到了（比如，使用预签名交易和 [BIP65 CLTV][bip65]）。而 Pyth 补充说，它们的目标用途是一条钱包复原路径：长时间锁只会在主要路径变得不可用时派上用场，此时，另一种结局只剩资金永久丢失了。
 
