@@ -11,11 +11,11 @@ lang: zh
 
 ## 新闻
 
-- **<!--draft-bips-proposed-for-utreexo-->为 Utreexo 提出的草案 BIP：** Calvin Kim 在 Bitcoin-Dev 邮件列表上[发布][kim bips]了他与 Tadge Dryja 和 Davidson Souza 共同撰写的关于 [Utreexo][topic utreexo] 验证模型的三个草案 BIP。[第一个 BIP][ubip1] 指定了 Utreexo 累加器的结构，它允许节点在“仅几千字节”的空间内存储对完整 UTXO 集的易于更新的承诺。[第二个 BIP][ubip2] 指定了全节点如何使用累加器而不是传统的已花费交易输出集（STXO，在早期 Bitcoin Core 和当前 libbitcoin 中使用）或未花费交易输出集（UTXO，在当前 Bitcoin Core 中使用）来验证新区块和交易。[第三个 BIP][ubip3] 指定了对比特币 P2P 协议的更改，以允许传输 Utreexo 验证所需的额外数据。
+- **<!--draft-bips-proposed-for-utreexo-->****为 Utreexo 提出的草案 BIP：** Calvin Kim 在 Bitcoin-Dev 邮件列表上[发布][kim bips]了他与 Tadge Dryja 和 Davidson Souza 共同撰写的关于 [Utreexo][topic utreexo] 验证模型的三个草案 BIP。[第一个 BIP][ubip1] 指定了 Utreexo 累加器的结构，它允许节点在“仅几千字节”的空间内存储对完整 UTXO 集的易于更新的承诺。[第二个 BIP][ubip2] 指定了全节点如何使用累加器而不是传统的已花费交易输出集（STXO，在早期 Bitcoin Core 和当前 libbitcoin 中使用）或未花费交易输出集（UTXO，在当前 Bitcoin Core 中使用）来验证新区块和交易。[第三个 BIP][ubip3] 指定了对比特币 P2P 协议的更改，以允许传输 Utreexo 验证所需的额外数据。
 
   作者正在寻求概念性审核，并将根据进一步的发展更新草案 BIP。
 
-- **<!--continued-discussion-about-lowering-the-minimum-relay-feerate-->关于降低最低中继费率的持续讨论：** Gloria Zhao 在 Delving Bitcoin 上[发布][zhao minfee]了关于将[默认最低中继费率][topic default minimum transaction relay feerates]降低 90% 至 0.1 sat/vbyte 的讨论。她鼓励就这个想法以及它可能如何影响其他软件进行概念性讨论。对于 Bitcoin Core 的具体关注，她链接到了一个[PR][bitcoin core #33106]。
+- **<!--continued-discussion-about-lowering-the-minimum-relay-feerate-->关于降低最低中继费率的持续讨论：** Gloria Zhao 在 Delving Bitcoin 上[发布][zhao minfee]了关于将[默认最低中继费率][topic default minimum transaction relay feerates]降低 90% 至 0.1 sat/vbyte 的讨论。她鼓励就这个想法以及它可能如何影响其他软件进行概念性讨论。对于 Bitcoin Core 的具体关注，她链接到了一个 [PR][bitcoin core #33106]。
 
 - **<!--peer-block-template-sharing-to-mitigate-problems-with-divergent-mempool-policies-->对等节点区块模板共享以缓解不同交易池策略的问题：** Anthony Towns 在 Delving Bitcoin 上[发布][towns tempshare]建议全节点对等节点偶尔使用[致密区块中继][topic compact block relay]编码向彼此发送其下一个区块的当前模板。接收对等节点随后可以请求模板中缺失的任何交易，要么将它们添加到本地交易池，要么将它们存储在缓存中。这将允许具有不同交易池策略的对等节点尽管存在差异仍能共享交易。它为之前建议使用_弱区块_的提案提供了替代方案（参见[周报 #299][news299 weak blocks]）。Towns 发布了一个[概念验证实现][towns tempshare poc]。
 
@@ -33,28 +33,28 @@ lang: zh
 然后可以使用 `restorewallet` RPC 导入导出的钱包数据库。
 
 {% include functions/details-list.md
-  q0=“为什么现有的 `IsRange()`/`IsSingleType()` 信息不能告诉我们描述符是否可以在仅观察端扩展？解释 `CanSelfExpand()` 对于 a）强化 `wpkh(xpub/0h/*)` 路径和 b）`pkh(pubkey)` 描述符的逻辑。”
-  a0=“`IsRange()` 和 `IsSingleType()` 不足够，因为它们不检查强化派生，这需要仅观察钱包中不可用的私钥。添加了 `CanSelfExpand()` 来递归搜索强化路径；如果找到一个，它返回 `false`，表示必须为仅观察钱包导出预填充的缓存以派生地址。`pkh(pubkey)` 描述符不是范围的且没有派生，因此它总是可以自扩展。”
+  q0="<!--why-can-t-the-existing-isrange-issingletype-information-tell-us-whether-a-descriptor-can-be-expanded-on-the-watch-only-side-explain-the-logic-behind-canselfexpand-for-a-a-hardened-wpkh-xpub-0h-path-and-b-a-pkh-pubkey-descriptor-->为什么现有的 `IsRange()`/`IsSingleType()` 信息不能告诉我们描述符是否可以在仅观察端扩展？解释 `CanSelfExpand()` 对于 a）强化 `wpkh(xpub/0h/*)` 路径和 b）`pkh(pubkey)` 描述符的逻辑。"
+  a0="`IsRange()` 和 `IsSingleType()` 不足够，因为它们不检查强化派生，这需要仅观察钱包中不可用的私钥。添加了 `CanSelfExpand()` 来递归搜索强化路径；如果找到一个，它返回 `false`，表示必须为仅观察钱包导出预填充的缓存以派生地址。`pkh(pubkey)` 描述符不是范围的且没有派生，因此它总是可以自扩展。"
   a0link="https://bitcoincore.reviews/32489#l-27"
 
-  q1=“`ExportWatchOnlyWallet` 只有在 `!desc->CanSelfExpand()` 时才复制描述符缓存。该缓存中确切存储了什么？不完整的缓存如何影响仅观察钱包上的地址派生？”
-  a1=“缓存存储具有强化派生路径的描述符的 `CExtPubKey` 对象，这些对象在支出钱包上预派生。如果此缓存不完整，仅观察钱包无法派生缺失的地址，因为它缺乏必要的私钥。这将导致它无法看到发送到这些地址的交易，从而导致余额不正确。”
+  q1="<!--exportwatchonlywallet-only-copies-the-descriptor-cache-if-desc-canselfexpand-what-exactly-is-stored-in-that-cache-how-could-an-incomplete-cache-affect-address-derivation-on-the-watch-only-wallet-->`ExportWatchOnlyWallet` 只有在 `!desc->CanSelfExpand()` 时才复制描述符缓存。该缓存中确切存储了什么？不完整的缓存如何影响仅观察钱包上的地址派生？"
+  a1="缓存存储具有强化派生路径的描述符的 `CExtPubKey` 对象，这些对象在支出钱包上预派生。如果此缓存不完整，仅观察钱包无法派生缺失的地址，因为它缺乏必要的私钥。这将导致它无法看到发送到这些地址的交易，从而导致余额不正确。"
   a1link="https://bitcoincore.reviews/32489#l-52"
 
-  q2=“导出器设置 `create_flags = GetWalletFlags() | WALLET_FLAG_DISABLE_PRIVATE_KEYS`。为什么保留原始标志（例如 `AVOID_REUSE`）而不是清除所有内容并重新开始很重要？”
-  a2=“保留标志确保支出钱包和仅观察钱包之间的行为一致性。例如，`AVOID_REUSE` 标志影响哪些币被认为可用于支出。不保留它会导致仅观察钱包报告与主钱包不同的可用余额，从而导致用户困惑。”
+  q2="<!--the-exporter-sets-create-flags-getwalletflags-wallet-flag-disable-private-keys-why-is-it-important-to-preserve-the-original-flags-e-g-avoid-reuse-instead-of-clearing-everything-and-starting-fresh-->导出器设置 `create_flags = GetWalletFlags() | WALLET_FLAG_DISABLE_PRIVATE_KEYS`。为什么保留原始标志（例如 `AVOID_REUSE`）而不是清除所有内容并重新开始很重要？"
+  a2="保留标志确保支出钱包和仅观察钱包之间的行为一致性。例如，`AVOID_REUSE` 标志影响哪些币被认为可用于支出。不保留它会导致仅观察钱包报告与主钱包不同的可用余额，从而导致用户困惑。"
   a2link="https://bitcoincore.reviews/32489#l-68"
 
-  q3=“为什么导出器从源钱包读取定位器并将其逐字写入新钱包，而不是让新钱包从区块 0 开始？”
-  a3=“复制区块定位器是为了告诉新的仅观察钱包从哪里恢复扫描区块链以寻找新交易，防止需要完整重新扫描。”
+  q3="<!--why-does-the-exporter-read-the-locator-from-the-source-wallet-and-write-it-verbatim-into-the-new-wallet-instead-of-letting-the-new-wallet-start-from-block-0-->为什么导出器从源钱包读取定位器并将其逐字写入新钱包，而不是让新钱包从区块 0 开始？"
+  a3="复制区块定位器是为了告诉新的仅观察钱包从哪里恢复扫描区块链以寻找新交易，防止需要完整重新扫描。"
   a3link="https://bitcoincore.reviews/32489#l-93"
 
-  q4=“考虑多重签名描述符 `wsh(multi(2,xpub1,xpub2))`。如果一个共同签名者导出仅观察钱包并与第三方共享，与仅给他们描述符字符串相比，该第三方学到了什么新信息？”
-  a4=“仅观察钱包数据包括额外的元数据，如地址簿、钱包标志和币控制标签。对于具有强化派生的钱包，第三方只能通过仅观察钱包导出获得有关历史和未来交易的信息。”
+  q4="<!--consider-a-multisig-descriptor-wsh-multi-2-xpub1-xpub2-if-one-cosigner-exports-a-watch-only-wallet-and-shares-it-with-a-third-party-what-new-information-does-that-third-party-learn-compared-to-just-giving-them-the-descriptor-strings-->考虑多重签名描述符 `wsh(multi(2,xpub1,xpub2))`。如果一个共同签名者导出仅观察钱包并与第三方共享，与仅给他们描述符字符串相比，该第三方学到了什么新信息？"
+  a4="仅观察钱包数据包括额外的元数据，如地址簿、钱包标志和币控制标签。对于具有强化派生的钱包，第三方只能通过仅观察钱包导出获得有关历史和未来交易的信息。"
   a4link="https://bitcoincore.reviews/32489#l-100"
 
-  q5=“在 `wallet_exported_watchonly.py` 中，为什么测试在检查在线/离线对之间的可支出性之前调用 `wallet.keypoolrefill(100)`？”
-  a5=“`keypoolrefill(100)` 调用强制离线（支出）钱包为其强化描述符预派生 100 个密钥，填充其缓存。然后将此缓存包含在导出中，允许在线仅观察钱包生成这 100 个地址。它还确保离线钱包在收到要签名的 PSBT 时会识别这些地址。”
+  q5="<!--in-wallet-exported-watchonly-py-why-does-the-test-call-wallet-keypoolrefill-100-before-checking-spendability-across-the-online-offline-pair-->在 `wallet_exported_watchonly.py` 中，为什么测试在检查在线/离线对之间的可支出性之前调用 `wallet.keypoolrefill(100)`？"
+  a5="`keypoolrefill(100)` 调用强制离线（支出）钱包为其强化描述符预派生 100 个密钥，填充其缓存。然后将此缓存包含在导出中，允许在线仅观察钱包生成这 100 个地址。它还确保离线钱包在收到要签名的 PSBT 时会识别这些地址。"
   a5link="https://bitcoincore.reviews/32489#l-122"
 %}
 
@@ -123,7 +123,7 @@ lang: zh
 [gh achow101]: https://github.com/achow101
 [news363 reputation]: /zh/newsletters/2025/07/18/#eclair-2716
 [news322 sink]: /zh/newsletters/2024/09/27/#hybrid-jamming-mitigation-testing-and-changes
-[news33 canceled]: /en/newsletters/2019/02/12/#lnd-2457
+[news33 canceled]: /zh/newsletters/2019/02/12/#lnd-2457
 [final alert]: https://bitcoin.org/en/release/v0.14.0#final-alert
 [retired]: https://bitcoin.org/en/alert/2016-11-01-alert-retirement#updates
 [news365 webhook]: /zh/newsletters/2025/08/01/#ldk-3662
