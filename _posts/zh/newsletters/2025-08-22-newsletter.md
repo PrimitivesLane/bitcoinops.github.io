@@ -34,7 +34,7 @@ lang: zh
 
 - **<!--peerobserver-tooling-and-call-to-action-->对等节点观察员工具和行动号召**：0xB10C [公开][b10c blog]了他的 “[peer-observer][peer-observer github]” 项目的动机、架构、代码、支持库和研究成果。他尝试建立 “一个松散的、去中心化的个人团体，分享对观察比特币网络的兴趣。希望是一个能够分享想法、讨论、数据、工具、洞见等等的团体。”
 
-- **<!--bitcoin-core-kernelbased-node-announced-->基于 Bitcoin Core Kernal 的节点发布**：Bitcoin backbone [发布][bitcoin backbone]，演示了一个使用 [Bitcoin Core Kernel][kernel blog] 作为基础的比特币节点。
+- **<!--bitcoin-core-kernelbased-node-announced-->** **基于 Bitcoin Core Kernel 的节点发布**：Bitcoin backbone [发布][bitcoin backbone]，演示了一个使用 [Bitcoin Core Kernel][kernel blog] 作为基础的比特币节点。
 
 - **<!--simplicityhl-released-->** **SimplicityHL 发布**：[SimplicityHL][simplcityhl github] 是一个类似于 Rust 的变成语言，可以编译成更低层次的 [Simplicity][simplicity] 语言代码（刚刚在 Liquid 侧链上 [激活][simplicity post]）。想了解更多，请看 [相关的 Delving Bitcoin 帖子][simplicityhl delving]。
 
