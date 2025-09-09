@@ -22,19 +22,19 @@ lang: zh
 {% comment %}<!-- https://bitcoin.stackexchange.com/search?tab=votes&q=created%3a1m..%20is%3aanswer -->{% endcomment %}
 {% assign bse = "https://bitcoin.stackexchange.com/a/" %}
 
-- [是否可能在强假设下从聚合公钥中恢复私钥？]({{bse}}127723)
+- [<!--is-it-possible-to-recover-a-private-key-from-an-aggregate-public-key-under-strong-assumptions-->是否可能在强假设下从聚合公钥中恢复私钥？]({{bse}}127723)
   Pieter Wuille 解释了围绕 [MuSig2][topic musig] 无脚本[多重签名][topic multisignature]的当前和假设安全假设。
 
-- [所有 taproot 地址都容易受到量子计算攻击吗？]({{bse}}127660)
+- [<!--are-all-taproot-addresses-vulnerable-to-quantum-computing-->所有 taproot 地址都容易受到量子计算攻击吗？]({{bse}}127660)
   Hugo Nguyen 和 Murch 指出，即使是构造为仅使用脚本路径支出的 [taproot][topic taproot] 输出也容易受到[量子][topic quantum resistance]攻击。Murch 继续指出“有趣的是，生成输出脚本的一方能够证明内部密钥是 NUMS 点，从而证明发生了量子解密。”
 
-- [为什么我们不能设置链状态混淆密钥？]({{bse}}127814)
+- [<!--why-cant-we-set-the-chainstate-obfuscation-key-->为什么我们不能设置链状态混淆密钥？]({{bse}}127814)
   Ava Chow 强调，混淆 `blocksdir` 磁盘内容的密钥（参见[周报 #339][news339 blocksxor]）与混淆 `chainstate` 内容的密钥不同（参见 [Bitcoin Core #6650][]）。
 
-- [是否可能在区块高度后撤销支出分支？]({{bse}}127683)
+- [<!--is-it-possible-to-revoke-a-spending-branch-after-a-block-height-->是否可能在区块高度后撤销支出分支？]({{bse}}127683)
   Antoine Poinsot 指向[之前的答案]({{bse}}122224)，确认过期支出条件或“反向时间锁”是不可能的，甚至可能不是理想的。
 
-- [配置 Bitcoin Core 除了使用 IPv4 和 IPv6 节点外还使用洋葱节点？]({{bse}}127727)
+- [<!--configure-bitcoin-core-to-use-onion-nodes-in-addition-to-ipv4-and-ipv6-nodes-->配置 Bitcoin Core 除了使用 IPv4 和 IPv6 节点外还使用洋葱节点？]({{bse}}127727)
   Pieter Wuille 澄清设置 `onion` 配置选项仅适用于出站对等连接。他继续概述了如何为入站连接配置 [Tor][topic anonymity networks] 和 `bitcoind`。
 
 ## 新版本和候选版本
@@ -63,13 +63,13 @@ lang: zh
 [core lightning v25.09rc4]: https://github.com/ElementsProject/lightning/releases/tag/v25.09rc4
 [garcia fuzz]: https://delvingbitcoin.org/t/the-state-of-bitcoinfuzz/1946
 [bitcoinfuzz]: https://github.com/bitcoinfuzz
-[fuzz testing]: https://en.wikipedia.org/wiki/Fuzzing
+[fuzz testing]: https://zh.wikipedia.org/wiki/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95
 [eagen glock]: https://mailing-list.bitcoindevs.xyz/bitcoindev/Aq_-LHZtVdSN5nODCryicX2u_X1yAQYurf9UDZXDILq6s4grUOYienc4HH2xFnAohA69I_BzgRCSKdW9OSVlSU9d1HYZLrK7MS_7wdNsLmo=@protonmail.com/
 [eagen paper]: https://eprint.iacr.org/2025/1485
 [garbled circuits]: https://en.wikipedia.org/wiki/Garbled_circuit
-[news359 delbrag]: /zh/newsletters/2025/06/20/#improvements-to-bitvm-style-contracts
-[news339 blocksxor]: /zh/newsletters/2025/01/31/#how-does-the-blocksxor-switch-that-obfuscates-the-blocks-dat-files-work
-[news99 ipc]: /en/newsletters/2020/05/27/#bitcoin-core-18677
+[news359 delbrag]: /zh/newsletters/2025/06/20/#improvements-to-bitvmstyle-contracts
+[news339 blocksxor]: /zh/newsletters/2025/01/31/#how-does-the-blocksxor-switch-that-obfuscates-the-blocks-dat-files-work-blocksxor-blocks-dat
+[news99 ipc]: /zh/newsletters/2020/05/27/#bitcoin-core-18677
 [news147 ipc]: /zh/newsletters/2021/05/05/#bitcoin-core-19160
 [news320 ipc]: /zh/newsletters/2024/09/13/#bitcoin-core-30509
 [news323 ipc]: /zh/newsletters/2024/10/04/#bitcoin-core-30510
