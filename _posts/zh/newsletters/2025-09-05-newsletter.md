@@ -40,13 +40,13 @@ _流行的比特币基础设施项目的新版本和候选版本。请考虑升�
 
 _本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、[Lightning BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。_
 
-- [LDK #3726][] 为[盲化路径][topic rv routing]添加了虚拟跳跃支持，使接收者能够添加不起路由作用但充当诱饵的任意跳跃。每次都会添加随机数量的虚拟跳跃，但上限为 10（由 `MAX_DUMMY_HOPS_COUNT` 定义）。添加额外的跳跃使确定到接收者节点的距离或接收者节点的身份变得更加困难。
+- [LDK #3726][] 为[盲化路径][topic rv routing]添加了虚拟跳跃支持，使接收者能够添加不起路由作用但充当诱饵的任意跳跃。每次都会添加随机数量的虚拟跳跃，但上限为 10（由 `MAX_DUMMY_HOPS_COUNT` 定义）。添加额外的跳跃使确定到接收者节点的距离和接收者节点的身份变得更加困难。
 
 - [LDK #4019][] 按照规范所要求的，通过在初始化拼接交易之前要求静默通道状态，将[拼接][topic splicing]与[静默协议][topic channel commitment upgrades]集成。
 
 - [LND #9455][] 添加了对在闪电网络节点的公告消息中将有效的 DNS 域名与节点的 IP 地址和公钥关联的支持，这是规范允许的，并且得到了 Eclair 和 Core Lightning 等其他实现的支持（参见周报 [#212][news212 dns]、[#214][news214 dns] 和 [#178][news178 dns]）。
 
-- [LND #10103][] 引入了一个新的 `gossip.peer-msg-rate-bytes` 选项（默认值 51200），它限制了每个对等节点用于出站 [gossip 消息][topic channel announcements]的出站带宽。这个值限制了每秒字节数的平均带宽速度，如果对等节点超过了这个限制，LND 将开始对发送给该对等节点的消息进行排队和延迟。这个新选项防止单个对等节点消耗由 [LND #10096][] 中引入的 `gossip.msg-rate-bytes` 定义的所有全局带宽。有关 LND 在 gossip 请求资源管理方面的相关工作，请参见周报 [#366][news366 gossip] 和 [#369][news369 gossip]。
+- [LND #10103][] 引入了一个新的 `gossip.peer-msg-rate-bytes` 选项（默认值 51200），它限制了每个对等节点用于出站 [gossip 消息][topic channel announcements]的出站带宽。这个值限制了平均带宽速度（以每秒字节数为单位），如果对等节点超过了这个限制，LND 将开始对发送给该对等节点的消息进行排队和延迟。这个新选项防止单个对等节点消耗由 [LND #10096][] 中引入的 `gossip.msg-rate-bytes` 定义的所有全局带宽。有关 LND 在 gossip 请求资源管理方面的工作，请参见周报 [#366][news366 gossip] 和 [#369][news369 gossip]。
 
 - [HWI #795][] 通过将 `bitbox02` 库更新到版本 7.0.0 来添加对 BitBox02 Nova 的支持。它还进行了几项 CI 更新。
 
