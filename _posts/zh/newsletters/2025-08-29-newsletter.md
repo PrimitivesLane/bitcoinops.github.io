@@ -13,7 +13,7 @@ lang: zh
 
 - **<!--update-on-differential-fuzzing-of-bitcoin-and-ln-implementations-->比特币和闪电网络实现差异化模糊测试的更新：** Bruno Garcia 在 Delving Bitcoin 上[发布][garcia fuzz]了关于 [bitcoinfuzz][] 最近进展和成就的描述，这是一个用于对基于比特币的软件和库进行[模糊测试][fuzz testing]的库和相关数据。成就包括发现了“btcd、rust-bitcoin、rust-miniscript、Embit、Bitcoin Core、Core Lightning [和] LND 等项目中的超过 35 个错误”。发现的闪电网络实现之间的差异不仅揭示了错误，还推动了对闪电网络规范的澄清。鼓励比特币项目的开发者调查使其软件成为 bitcoinfuzz 支持的目标。
 
-- **<!--garbled-locks-for-accountable-computing-contracts-->用于可问责计算合约的混淆锁：** Liam Eagen 在 Bitcoin-Dev 邮件列表上[发布][eagen glock]了关于他撰写的一篇[论文][eagen paper]，该论文描述了一种基于[混淆电路][garbled circuits]创建[可问责计算合约][topic acc]的新机制。这与其他最近关于将混淆电路用于 BitVM 的独立工作类似（但不同）（参见[周报 #359][news359 delbrag]）。Eagen 的帖子声称“第一个（在他看来）实用的混淆锁，其欺诈证明是单个签名，与 BitVM2 相比，链上数据减少了超过 550 倍”。截至撰写本文时，他的帖子尚未收到任何公开回复。
+- **<!--garbled-locks-for-accountable-computing-contracts-->用于可问责计算合约的混淆锁：** Liam Eagen 在 Bitcoin-Dev 邮件列表上[发布][eagen glock]了关于他撰写的一篇[论文][eagen paper]，该论文描述了一种基于[混淆电路][garbled circuits]创建[可问责计算合约][topic acc]的新机制。这与最近其他将混淆电路用于 BitVM 的独立工作类似（但不同）（参见[周报 #359][news359 delbrag]）。Eagen 的帖子自称“（在他看来）第一个实用的混淆锁，其欺诈证明是单个签名，与 BitVM2 相比，链上数据减少了超过 550 倍”。截至撰写本文时，他的帖子尚未收到任何公开回复。
 
 ## Bitcoin Stack Exchange 精选问答
 
@@ -23,7 +23,7 @@ lang: zh
 {% assign bse = "https://bitcoin.stackexchange.com/a/" %}
 
 - [<!--is-it-possible-to-recover-a-private-key-from-an-aggregate-public-key-under-strong-assumptions-->是否可能在强假设下从聚合公钥中恢复私钥？]({{bse}}127723)
-  Pieter Wuille 解释了围绕 [MuSig2][topic musig] 无脚本[多重签名][topic multisignature]的当前和假设安全假设。
+  Pieter Wuille 解释了围绕 [MuSig2][topic musig] 无脚本[多重签名][topic multisignature]的当前和理论安全假设。
 
 - [<!--are-all-taproot-addresses-vulnerable-to-quantum-computing-->所有 taproot 地址都容易受到量子计算攻击吗？]({{bse}}127660)
   Hugo Nguyen 和 Murch 指出，即使是构造为仅使用脚本路径支出的 [taproot][topic taproot] 输出也容易受到[量子][topic quantum resistance]攻击。Murch 继续指出“有趣的是，生成输出脚本的一方能够证明内部密钥是 NUMS 点，从而证明发生了量子解密。”
@@ -53,7 +53,7 @@ lang: zh
 
 - [LDK #3979][] 添加了拼接输出支持，使 LDK 节点既能发起拼接输出交易，也能接受来自对手方的请求。这完成了 LDK 的[通道拼接][topic splicing]实现，因为 [LDK #3736][] 已经添加了拼接输入支持。此 PR 添加了一个涵盖输入和输出场景的 `SpliceContribution` 枚举，并确保拼接输出交易的输出值在考虑费用和储备要求后不超过用户的通道余额。
 
-- [LND #10102][] 添加了 `gossip.ban-threshold` 选项（默认为 100，0 禁用它），允许用户配置因发送无效[gossip][topic channel announcements]消息而被禁止的对等节点的分数阈值。对等节点禁止系统之前已引入并在[周报 #319][news319 ban]中介绍。此 PR 还解决了一个问题，即解决了响应积压流言查询请求时发送了不必要的节点和[通道公告][topic channel announcements]消息的问题。
+- [LND #10102][] 添加了 `gossip.ban-threshold` 选项（默认为 100，0 为禁用该特性），允许用户配置禁用发来无效[gossip][topic channel announcements]消息的对等节点的分数阈值。对等节点禁止系统之前已引入并在[周报 #319][news319 ban]中介绍。此 PR 还解决了一个问题，即解决了响应积压 gossip 查询请求时发送了不必要的节点和[通道公告][topic channel announcements]消息的问题。
 
 - [Rust Bitcoin #4907][] 通过向 `Script` 和 `ScriptBuf` 添加新的通用标签参数 `T` 来引入脚本标记，并定义了类型别名 `ScriptPubKey`、`ScriptSig`、`RedeemScript`、`WitnessScript` 和 `TapScript`，这些别名由密封的 `Tag` 特征支持，用于编译时角色安全。
 
