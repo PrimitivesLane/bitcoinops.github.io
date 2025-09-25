@@ -11,7 +11,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--lsp-funded-redundant-overpayments-->由 LSP 出资的冗余超额支付：** 开发者 ZmnSCPxj 在 Delving Bitcoin 上[发布][zmnscpxj lspstuck]了一个提案，允许 LSP 为[冗余超额支付][topic redundant overpayments]提供所需的额外资金（流动性）。在冗余超额支付的原始提案中，Alice 通过多条路径发送多笔支付来向 Zed 付款，但只允许 Zed 领取其中一笔支付；其余支付会退还给 Alice。这种方法的优势是，到达 Zed 的第一笔支付尝试可以在其他尝试仍在网络中传输时成功，从而提高闪电网络支付的速度。
+- **<!--lsp-funded-redundant-overpayments-->****由 LSP 出资的冗余超额支付：** 开发者 ZmnSCPxj 在 Delving Bitcoin 上[发布][zmnscpxj lspstuck]了一个提案，允许 LSP 为[冗余超额支付][topic redundant overpayments]提供所需的额外资金（流动性）。在冗余超额支付的原始提案中，Alice 通过多条路径发送多笔支付来向 Zed 付款，但只允许 Zed 领取其中一笔支付；其余支付会退还给 Alice。这种方法的优势是，到达 Zed 的第一笔支付尝试可以在其他尝试仍在网络中传输时成功，从而提高闪电网络支付的速度。
 
   这种方法的缺点是 Alice 必须拥有额外的资本（流动性）来进行冗余支付，Alice 必须保持在线直到冗余超额支付完成，并且任何卡住的支付都会阻止 Alice 花费这笔钱，直到支付尝试超时（使用常用设置最多两周）。
 
@@ -19,7 +19,7 @@ lang: zh
 
   新提案的缺点是 Alice 会向她的 LSP 失去一些隐私，并且该提案除了支持冗余超额支付外，还需要对闪电网络协议进行多项更改。
 
-- **<!--partitioning-and-eclipse-attacks-using-bgp-interception-->使用 BGP 拦截的分区和日蚀攻击：** 开发者 cedarctic 在 Delving Bitcoin 上[发布][cedarctic bgp]了关于用来拦截全节点连接到对等节点的内容的边界网关协议（BGP）的使用缺陷，这可以用于使网络分区或执行[日蚀攻击][topic eclipse attacks]。cedarctic 描述了几种缓解措施，讨论中的其他开发者描述了其他缓解措施和监控攻击使用的方法。
+- **<!--partitioning-and-eclipse-attacks-using-bgp-interception-->****使用 BGP 拦截的分区和日蚀攻击：** 开发者 cedarctic 在 Delving Bitcoin 上[发布][cedarctic bgp]了关于用来拦截全节点连接到对等节点的内容的边界网关协议（BGP）的使用缺陷，这可以用于使网络分区或执行[日蚀攻击][topic eclipse attacks]。cedarctic 描述了几种缓解措施，讨论中的其他开发者描述了其他缓解措施和监控攻击使用的方法。
 
 ## 服务和客户端软件变更
 
