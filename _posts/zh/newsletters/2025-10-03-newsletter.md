@@ -19,8 +19,11 @@ lang: zh
 - **<!--draft-bips-for-script-restoration-->** **Script Restoration 草案 BIP**：Rusty Russell 在 Bitcoin-Dev 邮件组中列出了关于在一个新的 [tapscript][topic tapscript] 版本中复原 Script 的能耐的提议的[总结][rr0]，以及描述其实现步骤的四个 BIP（[1][rr1]、[2][rr2]、[3][rr3]、[4][rr4]）。Russell 曾经[演讲][rr atx]和[撰写][rr blog]过这些想法。简单来说，这个提议旨在为比特币恢复加强过的可编程性（包含[限制条款][topic covenants]功能），同时避免范围相对更狭窄的一些提议所需面对的权衡。
 
   - *<!--varops-budget-for-script-runtime-constraint-->脚本运行时的变长操作码预算限制*：[第一个 BIP][rr1] 是非常完整的，提议为几乎所有的 Script 操作分配一个代价度量，这种度量类似于隔离见证（SegWit）中的 “签名操作预算（sigops budget）”。对于 Script 中的几乎所有操作，这个代价都基于在运行这个操作的粗糙实现时写入该节点的内存（RAM）中的字节数量。与签名操作预算不同，在这里，每一个操作码的代价都取决于其输入的体积 —— 这正是提案名字（“变长操作码（varops）”  ）的由来。使用这种统一的代价模型，许多当前用于保护节点不至于过量执行 Script 验证的限制，可以提升到实用的脚本无法触及或几乎无法触及的高度。
+
   - *<!--restoration-of-disabled-script-functionality-tapscript-v2-->* *恢复曾被禁用的 Script 功能（tapscript v2）*：[第二个 BIP][rr2] 也是非常完整的（除了缺少一个参考实现），详细描述了要恢复的在 2010 年从 Script 中[移除][misc changes]的操作码（当时是为了保护比特币网络免于过量的 Script 验证）。使用前述的变长操作码预算机制，所有这些操作码（或者它们的升级版本）都可以恢复，限制可以提高，而且数字可以使用任意长度。
+
   - *<!--optx-->* *OP_TX*：[第三个 BIP][rr3] 提出了一种新的通用内省操作码 `OP_TX`，它允许调用者在堆栈中获得来自交易的几乎任何一段（或多段）信息。通过提供直接访问花费交易的方法，这个操作码启用了 `OP_TEMPLATEHASH`（或 [`OP_CHECKTEMPLATEVERIFY`][topic op_checktemplateverify]）这样的操作码可以实现的任何限制条款功能。
+
   - *<!--new-opcodes-for-tapscript-v2-->* *为 tapscript v2 提议的新操作码*：[第四个 BIP][rr4] 提出了新的操作码，以完善比特币自启动以来缺失或者不需要的功能。比如说，添加操作 taptree 和 taproot 输出的功能，在比特币启动的时候是不必要的，但在复原 Script 的世界中，同时拥有这些功能就是有意义的。Brandon Black [指出][bb1] 提议中的操作码有所缺失，因此无法完全构造 taproot 输出。其中两个被提议的操作码似乎需要专门的 BIP：`OP_MULTI` 和 `OP_SEGMENT` 。
 
   `OP_MULTI` 会改变后续操作码的行为，从而在超过其标准数量的堆栈对象上操作，启用了（比如说）加总多个对象的功能。这就不需要在 Script 中使用循环结构，也不需要使用 `OP_VAULT` 风格的推迟检查，而依然能启用价值流控制以及类似逻辑。
@@ -32,7 +35,9 @@ lang: zh
 *热门的比特币基础设施项目的新版本和候选版本。请考虑升级新版本或帮助候选版本。*
 
 - [Bitcoin Core 30.0rc2][] 是这个全验证节点软件的下一个主要版本的候选发行。请看这份 “[版本 30 候选发行测试指南][bcc30 testing]”。
+
 - [bdk-wallet 2.2.0][] 是这个用于开发钱包应用的库的次要发行版，它引入了一项新特性，在应用一项更新时返回事件；一个新测试单元，用于测试持久性；还优化了文档。
+
 - [LND v0.20.0-beta.rc1][] 是这个热门的闪电节点实现的新版本的候选发行，它引入了多项 bug 修复、在重启时可以持久保留的节点公告设定、一种新的 `noopAdd` [HTLC][topic htlc] 类型、支持在 [BOLT11][] 发票中加入 [P2TR][topic taproot] 备用地址，以及一个实验性的 `XFindBaseLocalChanAlia` 端点，还有其它变更。
 
 ## 重大的代码和说明书变更
@@ -57,7 +62,6 @@ lang: zh
 
 - [BIPs #1911][] 将 [BIP21][] 标记为可被 [BIP321][] 替代，并将 [BIP321][] 的状态从 `Draft`（草案）更新为 `Proposed`（提议成型）。[BIP321][] 提出了一种前卫的 URI 方案来描述比特币支付指令，详见 [周报 #352][news352 bip321]。
 
-  
 
 {% include references.md %}
 {% include linkers/issues.md v=2 issues="33229,33446,3838,4098,4106,4096,10133,2029,1911,1289" %}
