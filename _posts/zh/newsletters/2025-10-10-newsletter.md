@@ -39,14 +39,14 @@ lang: zh
 
 
 {% include functions/details-list.md
-  q0=“模糊测试发送随机设置 `high_bandwidth` 的 `SENDCMPCT` 消息。允许多少个高带宽对等节点，模糊工具是否测试此限制？更一般地说，为什么对等节点会选择高带宽或低带宽？”
-  a0=“对于高带宽对等节点，致密区块在验证完成之前就被转发而无需公告。这大大提高了区块传播速度。为了减少带宽开销，节点只选择最多 3 个对等节点以高带宽模式发送致密区块。这种模式没有被 `cmpctblock` 模糊目标专门测试。”
+  q0="<!--the-fuzz-test-sends-sendcmpct-messages-with-high-bandwidth-randomly-set-how-many-high-bandwidth-peers-are-allowed-and-does-the-fuzz-harness-test-this-limit-more-generally-why-would-a-peer-choose-to-be-high-or-low-bandwidth-->模糊测试发送随机设置 `high_bandwidth` 的 `SENDCMPCT` 消息。允许多少个高带宽对等节点，模糊工具是否测试此限制？更一般地说，为什么对等节点会选择高带宽或低带宽？"
+  a0="对于高带宽对等节点，致密区块在验证完成之前就被转发而无需公告。这大大提高了区块传播速度。为了减少带宽开销，节点只选择最多 3 个对等节点以高带宽模式发送致密区块。这种模式没有被 `cmpctblock` 模糊目标专门测试。"
   a0link="https://bitcoincore.reviews/33300#l-66"
-  q1=“查看工具中的 `create_block`。生成的区块包含多少交易，它们来自哪里？只有区块中几个交易可能会错过哪些致密区块场景？”
-  a1=“生成的区块包含 1-3 个交易：一个 coinbase 交易（始终存在）、可选的来自交易池的交易，以及可选的非交易池交易。由于区块限制为少量交易，一些场景可能被遗漏，例如测试短 ID 冲突处理，这在许多交易时变得更有可能。审核俱乐部参与者建议增加交易计数以改善覆盖率。”
+  q1="<!--look-at-create-block-in-the-harness-how-many-transactions-do-the-generated-blocks-contain-and-where-do-they-come-from-what-compact-block-scenarios-might-be-missed-with-only-a-few-transactions-in-a-block-->查看工具中的 `create_block`。生成的区块包含多少交易，它们来自哪里？只有区块中几个交易可能会错过哪些致密区块场景？"
+  a1="生成的区块包含 1-3 个交易：一个 coinbase 交易（始终存在）、可选的来自交易池的交易，以及可选的非交易池交易。由于区块限制为少量交易，一些场景可能被遗漏，例如测试短 ID 冲突处理，这在许多交易时变得更有可能。审核俱乐部参与者建议增加交易计数以改善覆盖率。"
   a1link="https://bitcoincore.reviews/33300#l-132"
-  q2=“提交 [ed813c4][review-club ed813c4] 按区块哈希而不是指针地址对 `m_dirty_blockindex` 进行排序。这修复了什么非确定性？作者[注意到][q1 note]这减慢了生产代码而没有生产效益。为什么这里不能使用 [`EnableFuzzDeterminism()`][code enablefuzzdeterminism]？你认为这种非确定性应该如何最好地处理（如果不是 PR 当前的方式）？”
-  a2=“`m_dirty_blockindex` 集合按指针内存地址排序，这在运行之间不同，导致非确定性行为。修复通过使用区块哈希而不是指针地址提供确定性排序顺序。像 `EnableFuzzDeterminism()` 这样的运行时解决方案不能使用，因为 `std::set` 的比较器是其类型的编译时属性，不能在运行时切换。因为这种非确定性影响执行路径，它误导模糊器对每次插入集合的代码覆盖率分析。PR 作者建议 [afl-fuzz 白皮书][afl fuzz] 作为关于模糊测试中覆盖率反馈如何工作的推荐进一步阅读。”
+  q2="<!--commit-ed813c4-review-club-ed813c4-sorts-m-dirty-blockindex-by-block-hash-instead-of-pointer-address-what-non-determinism-does-this-fix-the-author-notes-q1-note-this-slows-production-code-for-no-production-benefit-why-can-t-enablefuzzdeterminism-code-enablefuzzdeterminism-be-used-here-how-do-you-think-this-non-determinism-should-be-best-handled-if-not-the-way-the-pr-currently-does-->提交 [ed813c4][review-club ed813c4] 按区块哈希而不是指针地址对 `m_dirty_blockindex` 进行排序。这修复了什么非确定性？作者[注意到][q1 note]这减慢了生产代码而没有生产效益。为什么这里不能使用 [`EnableFuzzDeterminism()`][code enablefuzzdeterminism]？你认为这种非确定性应该如何最好地处理（如果不是 PR 当前的方式）？"
+  a2="`m_dirty_blockindex` 集合按指针内存地址排序，这在运行之间不同，导致非确定性行为。修复通过使用区块哈希而不是指针地址提供确定性排序顺序。像 `EnableFuzzDeterminism()` 这样的运行时解决方案不能使用，因为 `std::set` 的比较器是其类型的编译时属性，不能在运行时切换。因为这种非确定性影响执行路径，它误导模糊器对每次插入集合的代码覆盖率分析。PR 作者建议 [afl-fuzz 白皮书][afl fuzz] 作为关于模糊测试中覆盖率反馈如何工作的推荐进一步阅读。"
   a2link="https://bitcoincore.reviews/33300#l-147"%}
 
 ## 版本和候选版本
@@ -79,7 +79,7 @@ lang: zh
 {% include linkers/issues.md v=2 issues="33453,33504,8563,8523,8398,4120,10254,1240" %}
 [sindura post]: https://delvingbitcoin.org/t/optimal-threshold-signatures-in-bitcoin/2023
 [Bitcoin Inquisition 29.1]: https://github.com/bitcoin-inquisition/bitcoin/releases/tag/v29.1-inq
-[news285 internal]: /zh/newsletters/2024/01/17/#new-lnhance-combination-soft-fork-proposed
+[news285 internal]: /zh/newsletters/2024/01/17/#lnhance
 [news332 internal]: /zh/newsletters/2024/12/06/#bips-1534
 [news352 data]: /zh/newsletters/2025/05/02/#increasing-or-removing-bitcoin-core-s-op-return-size-limit
 [news358 data]: /zh/newsletters/2025/06/13/#bitcoin-core-32406
