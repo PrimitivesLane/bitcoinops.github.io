@@ -17,8 +17,11 @@ lang: zh
   当一笔新交易进入交易池时，它可能没有连接、也可能连接到了现有的交易族群，因此会触发受影响族群的重新线性化，从而能产生旧的（更新之前的）费率图和新的（更新之后的）费率图（关于 “线性化”，周报 [#312][news312 lin] 提供了更多信息）。旧的费率图标识了可能要从区块模板中驱逐的潜在部分，而新的费率图则标识了可以添加到区块模板中、带来更高费率的部分。然后，这个系统可以遵循下列 4 个步骤来模拟更新（区块模板）的影响：
 
   1. 驱逐：从一个区块模板副本中移除匹配的部分，从而更新变更之后的手续费和体积。
+
   2. 天真合并：贪婪地添加候选部分，同时，根据区块重量的限制来评估潜在的手续费收益（ΔF）。
+
   3. 迭代式合并：如果天真合并无法得到结果，就使用一种更富细节的模拟来提炼 ΔF 。
+
   4. 决策：对比 ΔF 和一个阈值；如果它超过了这个阈值，就重新构建区块模板、发送给矿工。否则，就跳过，以避免不必要的计算。
 
   当前的提议还在讨论阶段，没有可用的原型。
@@ -34,6 +37,7 @@ lang: zh
 *在这个月度栏目中，我们会列出比特币钱包和服务的有趣更新。*
 
 - **<!--bull-wallet-launches-->** **BULL 钱包启动**：开源的 [BULL 移动端钱包][bull blog]基于 BDK 开发，并且支持[描述符][topic descriptors]、[交易（地址）标签][topic wallet labels]、钱币选择、闪电通道、[payjoin][topic payjoin]、Liquid 侧链、硬件签名其和仅观察钱包；还有其它特性。
+
 - **<!--sparrow-230-released-->** **Sparrow 2.3.0 版本发布**：[Sparrow 2.3.0][sparrow github] 添加了发送到 “[静默支付][topic silent payments]” 地址和 [BIP353][] 肉眼可读比特币支付指令的支持，还有其它特性和 bug 修复。
 
 ## 新版本和候选版本
@@ -41,6 +45,7 @@ lang: zh
 *热门比特币基础设施软件的新版本和候选版本。请考虑升级到新版本或帮助测试候选版本。*
 
 - [Core Lightning 25.09.1][] 是这种流行的闪电节点实现的当前主要版本的一个维护版本，包含了多项 bug 修复。
+
 - [Bitcoin Core 28.3][] 是这个主流的全节点实现的旧版本的维护版本，包含了多项 bug 修复，也为 `blockmintxfee`、`incrementalrelayfee` 和 `minrelaytxfee` 使用了新的默认数值。
 
 ## 重大的代码和说明书变更
@@ -48,12 +53,18 @@ lang: zh
 *本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Lightning][core lightning repo]、[Eclair][eclair repo]、[LDK][ldk repo]、[LND][lnd repo]、[libsecp256k1][libsecp256k1 repo]、[Hardware Wallet Interface (HWI)][hwi repo]、[Rust Bitcoin][rust bitcoin repo]、[BTCPay Server][btcpay server repo]、[BDK][bdk repo]、[Bitcoin Improvement Proposals (BIPs)][bips repo]、[Lightning BOLTs][bolts repo]、[Lightning BLIPs][blips repo]、[Bitcoin Inquisition][bitcoin inquisition repo] 和 [BINANAs][binana repo]。*
 
 - [Bitcoin Core #33157][] 通过为单交易族群加入一种 `SingletonClusterImpl` 类型、压缩多个 `TxGraph` 的内部组件，优化了[族群交易池][topic cluster mempool]的内存使用。这项 PR 也加入了一种 `GetMainMemoryUsage()` 来评估 `TxGraph` 的内存用量。
+
 - [Bitcoin Core #29675][] 开始支持通过导入 `musig(0)` [描述符][topic descriptors] 到钱包，使用由 [MuSig2][topic musig] 聚合公钥控制的 [taproot][topic taproot] 输出收款和花费。关于更早的支持性工作，请看 [周报 #366][news366 musig2]。
+
 - [Bitcoin Core #33517][] 和 [Bitcoin Core #33518][] 通过加入日志层级和类型、避免序列化已被丢弃的线程间通信（IPC）日志消息，减少了多线程日志编撰的 CPU 消耗。该 PR 的作者发现，在应用该 PR 以前，日志编撰会占用他的 [Stratum v2][topic pooled mining] 客户端应用 50% 的 CPU 时间和比特币节点的 10% 的处理量。而应用该 PR 之后，就降低到近乎 0 比例。周报 [#323][news323 ipc] 和 [#369][news369 ipc] 提供了更多的上下文。
+
 - [Eclair #2792][] 加入了一种新的 “多路径支付（[MPP][topic multipath payments]）” 分割策略 `max-expected-amount`，它通过考虑每一条路径的容量和成功率来分配支付碎片。加入了一个新的 `mpp.splitting-strategy` 配置选项，带有三个选项：`max-expected-amount`、`full-capacity`（仅考虑一条路线的容量）和 `randomize`（是该配置的默认值，随机分割支付碎片）。后面两种策略已经能够通过 `randomize-route-selection` 配置选项的布尔值来使用。这个 PR 还添加了对远端通道的 [HTLC][topic htlc] 最大数额强制执行。
+
 - [LDK #4122][] 支持在一个对等节点离线时排队（queuing）一次[通道拼接][topic splicing]请求，在该节点重新连接时再开始协商。对于[零确认][topic zero-conf channels]的通道拼接，LDK 现在会在交换了 `tx_signatures`（交易签名）之后，立即发送一条 `splice_locked` 消息给对等节点。LDK 也将会在并发通道拼接期间排队一个通道拼接，在另一个通道拼接锁定之后尽快尝试它。
+
 - [LND #9868][] 定义了一种 `OnionMessage` 类型，并添加了两种新的 RPC 端点：`SendOnionMessage`，它会发送一条洋葱信息给某一个对等节点；`SubscribeOnionMessages`，它会订阅一个入站的洋葱消息流。这些是支持 [BOLT12 offers][topic offers] 所需的第一个步骤。
-- [LND #10273][] 修复了一个问题：传统的资金清扫器 `utxonursery` 在尝试清扫一个在 [锁定时间][topic timelocks]（区块高度提示）中使用 0 数值的 [HTLC][topic htlc] 时，LND 会崩溃。现在，LND 会通过从通道的关闭高度中派生出区块高度提示，从而成功清扫这些 HTLC 。
+
+- [LND #10273][] 修复了一个问题：传统的资金清扫器 `utxonursery` 在尝试清扫一个在[锁定时间][topic timelocks]（区块高度提示）中使用 0 数值的 [HTLC][topic htlc] 时，LND 会崩溃。现在，LND 会通过从通道的关闭高度中派生出区块高度提示，从而成功清扫这些 HTLC 。
 
 
 {% include references.md %}
