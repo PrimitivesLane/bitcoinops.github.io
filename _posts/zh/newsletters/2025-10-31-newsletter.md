@@ -11,16 +11,16 @@ lang: zh
 
 ## 新闻
 
-- **<!--disclosure-of-four-low-severity-vulnerabilities-in-bitcoin-core-->Bitcoin Core 四个低严重性漏洞的披露：**
+- **<!--disclosure-of-four-low-severity-vulnerabilities-in-bitcoin-core-->****Bitcoin Core 四个低严重性漏洞的披露：**
   Antoine Poinsot 最近在 Bitcoin-Dev 邮件列表上[发布][poinsot disc]了四个 Bitcoin Core 安全公告，涉及在 Bitcoin Core 30.0 中修复的低严重性漏洞。根据[披露政策][disc pol]（参见[周报 #306][news306 disclosures]），低严重性漏洞在包含修复的主要版本发布两周后披露。披露的四个漏洞如下：
 
-  - [通过欺骗自连接填充磁盘空间][CVE-2025-54604]：此漏洞允许攻击者通过伪造自连接来填满受害者节点的磁盘空间。该漏洞于 2022 年 3 月由 Niklas Gögge [负责地披露][topic responsible disclosures]。Eugene Siegel 和 Niklas Gögge 于 2025 年 7 月合并了缓解措施。
+  * [<!--disk-filling-from-spoofed-self-connections-->通过欺骗自连接填充磁盘空间][CVE-2025-54604]：此漏洞允许攻击者通过伪造自连接来填满受害者节点的磁盘空间。该漏洞于 2022 年 3 月由 Niklas Gögge [负责地披露][topic responsible disclosures]。Eugene Siegel 和 Niklas Gögge 于 2025 年 7 月合并了缓解措施。
 
-  - [通过无效区块填充磁盘空间][CVE-2025-54605]：此漏洞允许攻击者通过重复发送无效区块来填满受害者节点的磁盘空间。此漏洞于 2022 年 5 月由 Niklas Gögge 负责披露，并于 2025 年 3 月由 Eugene Siegel 独立发现。Eugene Siegel 和 Niklas Gögge 于 2025 年 7 月合并了缓解措施。
+  * [<!--disk-filling-from-invalid-blocks-->通过无效区块填充磁盘空间][CVE-2025-54605]：此漏洞允许攻击者通过重复发送无效区块来填满受害者节点的磁盘空间。此漏洞于 2022 年 5 月由 Niklas Gögge 负责披露，并于 2025 年 3 月由 Eugene Siegel 独立发现。Eugene Siegel 和 Niklas Gögge 于 2025 年 7 月合并了缓解措施。
 
-  - [32 位系统上极不可能的远程崩溃][CVE-2025-46597]：此漏洞可能导致节点在接收到病态区块时在罕见边缘情况下崩溃。此漏洞于 2025 年 4 月由 Pieter Wuille 负责披露。Antoine Poinsot 于 2025 年 6 月实施并合并了缓解措施。
+  * [<!--highly-unlikely-remote-crash-on-32-bit-systems-->32 位系统上极不可能的远程崩溃][CVE-2025-46597]：此漏洞可能导致节点在接收到病态区块时在罕见边缘情况下崩溃。此漏洞于 2025 年 4 月由 Pieter Wuille 负责披露。Antoine Poinsot 于 2025 年 6 月实施并合并了缓解措施。
 
-  - [未确认交易处理导致的 CPU DoS][CVE-2025-46598]：此漏洞会在处理未确认交易时导致资源耗尽。此漏洞于 2025 年 4 月由 Antoine Poinsot 在邮件列表上报告。Pieter Wuille、Anthony Towns 和 Antoine Poinsot 于 2025 年 8 月实施并合并了缓解措施。
+  * [<!--cpu-dos-from-unconfirmed-transaction-processing-->未确认交易处理导致的 CPU DoS][CVE-2025-46598]：此漏洞会在处理未确认交易时导致资源耗尽。此漏洞于 2025 年 4 月由 Antoine Poinsot 在邮件列表上报告。Pieter Wuille、Anthony Towns 和 Antoine Poinsot 于 2025 年 8 月实施并合并了缓解措施。
 
   前三个漏洞的补丁也包含在 Bitcoin Core 29.1 及后续的次要版本中。
 
