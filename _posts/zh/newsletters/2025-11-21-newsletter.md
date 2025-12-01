@@ -60,22 +60,22 @@ lang: zh
 
 *在这个月度栏目中，我们重点介绍比特币钱包和服务的有趣更新。*
 
-- **<!--arkade-launches-->Arkade 启动：**
+- **<!--arkade-launches-->****Arkade 启动：**
   [Arkade][ark labs blog] 是一个 [Ark 协议][topic ark]实现，还包括多种编程语言 SDK、钱包、BTCPayServer 插件和其他功能。
 
 - **<!--mempool-monitoring-mobile-application-->交易池监控移动应用：**
   [Mempal][mempal gh] Android 应用提供关于比特币网络的各种指标和警报，从自托管的交易池服务器获取数据。
 
-- **<!--web-based-policy-and-miniscript-ide-->基于网络的策略和 miniscript IDE：**
+- **<!--web-based-policy-and-miniscript-ide-->****基于网络的策略和 miniscript IDE：**
   [Miniscript Studio][miniscript studio site] 提供与 [miniscript][topic miniscript] 和策略语言交互的界面。[博客文章][miniscript studio blog]描述了功能，[源代码][miniscript studio gh]可用。
 
-- **<!--phoenix-wallet-adds-taproot-channels-->Phoenix 钱包添加 taproot 通道：**
+- **<!--phoenix-wallet-adds-taproot-channels-->****Phoenix 钱包添加 taproot 通道：**
   Phoenix 钱包[添加][phoenix post]了对 [taproot][topic taproot] 通道的支持、现有通道的迁移工作流程和多钱包功能。
 
-- **<!--nunchuk-20-launches-->Nunchuk 2.0 启动：**
+- **<!--nunchuk-20-launches-->****Nunchuk 2.0 启动：**
   [Nunchuk 2.0][nunchuk blog] 支持使用多重签名、[时间锁][topic timelocks]和 miniscript 的钱包配置。它还包括降级多重签名功能。
 
-- **<!--ln-gossip-traffic-analysis-tool-announced-->LN Gossip 流量分析工具公布：**
+- **<!--ln-gossip-traffic-analysis-tool-announced-->****LN Gossip 流量分析工具公布：**
   [Gossip Observer][gossip observer gh] 从多个节点收集闪电网络 Gossip 消息并提供摘要指标。结果可能会为闪电网络提供类似 [minisketch][topic minisketch] 的集合协调协议。[Delving Bitcoin 主题][gossip observer delving]包括关于该方法的讨论。
 
 ## 重大的代码和文档变更
