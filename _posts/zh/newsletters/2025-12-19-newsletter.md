@@ -1,5 +1,5 @@
 ---
-title: 'Bitcoin Optech Newsletter #385: 2025 Year-in-Review Special'
+title: 'Bitcoin Optech Newsletter #385：2025 年度回顾特刊'
 permalink: /zh/newsletters/2025/12/19/
 name: 2025-12-19-newsletter-zh
 slug: 2025-12-19-newsletter-zh
