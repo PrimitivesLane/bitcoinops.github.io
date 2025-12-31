@@ -75,7 +75,7 @@ excerpt: >
 
 {:#offchaindlcs}
 
-- **<!--offchain-dlcs-->链下 DLC：** 开发者 Conduition [发布][news offchain dlc]了一种新的链下 DLC（[谨慎日志合约][topic dlc]）机制，使参与者能够协作创建和扩展 DLC 工厂，允许迭代 DLC 持续运行，直到一方选择在链上解决。这与[之前的工作][news dlc channels]形成对比，之前的链下 DLC 在每次合约滚动时都需要交互。
+- **<!--offchain-dlcs-->链下 DLC：** 开发者 Conduition [发布][news offchain dlc]了一种新的链下 DLC（[谨慎日志合约][topic dlc]）机制，使参与者能够协作创建和扩展 DLC 工厂，允许迭代 DLC 持续运行，直到一方选择在链上解决。这与[之前的工作][news dlc channels]形成对比，之前的链下 DLC 在每次合约展期时都需要交互。
 
 {:#compactblockstats}
 
@@ -87,7 +87,7 @@ excerpt: >
 
 {:#erlay}
 
-- **<!--erlay-update-->Erlay 更新：** Sergi Delgado 今年就他在 Bitcoin Core 中实现 [Erlay][erlay] 的工作和进展发表了[多篇帖子][erlay optech posts]。在第一篇帖子中，他概述了 Erlay 提案以及当前交易中继机制（“扇出 / fanout”）的工作原理。在这些帖子中，他讨论了在开发 Erlay 时发现的不同结果，例如[基于交易知识的过滤][erlay knowledge]并不像预期的那样有影响力。他还尝试选择[应该接收扇出的对等节点数量][erlay fanout amount]，发现 8 个出站对等节点可节省 35% 的带宽，12 个出站对等节点可节省 45%，但也发现延迟增加了 240%。在另外两个实验中，他确定了[基于交易接收方式的扇出速率][erlay transaction received]以及[何时选择候选对等节点][erlay candidate peers]。这些实验结合了扇出和调和（fanout and reconciliation），帮助他确定何时使用何种方法。
+- **<!--erlay-update-->Erlay 更新：** Sergi Delgado 今年就他在 Bitcoin Core 中实现 [Erlay][erlay] 的工作和进展发表了[多篇帖子][erlay optech posts]。在第一篇帖子中，他概述了 Erlay 提案以及当前交易中继机制（“扇出 / fanout”）的工作原理。在这些帖子中，他讨论了在开发 Erlay 时发现的不同结果，例如[基于交易知识的过滤][erlay knowledge]并不像预期的那样有影响力。他还尝试选择[应该接收扇出的对等节点数量][erlay fanout amount]，发现 8 个出站对等节点可节省 35% 的带宽，12 个出站对等节点可节省 45%，但也发现延迟增加了 240%。在另外两个实验中，他确定了[基于交易接收方式的扇出速率][erlay transaction received]以及[何时选择候选对等节点][erlay candidate peers]。这些实验结合了扇出式广播与集合对账（fanout and reconciliation），帮助他确定何时使用何种方法。
 
 {:#lneas}
 
@@ -107,7 +107,7 @@ excerpt: >
 
 _注意：只有当我们认为漏洞发现者已做出合理努力、尽可能降低对用户造成伤害的风险时，Optech 才会公布其姓名。我们感谢本节提到的所有个人，他们展现了洞见，并对用户安全有明确而真切的关注。_
 
-一月初，Yuval Kogman [公开披露][news335 coinjoin]了当前版本的 Wasabi 和 Ginger 使用的中心化 [coinjoin][topic coinjoin] 协议中存在的多个长期去匿名化弱点，以及过去版本的 Samourai、Sparrow 和 Trezor Suite 中的问题。如果被利用，中心化协调器可以将用户的输入与输出关联起来，从而有效地消除 coinjoin 的预期隐私优势。2024 年底也报告了类似的漏洞（见 [周报 #333][news333 coinjoin]）。
+一月初，Yuval Kogman [公开披露][news335 coinjoin]了当前版本的 Wasabi 和 Ginger 使用的中心化 [coinjoin][topic coinjoin] 协议中长期存在的多个去匿名化弱点，以及过去版本的 Samourai、Sparrow 和 Trezor Suite 中的问题。如果被利用，中心化协调器可以将用户的输入与输出关联起来，从而有效地消除 coinjoin 的预期隐私优势。2024 年底也报告了类似的漏洞（见 [周报 #333][news333 coinjoin]）。
 
 一月底，Matt Morehouse [宣布][news339 ldk]负责任地披露了 LDK 在处理具有多个待处理 [HTLC][topic htlc] 的单方面关闭时的索赔处理漏洞。LDK 旨在通过批量处理多个 HTLC 来降低费用；然而，如果与通道对手方的已确认交易发生冲突，LDK 可能无法更新所有受影响的批次，导致资金卡住甚至存在被盗风险。此问题已在 LDK 0.1 中修复。
 
@@ -117,7 +117,7 @@ _注意：只有当我们认为漏洞发现者已做出合理努力、尽可能�
 
 三月，Morehouse [宣布][news344 lnd]负责任地披露了 0.18 版本之前的 LND 中已修复的漏洞：如果攻击者与受害者有通道连接，并且能够以某种方式导致受害者的节点重启，就可以使 LND 同时支付和退款同一个 HTLC。这将允许攻击者窃取几乎整个通道价值。该披露还突出了闪电网络规范中的漏洞，这些漏洞后来得到了纠正（见 [周报 #346][news346 bolts]）。
 
-五月，Ruben Somsen [描述][news353 bip30]了一个与 BIP30 对[重复][topic duplicate transactions]coinbase 交易的历史处理方式相关的、理论上的共识失败边界情形。随着 Bitcoin Core 移除检查点（见 [周报 #346][news346 checkpoints]），如果发生一次极端的区块重组（reorg），回滚最深可至区块 91842，那么节点可能会因为是否曾观察到这些重复 coinbase 而产生不同的 UTXO 集，从而出现分歧。讨论了几种解决方案，例如为这两个例外情况硬编码额外的特殊情况逻辑；不过整体并未被认为是现实可行的威胁。
+五月，Ruben Somsen [描述][news353 bip30]了一个与 BIP30 对[重复][topic duplicate transactions]coinbase 交易的历史处理方式相关的、理论上的共识失败边界情形。随着 Bitcoin Core 移除检查点（见 [周报 #346][news346 checkpoints]），如果发生一次极端的区块重组（reorg），回滚深至区块 91842，那么节点可能会因为是否曾观察到这些重复 coinbase 而产生不同的 UTXO 集，从而出现分歧。讨论了几种解决方案，例如为这两个例外情况硬编码额外的特殊情况逻辑；不过整体并未被认为是现实可行的威胁。
 
 同样在五月，Antoine Poinsot [宣布][news354 32bit]负责任地披露了影响 29.0 版本之前的 Bitcoin Core 版本的低严重性漏洞，过量的地址通告（address advertisements）可能导致一个 32 位标识符溢出，从而使节点崩溃。早期的缓解措施已经使得在默认对等节点限制下利用漏洞变得不切实际地缓慢（见周报 [#159][news159 32bit] 和 [#314][news314 32bit]），并且通过在 Bitcoin Core 29.0 中切换到 64 位标识符完全解决了该问题。
 
@@ -178,11 +178,11 @@ Clara Shikhelman 和 Anthony Milton [发表][news357 quantum report]了一篇论
 
 Jesse Posner [强调了现有研究][news364 quantum primatives]，指出比特币现有的原语——如分层确定性（HD）钱包、[静默支付（Silent Payments）][topic silent payments]、密钥聚合和[门限签名][topic threshold signature]——可能与一些常见的抗量子签名算法兼容。
 
-Augustin Cruz [提议][news qr cruz]了一项 BIP，旨在彻底销毁那些具有确定性量子漏洞的代币。随后，Jameson Lopp [发起了一场讨论][news qr lopp1]，探讨应如何处理易受量子攻击的代币，产生的想法从“任由量子攻击者获取”到“直接销毁”不等。Lopp 随后[提出][news qr lopp2]了一套具体的[软分叉序列][BIPs #1895]，比特币可以在密码学相关量子计算机（CRQC）开发完成前很久就开始实施，以逐步减轻量子对手突然获取大量代币的威胁，同时给持有者留出安全转移资金的时间。
+Augustin Cruz [提议][news qr cruz]了一项 BIP，旨在彻底销毁那些具有确定性量子漏洞的钱币。随后，Jameson Lopp [发起了一场讨论][news qr lopp1]，探讨应如何处理易受量子攻击的代币，产生的想法从“任由量子攻击者获取”到“直接销毁”不等。Lopp 随后[提出][news qr lopp2]了一套具体的[软分叉序列][BIPs #1895]，比特币可以在密码学相关量子计算机（CRQC）开发完成前很久就开始实施，以逐步减轻量子对手突然获取大量钱币的威胁，同时给持有者留出安全转移资金的时间。
 
-有两项提案（[1][news qr sha], [2][news qr cr]）被提出，旨在让大多数现有代币能够以某种方式锁定，以便在比特币未来禁用量子漏洞支出时仍能恢复。简而言之，理论上的事件序列是：0）比特币持有者确保其当前钱包拥有某个支出路径所需的哈希机密；1）CRQC 显示即将出现；2）比特币禁用椭圆曲线签名；3）比特币启用抗量子签名方案；4）比特币启用这些提案之一，允许已做准备的持有者申领其易受量子攻击的代币。根据具体实现，任何地址类型（包括带有 Scriptpath 的 P2TR）都可以利用这些方法。
+有两项提案（[1][news qr sha], [2][news qr cr]）被提出，旨在让大多数现有钱币能够以某种方式锁定，以便在比特币未来禁用量子漏洞支出时仍能恢复。简而言之，理论上的事件序列是：0）比特币持有者确保其当前钱包拥有某个支出路径所需的哈希机密；1）CRQC 显示即将出现；2）比特币禁用椭圆曲线签名；3）比特币启用抗量子签名方案；4）比特币启用这些提案之一，允许已做准备的持有者申领其易受量子攻击的钱币。根据具体实现，任何地址类型（包括带有 Scriptpath 的 P2TR）都可以利用这些方法。
 
-开发者 Conduition 证明了 [`OP_CAT`][BIP347] 可用于实现 Winternitz 签名，这种签名提供抗量子检查，每个输入的成本约为 2000 vbytes。这比之前[提议][rubin lamport]的基于 `OP_CAT` 的 [Lamport 签名][lamport]成本更低。
+开发者 Conduition 证明了 [`OP_CAT`][BIP347] 可用于实现 Winternitz 签名，这种方案提供了抗量子的签名检查，每个输入的成本约为 2000 vbytes。这比之前[提议][rubin lamport]的基于 `OP_CAT` 的 [Lamport 签名][lamport]成本更低。
 
 Matt Corallo 围绕在 [Tapscript][topic tapscript] 中添加抗量子签名校验操作码的通用想法发起了[讨论][news qr corallo]。随后，Abdelhamid Bakhta [提议][abdel stark]将原生 STARK 验证作为此类操作码之一，Conduition 则[撰文][conduition sphincs]介绍了他们在优化 SLH-DSA (SPHINCS) 抗量子签名方面的进展。任何添加到 Tapscript 的抗量子签名校验操作码（包括 `OP_CAT`）都可以与 [BIP360][] 结合，从而实现对比特币输出的全面量子加固。
 
@@ -196,7 +196,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 {:#clustermempool}
 
-- **<!--cluster-mempool-->族群交易池：** 年初，Stefan Richter 通过[发现][news340 richter ggt]一篇 1989 年研究论文中关于 _最大比率闭包问题_ 的高效算法可以用于族群线性化，从而引发了不少期待。Pieter Wuille 当时已经在研究一种线性规划方法，作为对最初“候选集搜索”方案的潜在改进，并把基于最小割（min-cut）的方案作为第三种选项纳入研究。稍后，Wuille 在 Bitcoin Core PR Review Club 上[讲解了][news341 pr-review-club txgraph]新引入的 `TxGraph` 类，它将交易提炼为权重、手续费与相互关系，以便高效地与交易池图交互。5 月，Wuille 发布了三种族群线性化方案的基准测试并说明其[权衡][news352 wuille linearization techniques]，结论是：两种更高级的方案都远比简单的候选集搜索高效，但他基于线性规划的“生成森林线性化（spanning-forest linearization）”算法在实用性上优于基于最小割的方法。秋季，Abubakar Sadiq Ismail [描述了][news377 ismail template improvement]族群交易池如何可用于跟踪：交易池内容何时相较于某个先前的区块模板已经显著改善。接近年末时，族群交易池的实现[完成][news382 cluster mempool completed]，为随 Bitcoin Core 31.0 发布做好准备。将初始的候选集搜索线性化算法替换为生成森林线性化算法的工作仍在进行中。
+- **<!--cluster-mempool-->族群交易池：** 年初，Stefan Richter 通过[发现][news340 richter ggt]一篇 1989 年研究论文中关于 _最大比率闭包问题_ 的高效算法可以用于族群线性化，从而引发了不少期待。Pieter Wuille 当时已经在研究一种线性规划方法，作为对最初“候选集搜索”方案的潜在改进，并把基于最小割（min-cut）的方案作为第三种选项纳入研究。稍后，Wuille 在 Bitcoin Core PR Review Club 上[讲解了][news341 pr-review-club txgraph]新引入的 `TxGraph` 类，它将交易提炼为交易重量、手续费与相互关系，以便高效地与交易池图交互。5 月，Wuille 发布了三种族群线性化方案的基准测试并说明其[权衡][news352 wuille linearization techniques]，结论是：两种更高级的方案都远比简单的候选集搜索高效，但他基于线性规划的“生成森林线性化（spanning-forest linearization）”算法在实用性上优于基于最小割的方法。秋季，Abubakar Sadiq Ismail [描述了][news377 ismail template improvement]族群交易池如何可用于追踪：交易池内容何时相较于某个先前的区块模板已经显著改善。接近年末时，族群交易池的实现[完成][news382 cluster mempool completed]，为随 Bitcoin Core 31.0 发布做好准备。将初始的候选集搜索线性化算法替换为生成森林线性化算法的工作仍在进行中。
 
 {:#opreturn}
 
@@ -224,7 +224,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 今年围绕软分叉提案出现了大量讨论，范围从“范围少、影响小”的提案到“范围广、能力强”的提案都有涉及。
 
-- *<!--transaction-templates-->交易模板：* 围绕交易模板讨论了多个软分叉打包方案。其中范围与能力相近的包括 CTV+CSFS（[BIP119][]+[BIP348][]）以及 [Taproot 原生的可重新绑定签名打包方案][news thikcs]（[`OP_TEMPLATEHASH`][BIPs #1974]+[BIP348][]+[BIP349][]）。它们代表了对比特币脚本能力的“最小增强”：既能实现可重新绑定的签名（即不承诺花费某个特定 UTXO 的签名），也能实现“预先承诺将某个 UTXO 花费到一笔特定的下一笔交易”（有时被称为一种等式[限制条款][topic covenants]）。若被激活，它们将启用 [LN-Symmetry][ctv csfs symmetry] 与[简化版 CTV 保险库][ctv vaults]，并能[降低 DLC 的签名需求][ctv dlcs]、[降低 Ark 的交互性][ctv csfs arks]、[简化 PTLC][ctv csfs ptlcs] 等等。这两类提案的一个差异在于：CTV 能用于[BitVM sibling hack][ctv csfs bitvm]，而 `OP_TEMPLATEHASH` 不能，因为 `OP_TEMPLATEHASH` 不会承诺 `scriptSigs`。
+- *<!--transaction-templates-->交易模板：* 多个围绕交易模板的软分叉提案包得到了讨论。其中范围与能力相近的包括 CTV+CSFS（[BIP119][]+[BIP348][]）以及 [Taproot 原生的可重新绑定签名打包方案][news thikcs]（[`OP_TEMPLATEHASH`][BIPs #1974]+[BIP348][]+[BIP349][]）。它们代表了对比特币脚本能力的“最小增强”：既能实现可重新绑定的签名（即不承诺花费某个特定 UTXO 的签名），也能实现“预先承诺将某个 UTXO 花费到一笔特定的下一笔交易”（有时被称为一种等式[限制条款][topic covenants]）。若被激活，它们将启用 [LN-Symmetry][ctv csfs symmetry] 与[简化版 CTV 保险库][ctv vaults]，并能[降低 DLC 的签名需求][ctv dlcs]、[降低 Ark 的交互性][ctv csfs arks]、[简化 PTLC][ctv csfs ptlcs] 等等。这两类提案的一个差异在于：CTV 能用于[BitVM sibling hack][ctv csfs bitvm]，而 `OP_TEMPLATEHASH` 不能，因为 `OP_TEMPLATEHASH` 不会承诺 `scriptSigs`。
 
   由于包含了 [OP_CHECKSIGFROMSTACK][topic OP_CHECKSIGFROMSTACK]，这些提案还可通过 [Key Laddering][rubin key ladder] 实现类似默克尔树的“多重承诺”（在锁定脚本或花费脚本中承诺多个相关且可选有序的值）。更新后的 [LNHANCE][lnhance update] 提案还包含 `OP_PAIRCOMMIT`（[BIPs #1699][]），使得无需 Key Laddering 所要求的额外脚本大小与验证成本也能实现多重承诺。多重承诺可用于 LN-Symmetry、复杂委托等更多场景。
 
@@ -232,7 +232,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 - *<!--consensus-cleanup-->共识清理：* [共识清理][topic consensus cleanup]提案基于反馈与额外研究进行了[更新][gcc update]；一个 [BIP 草案][gcc bip]被发布并合并为 [BIP54][]，且现在[包含实现与测试向量][gcc impl tests]。年内较早时还讨论了这种清理是否应当在“可能出现非预期没收”的担忧下被设计为临时的[临时软分叉][topic transitory soft forks]；但每次到期都需要重新评估这一必要性，使得临时软分叉显得不那么有吸引力。
 
-- *<!--opcode-proposals-->操作码提案：* 除了上面讨论的打包操作码提案之外，2025 年还提出或完善了若干单独的 Script 操作码。
+- *<!--opcode-proposals-->操作码提案：* 除了上面讨论的捆绑操作码提案之外，2025 年还提出或完善了若干单独的 Script 操作码。
 
   `OP_CHECKCONTRACTVERIFY`（CCV）[成为了][ccv bip] [BIP443][]，并对其语义（尤其是资金流转相关部分）进行了[细化][ccv semantics]。CCV 通过以特定方式约束某些输入或输出的 `scriptPubKey` 与金额，使得可以实现具备“反应式安全性”的[保险库][topic vaults]，以及大量其他合约。`OP_VAULT` 提案已[撤回][vault withdrawn]，转而支持 CCV。关于 CCV 应用的更多内容，可参见 [Optech 的主题词条][topic MATT]。
 
@@ -250,7 +250,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 {:#ccdelegation}
 
-- **<!--chain-code-delegation-->链码委托**：Jurvis Tan [发布][jt delegation]了他与 Jesse Posner 的合作成果：一种用于合作式通过的方法（现在被称为 “链码委托（[Chain Code Delegation][BIPs #2004]）/BIP89”），由客户（而不是部分受到信任的合作托管供应商）来生成从供应商的签名密钥中派生子密钥的 [BIP32][] 链码（并保持私密）。这样以来，供应商就无法派生出客户的完整的密钥树。这种方法既可以盲化使用（获得完全的隐私性，同时依然能利用供应商的密钥安全性），也可以非盲化使用（允许服务提供商执行策略，但代价是向服务提供商暴露将被签名的具体交易）。
+- **<!--chain-code-delegation-->链码委托**：Jurvis Tan [发布][jt delegation]了他与 Jesse Posner 的合作成果：一种用于协作式托管的方法（现在被称为 “链码委托（[Chain Code Delegation][BIPs #2004]）/BIP89”），由客户（而不是部分受到信任的合作托管供应商）来生成从供应商的签名密钥中派生子密钥的 [BIP32][] 链码（并保持私密）。这样一来，供应商就无法派生出客户的完整的密钥树。这种方法既可以盲化使用（获得完全的隐私性，同时依然能利用供应商的密钥安全性），也可以非盲化使用（允许服务提供商执行策略，但代价是向服务提供商暴露将被签名的具体交易）。
 
 ## 八月
 
@@ -398,7 +398,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 {:#kernelapi}
 
 - **<!--bitcoin-kernel-c-api-introduced-->****引入 Bitcoin Kernel C API：** [Bitcoin Core #30595][news380 kernel]
-  引入了一个 C 头文件，作为 [`bitcoinkernel`][Bitcoin Core #27587] 的 API，使外部项目能够通过可复用的 C 库与 Bitcoin Core 的区块验证与链状态（chainstate）逻辑交互。目前它仅限于对区块的操作，并且在功能上与现已废弃的 `libbitcoin-consensus` 等价（见 [周报 #288][news288 lib]）。
+  引入了一个 C 语言头文件，作为 [`bitcoinkernel`][Bitcoin Core #27587] 的 API，使外部项目能够通过可复用的 C 库与 Bitcoin Core 的区块验证与链状态（chainstate）逻辑交互。目前它仅限于对区块的操作，并且在功能上与现已废弃的 `libbitcoin-consensus` 等价（见 [周报 #288][news288 lib]）。
 
   `bitcoinkernel` 的用例包括：替代性节点实现、Electrum 服务器索引构建器、[静默支付][topic silent payments]扫描器、区块分析工具、脚本验证加速器等。多个语言绑定正在开发中，包括 [Rust][kernel rust]、[Go][kernel go]、[JDK][kernel jdk]、[C#][kernel csharp] 和 [Python][kernel python]。
 
@@ -502,7 +502,7 @@ Optech 有幸并心怀感激地再次收到 [Human Rights Foundation][] 对我�
 
 - **<!--splicing-->****拼接：** 12 月，[LDK 0.2][] 发布并提供了实验性的[通道拼接][topic splicing]支持，使该特性在三大闪电网络实现中都可用：LDK、Eclair 与 Core Lightning。拼接允许节点在不关闭通道的情况下，为通道增加或移除资金。
 
-  这为闪电网络拼接特性在 2025 年取得的重大进展画上句号。Eclair 在 2 月加入了[公有通道拼接支持][news340 eclairsplice]，并在 8 月加入了[简单 taproot 通道中的拼接][news368 eclairtaproot]。同时，Core Lightning 在 5 月[完成][news355 clnsplice]与 Eclair 的互操作性，并在 [Core Lightning 25.05][news359 cln2505] 中发布。
+  这为闪电网络拼接特性在 2025 年取得的重大进展画上句号。Eclair 在 2 月加入了[公开通道拼接支持][news340 eclairsplice]，并在 8 月加入了[简单 taproot 通道中的拼接][news368 eclairtaproot]。同时，Core Lightning 在 5 月[完成][news355 clnsplice]与 Eclair 的互操作性，并在 [Core Lightning 25.05][news359 cln2505] 中发布。
 
   贯穿全年，LDK 实现所需的各个组件也陆续到位，包括 8 月的 [splice-out 支持][news369 ldksplice]、9 月将拼接与静默（quiescence）协议[集成][news370 ldkquiesce]，以及在 0.2 发布之前交付的多项额外改进。
 
