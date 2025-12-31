@@ -71,7 +71,7 @@ excerpt: >
 
 {:#chilldkg}
 
-- **<!--updated-chilldkg-draft-->更新的 ChillDKG 草案：** Tim Ruffing 和 Jonas Nick [更新][news335 chilldkg]了他们针对 FROST [门限签名][topic threshold signature]方案的分布式密钥生成协议（DKG）的工作。ChillDKG 旨在为现有的描述符钱包提供类似的可恢复性功能。
+- **<!--updated-chilldkg-draft-->更新的 ChillDKG 草案：** Tim Ruffing 和 Jonas Nick [更新][news335 chilldkg]了他们针对 FROST [门限签名][topic threshold signature]方案的分布式密钥生成协议（DKG）的工作。ChillDKG 旨在提供跟现有的描述符钱包相似的可恢复功能。
 
 {:#offchaindlcs}
 
@@ -268,7 +268,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 {:#minfeerate}
 
-- **<!--lowering-the-minimum-relay-feerate-->降低交易转发费率门槛**：在去年，降低交易转发费率门槛的想法[得到多次讨论][news340 lowering feerates]。今年六月下旬，一些矿工突然开始在区块中包含手续费率低于 `Bitcoin Core` 默认最低转发费率（1 聪/vB）的交易。到了七月底，[85% 的哈希算力][mononautical 85]都已经接受了更低的费率门槛，而且因为一些节点运营者手动配置了更低的限制，低费率交易可以有机地在网络中传播（尽管并不可靠）。到八月中旬，[超过 30% 的得到确认的交易][mononautical 32]所支付的手续费率都低于 1 聪/vB 。比特币协议开发者们观察到，缺失低费率交易的高比例，[导致了致密区块重构成功率降低][0xb10c delving]，因此[提议][news366 lower feerate]调整默认的最低转发费率。九月初发布的 `Bitcoin Core` 29.1 版本降低了默认的转发费率门槛到 0.1 聪/vB 。
+- **<!--lowering-the-minimum-relay-feerate-->降低交易转发费率门槛**：在过去几年，降低交易转发费率门槛的想法[得到多次讨论][news340 lowering feerates]。今年六月下旬，一些矿工突然开始在区块中包含手续费率低于 `Bitcoin Core` 默认最低转发费率（1 聪/vB）的交易。到了七月底，[85% 的哈希算力][mononautical 85]都已经接受了更低的费率门槛，而且因为一些节点运营者手动配置了更低的限制，低费率交易可以有机地在网络中传播（尽管并不可靠）。到八月中旬，[超过 30% 的得到确认的交易][mononautical 32]所支付的手续费率都低于 1 聪/vB 。比特币协议开发者们观察到，缺失低费率交易的高比例，[导致了致密区块重构成功率降低][0xb10c delving]，因此[提议][news366 lower feerate]调整默认的最低转发费率。九月初发布的 `Bitcoin Core` 29.1 版本降低了默认的转发费率门槛到 0.1 聪/vB 。
 
 {:#templatesharing}
 
@@ -280,7 +280,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 - **<!--differential-fuzzing-of-bitcoin-and-ln-implementations-->比特币和闪电节点实现的差异模糊测试**：Bruno Garcia 给出了 [bitcoinfuzz][] 项目所取得的[进展和结果][news369 fuzz]；这是一个为比特币和闪电节点实现和代码库执行模糊测试的库。使用这个代码库，开发者们报告了在比特币相关的项目（比如 btcd、rust-bitcoin、rust-miniscript、LND，等等）中发现的超过 35 个 bug 。
 
-  Garcia 也强调了差异模糊测试在这个生态系统中的重要性。开发者们可以发现完全没有实现模糊测试的项目中的 bug、捕捉比特币软件实现中的依赖，以及找出闪电网络规范中的空白。
+  Garcia 也强调了差异模糊测试在这个生态系统中的重要性。开发者们可以发现完全没有实现模糊测试的项目中的 bug、捕捉比特币软件实现中的差异，以及找出闪电网络规范中的空白。
 
   最后，Garcia 鼓励维护者们集成更多项目到 bitcoinfuzz 中，扩大对差异模糊测试的支持，并为这个项目提供可能的开发方向。
 
