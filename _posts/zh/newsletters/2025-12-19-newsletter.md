@@ -292,7 +292,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 在整个 2025 年，Bitcoin Core 接受了多项更新以更好地支持 Stratum V2 实现。今年早些时候的更新集中在挖矿 RPC 上，通过增加 `nBits`、`target` 和 `next` 字段来[更新它们][news339 sv2fields]，这对构造和验证区块模板有用。
 
-最重要的工作则集中在 `Bitcoin Core` 的实验性 “进程间通信（IPC）” 接口上，它让外部的 Stratum v2 服务可以跟 `Bitcoin Core` 的区块验证模块交互，而无需使用更慢的 JSON-RPC 接口。一种新的 [`waitNext()`][news346 waitnext] 方法在 `BlockTemplate` 接口中引入；仅在链顶端发生变化，或者交易池手续费显著增加的时候，它会返回一个新的区块模板，从而减少不必要的区块模板生成。然后，增加了 [`checkBlock`][news360 checkblock]，它让 矿池可以通过 IPC 来验证矿工所提供的区块模板。IPC 也是默认[启用][news369 ipc]的，并且新的 `bitcoin-node` 和其它多进程二进制文件被添加到了编译好的发行版中。[加入][news357 wrapper]了一种新的可执行的 `bitcoin` 封装器，以便于发行和启动数量不断增加的二进制文件；并且，后续的一项工作[实现][news374 ipcauto]了原子化的多进程挑选，因此不再需要 `-m` 启动标签。今年的 IPC 优化主要是[降低][news377 ipclog]多进程日志记录的 CPU 占用；以及[保证][news381 witness]通过 IPC 提交的区块都重新验证了它们的见证数据承诺。
+最重要的工作则集中在 `Bitcoin Core` 的实验性 “进程间通信（IPC）” 接口上，它让外部的 Stratum v2 服务可以跟 `Bitcoin Core` 的区块验证模块交互，而无需使用更慢的 JSON-RPC 接口。一种新的 [`waitNext()`][news346 waitnext] 方法在 `BlockTemplate` 接口中引入；仅在链顶端发生变化，或者交易池手续费显著增加的时候，它会返回一个新的区块模板，从而减少不必要的区块模板生成。然后，增加了 [`checkBlock`][news360 checkblock]，它让 矿池可以通过 IPC 来验证矿工所提供的区块模板。IPC 也是默认[启用][news369 ipc]的，并且新的 `bitcoin-node` 和其它多进程二进制文件被添加到了编译好的发行版中。[加入][news357 wrapper]了一种新的可执行的 `bitcoin` 封装器，以便于发行和启动数量不断增加的二进制文件；并且，后续的一项工作[实现][news374 ipcauto]了自动化的多进程挑选，因此不再需要 `-m` 启动标签。今年的 IPC 优化主要是[降低][news377 ipclog]多进程日志记录的 CPU 占用；以及[保证][news381 witness]通过 IPC 提交的区块都重新验证了它们的见证数据承诺。
 
 [Bitcoin Core 30.0][news376 30] 在十月发布，是第一个包含这个实验性 IPC 挖矿接口的发行版 —— 而这个挖矿接口第一次[加入][news323 miningipc]是在去年。
 
@@ -340,7 +340,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 - [BTCPay Server 2.2.0][] 添加了对钱包条款和 [miniscript][topic miniscript] 的支持。
 
-- [Core Lightning v25.09][] 加入了对 `xpay` 命令的支持，用于支付 [Stratum v2][topic pooled mining] 地址和要约（[offer][topic offers]）。
+- [Core Lightning v25.09][] 加入了对 `xpay` 命令的支持，用于支付 [BIP353][] 地址和要约（[offer][topic offers]）。
 
 - [Eclair v0.13.0][] 加入了 “[简单 taproot 通道][topic simple taproot channels]” 的一项初步实现、基于近期的规范更新提升了[通道拼接][topic splicing]，并且更好地支持了 BOLT 12 。
 
