@@ -316,13 +316,7 @@ Tadge Dryja [提议][news qr agg]了一种比特币实现通用跨输入签名�
 
 {:#eclipseattacks}
 
-- **Partitioning and eclipse attacks using BGP interception:** Cedarctic
-  [posted][Cedarctic post] to Delving Bitcoin about flaws in Border Gateway
-  Protocol (BGP) which could be used to prevent full nodes from being able to
-  connect to honest peers, potentially allowing network partitions or [eclipse
-  attacks][eclipse attack]. Several mitigations were described by cedarctic,
-  with other developers in the discussion describing other mitigations and ways
-  to monitor for the attack.
+- **<!--partitioning-and-eclipse-attacks-using-bgp-interception-->****使用 “边界网关协议” 拦截的网络分区和日蚀攻击：** 使用 “边界网关协议” 拦截的网络分区和日蚀攻击：Cedarctic 在 Delving Bitcoin 论坛中[报告][Cedarctic post]了边界网关协议（BGP）中的错误可被用于阻止全节点连接到诚实的对等节点；可能允许网络分区（或者说 “日蚀攻击（[eclipse attacks][eclipse attack]）”。Cedarctic 介绍了几种缓解措施，参与讨论的其他开发者也介绍了其它缓解措施以及观测这种攻击的方法。
 
 <div markdown="1" class="callout" id="releases">
 
