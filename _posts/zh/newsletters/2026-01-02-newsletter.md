@@ -12,7 +12,7 @@ lang: zh
 
 ## 新闻
 
-- **<!--building-a-vault-using-blinded-co-signers-->使用盲化共同签名者构建保险库：** Johan T. Halseth
+- **<!--building-a-vault-using-blinded-co-signers-->使用盲化共同签名者构建保管库：** Johan T. Halseth
   在 Delving Bitcoin 上[发布][halseth post]了一个使用盲化共签者的类[保管库][topic vaults]方案的原型。不同于传统的共签设置，该方案使用 [MuSig2][topic musig] 的[盲化版本][blinded musig]，以确保签名者对其参与签名的资金了解尽可能少。为避免签名者不得不对提交给他们的内容“盲签”，该方案在签名请求中附带零知识证明，证明该交易满足预先设定的策略要求（此处为[时间锁][topic timelocks]）。
 
   Halseth 提供了一张方案流程图，展示了四笔将被预签名的交易：初始存入交易、恢复交易、出库（unvault）交易以及出库恢复交易。在进行出库（unvault）时，共签者将要求提供零知识证明，以证明其所签的交易已正确设置相对时间锁。这从而确保在发生未授权的出库（unvault）时，用户或瞭望塔仍有时间将资金扫走/转走。
