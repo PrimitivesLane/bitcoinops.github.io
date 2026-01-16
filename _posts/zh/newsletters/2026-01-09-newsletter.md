@@ -77,6 +77,6 @@ _本周出现重大变更的有：[Bitcoin Core][bitcoin core repo]、[Core Ligh
 [bitcoin core notice]: https://bitcoincore.org/en/2026/01/05/wallet-migration-bug/
 [Bitcoin Core 30.2rc1]: https://bitcoincore.org/bin/bitcoin-core-30.2/test.rc1/
 [news45 wallettool]: /zh/newsletters/2019/05/07/#new-wallet-tool
-[news130 createfrom]: /zh/newsletters/2021/01/06/#bitcoin-core-19137
+[news130 createfrom]: /zh/newsletters/2021/01/06/#bitcoin-core-19137-adds-dump-and-createfromdump-commands-to-wallet-tool
 [news386 sfl]: /zh/newsletters/2026/01/02/#bitcoin-core-32545
 [sp ml]:https://groups.google.com/g/bitcoindev/c/bP6ktUyCOJI
