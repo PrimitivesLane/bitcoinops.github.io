@@ -105,3 +105,6 @@ lang: zh
 [lnd issue]: https://github.com/lightningnetwork/lnd/issues/53
 [news388 bip3]: /zh/newsletters/2026/01/16/#bip-process-updated
 [news347 lsp]: /zh/newsletters/2025/03/28/#ldk-3649
+
+{% include references.md %}
+{% include linkers/issues.md v=2 issues="32471,34146,8831,4261,4152,10488,10331,5402,1820,1306,59" %}
