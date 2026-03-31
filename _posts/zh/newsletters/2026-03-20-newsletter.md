@@ -51,7 +51,7 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 
 - [Eclair #3265][] 和 [LDK #4324][] 开始拒绝 `offer_amount` 设置为零的 [BOLT12 要约][topic offers]，以与 BOLT 规范的最新变更保持一致（见[周报 #396][news396 amount]）。
 
-- [LDK #4427][] 通过重新进入[静默][topic channel commitment upgrades]状态，添加了对已协商但尚未锁定的[拼接][topic splicing]注资交易进行 [RBF][topic rbf] 手续费追加的支持。当双方同时尝试 RBF 时，静默打破平衡的失败方可以作为接受者贡献资金。当对方发起 RBF 时，先前的贡献会被自动重用，防止手续费追加悄悄移除对等节点的拼接资金。基础的拼接接受者贡献支持见[周报 #396][news396 splice]。
+- [LDK #4427][] 通过重新进入[通道静默（quiescence）][topic channel commitment upgrades]状态，添加了对已协商但尚未锁定的[拼接][topic splicing]注资交易进行 [RBF][topic rbf] 手续费追加的支持。当双方同时尝试 RBF 时，通道静默的打破平衡机制会选出失败方，失败方可以作为接受者贡献资金。当对方发起 RBF 时，先前的贡献会被自动重用，防止手续费追加悄悄移除对等节点的拼接资金。基础的拼接接受者贡献支持见[周报 #396][news396 splice]。
 
 - [LDK #4484][] 将具有零手续费 [HTLC][topic htlc] 的[锚点][topic anchor outputs]通道（包括[零确认通道][topic zero-conf channels]）的最大可接受通道[粉尘][topic uneconomical outputs]限额提高到 10,000 聪。这实现了 [BOLTs #1301][]（见[周报 #395][news395 dust]）中的建议。
 
