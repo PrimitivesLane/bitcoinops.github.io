@@ -52,13 +52,13 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 
 - [Eclair #3247][] 添加了一个可选的对等节点评分系统，跟踪每个对等节点的转发收入和支付量随时间的变化。启用后，它会定期按盈利能力对对等节点排名，并可选择自动为高收益对等节点注资通道、自动关闭低产通道以回收流动性、以及根据交易量自动调整中继手续费，所有操作都在可配置的范围内进行。运营者可以先仅启用可见性功能，再逐步选择启用自动化。
 
-- [LDK #4472][] 修复了通道注资和[拼接][topic splicing]过程中一个潜在的资金损失场景，此前 `tx_signatures` 可能在对方的承诺签名被持久化之前就被发送。如果交易确认后节点崩溃，它将失去强制执行通道状态的能力。修复方案是延迟释放 `tx_signatures`，直到相应的监视器更新完成。
+- [LDK #4472][] 修复了通道注资和[拼接][topic splicing]过程中一个潜在的资金损失场景，此前 `tx_signatures` 可能在对方的承诺签名被持久存储之前就被发送。如果交易确认后节点崩溃，它将失去强制执行通道状态的能力。修复方案是延迟释放 `tx_signatures`，直到相应的监视器更新完成。
 
 - [LND #10602][] 向实验性的 `switchrpc` 子系统（见[周报 #386][news386 sendonion]）添加了一个 `DeleteAttempts` RPC，允许外部控制器从 LND 的尝试存储中显式删除已完成（成功或失败，非待处理）的 [HTLC][topic htlc] 尝试记录。
 
-- [LND #10481][] 向 LND 的集成测试框架添加了 `bitcoind` 矿工后端。此前，`lntest` 即使在使用 `bitcoind` 作为链后端时也假定使用基于 `btcd` 的矿工。此变更允许测试执行依赖于 Bitcoin Core 交易池和挖矿策略的行为，包括 [v3 交易中继][topic v3 transaction relay]和[交易包中继][topic package relay]。
+- [LND #10481][] 向 LND 的集成测试框架添加了 `bitcoind` 矿工后端。此前，即使使用 `bitcoind` 作为链后端，`lntest` 也假定使用基于 `btcd` 的矿工。此变更允许测试执行依赖于 Bitcoin Core 交易池和挖矿策略的行为，包括 [v3 交易中继][topic v3 transaction relay]和[交易包中继][topic package relay]。
 
-- [BOLTs #1160][] 将[拼接][topic splicing]协议合并到闪电网络规范中，用更新的流程和边缘情况的测试向量替换了 [BOLTs #863][] 中的草案（该草案的讨论见[周报 #246][news246 splicing draft]）。拼接允许对等节点在不关闭通道的情况下添加或移除资金；协商从静默状态开始（[BOLTs #869][]，[周报 #309][news309 quiescence]）。合并的 BOLT2 文本涵盖了拼接交易的交互式构建、在拼接未确认时继续操作通道、待处理拼接的 [RBF][topic rbf]、重连行为、达到足够深度后的 `splice_locked`，以及更新的[通道公告][topic channel announcements]。
+- [BOLTs #1160][] 将[拼接][topic splicing]协议合并到闪电网络规范中，用更新的流程和边缘情况的测试向量替换了 [BOLTs #863][] 中的草案（该草案的讨论见[周报 #246][news246 splicing draft]）。拼接允许对等节点在不关闭通道的情况下添加或移除资金；协商从通道静默（quiescence）状态开始（[BOLTs #869][]，[周报 #309][news309 quiescence]）。合并的 BOLT2 文本涵盖了拼接交易的交互式构建、在拼接未确认时继续操作通道、待处理拼接的 [RBF][topic rbf]、重连行为、达到足够深度后的 `splice_locked`，以及更新的[通道公告][topic channel announcements]。
 
 {% include snippets/recap-ad.md when="2026-03-31 16:30" %}
 {% include references.md %}
