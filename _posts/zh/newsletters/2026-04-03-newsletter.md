@@ -43,7 +43,7 @@ lang: zh
 
   从技术角度来看，拟议的格式是一个 UTF-8 编码的文本文件，包含一个有效的 JSON 对象来表示备份结构。该 BIP 列出了 JSON 对象中可以包含的所有不同字段，并指定每个字段都是可选的，且任何钱包实现都可以自由忽略其认为无用的元数据。
 
-## 改变共识
+## 共识变更
 
 _每月一次的栏目，总结关于改变比特币共识规则的提案和讨论。_
 
@@ -97,8 +97,8 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [topic payjoin fingerprinting]: https://delvingbitcoin.org/t/how-wallet-fingerprints-damage-payjoin-privacy/2354
 [c delving ibc hd]: https://delvingbitcoin.org/t/compact-isogeny-pqc-can-replace-hd-wallets-key-tweaking-silent-payments/2324
 [rr ml gsr bips]: https://groups.google.com/g/bitcoindev/c/T8k47suwuOM
-[news374 varops]: /en/newsletters/2025/10/03/#first-bip
-[news374 c2]: /en/newsletters/2025/10/03/#second-bip
+[news374 varops]: /zh/newsletters/2025/10/03/#first-bip
+[news374 c2]: /zh/newsletters/2025/10/03/#second-bip
 [jn delving shrimps]: https://delvingbitcoin.org/t/shrimps-2-5-kb-post-quantum-signatures-across-multiple-stateful-devices/2355
 [news383 sphincs]: /zh/newsletters/2025/12/05/#lh-dsa-post-quantum-signature-optimizations
 [news391 shrincs]: /zh/newsletters/2026/02/06/#shrincs-324-byte-stateful-post-quantum-signatures-with-static-backups
