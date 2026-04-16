@@ -54,7 +54,7 @@ lang: zh
 [sources]: /en/internal/sources/
 [news380 kernel]: /zh/newsletters/2025/11/14/#bitcoin-core-30595
 [news394 bip393]: /zh/newsletters/2026/02/27/#draft-bip-for-output-script-descriptor-annotations-bip
-[news399 bips]: /en/newsletters/2026/04/03/#varops-budget-and-tapscript-leaf-0xc2-aka-script-restoration-are-bips-440-and-441
+[news399 bips]: /zh/newsletters/2026/04/03/#varops-budget-and-tapscript-leaf-0xc2-aka-script-restoration-are-bips-440-and-441
 [news374 varops]: /zh/newsletters/2025/10/03/#varops-budget-for-script-runtime-constraint
 [news374 tapscript]: /zh/newsletters/2025/10/03/#restoration-of-disabled-script-functionality-tapscript-v2
 [BIP393]: https://github.com/bitcoin/bips/blob/master/bip-0393.mediawiki
