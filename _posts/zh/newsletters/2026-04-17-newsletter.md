@@ -77,11 +77,11 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 
 [coldcard 6.5.0]: https://coldcard.com/docs/upgrade/#edge-version-650xqx-musig2-miniscript-and-taproot-support
 [frigate blog]: https://damus.io/nevent1qqsrg3xsjwpt4d9g05rqy4vkzx5ysdffm40qtxntfr47y3annnfwpzgpp4mhxue69uhkummn9ekx7mqpz3mhxue69uhkummnw3ezummcw3ezuer9wcq3samnwvaz7tmjv4kxz7fwwdhx7un59eek7cmfv9kqz9rhwden5te0wfjkccte9ejxzmt4wvhxjmczyzl85553k5ew3wgc7twfs9yffz3n60sd5pmc346pdaemf363fuywvqcyqqqqqqgmgu9ev
-[news389 frigate]: /en/newsletters/2026/01/23/#electrum-server-for-testing-silent-payments
+[news389 frigate]: /zh/newsletters/2026/01/23/#electrum-server-for-testing-silent-payments-electrum
 [news368 backbone]: /zh/newsletters/2025/08/22/#bitcoin-core-kernelbased-node-announced
 [backbone ml 1]: https://groups.google.com/g/bitcoindev/c/D6nhUXx7Gnw/m/q1Bx4vAeAgAJ
 [backbone ml 2]: https://groups.google.com/g/bitcoindev/c/ViIOYc76CjU/m/cFOAYKHJAgAJ
-[news349 swiftsync]: /en/newsletters/2025/04/11/#swiftsync-speedup-for-initial-block-download
+[news349 swiftsync]: /zh/newsletters/2025/04/11/#swiftsync-speedup-for-initial-block-download-swiftsync
 [utreexod blog]: https://delvingbitcoin.org/t/new-utreexo-releases/2371
 [floresta v0.9.0]: https://www.getfloresta.org/blog/release-v0.9.0
 [news366 utreexo bips]: /zh/newsletters/2025/08/08/#draft-bips-proposed-for-utreexo
