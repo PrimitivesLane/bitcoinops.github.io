@@ -63,7 +63,7 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [coredev pkg relay]: https://btctranscripts.com/bitcoin-core-dev-tech/2026-05/package-relay
 [coredev silent payments]: https://btctranscripts.com/bitcoin-core-dev-tech/2026-05/silent-payments
 [coredev tcp holepunch]: https://btctranscripts.com/bitcoin-core-dev-tech/2026-05/tcp-holepunch
-[news406 tcp holepunch]: /en/newsletters/2026/05/22/#tcp-hole-punching-for-bitcoin-nodes-behind-nats
+[news406 tcp holepunch]: /zh/newsletters/2026/05/22/#tcp-hole-punching-for-bitcoin-nodes-behind-nats
 [coredev private broadcast]: https://btctranscripts.com/bitcoin-core-dev-tech/2026-05/private-broadcast
 [coredev modern crypto]: https://btctranscripts.com/bitcoin-core-dev-tech/2026-05/modern-crypto-library
 [coredev mutation testing]: https://btctranscripts.com/bitcoin-core-dev-tech/2026-05/mutation-testing
@@ -72,6 +72,6 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [news310 mining]: /zh/newsletters/2024/07/05/#bitcoin-core-30200
 [news323 mining]: /zh/newsletters/2024/10/04/#bitcoin-core-30510
 [news403 rbf]: /zh/newsletters/2026/05/01/#bitcoin-core-34911
-[news404 0fc]: /en/newsletters/2026/05/08/#bolts-1228
-[news405 metadata]: /en/newsletters/2026/05/15/#ldk-4528
+[news404 0fc]: /zh/newsletters/2026/05/08/#bolts-1228
+[news405 metadata]: /zh/newsletters/2026/05/15/#ldk-4528
 [news370 tweak]: /zh/newsletters/2025/09/05/#draft-bip-for-op-tweakadd
