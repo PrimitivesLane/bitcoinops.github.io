@@ -97,10 +97,10 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [bs blog lattice]: https://blog.blockstream.com/schnorr-but-with-vectors-lattice-based-signatures-explained/
 [jr ml merkle64]: https://groups.google.com/g/bitcoindev/c/ZVDEzxG6Sq8
 [pw ml p2xx]: https://groups.google.com/g/bitcoindev/c/aWYtPLVPZ3U
-[news383 sphincs]: /en/newsletters/2025/12/05/#slh-dsa-sphincs-post-quantum-signature-optimizations
-[news386 jn hash]: /en/newsletters/2026/01/02/#hash-based-signatures-for-bitcoin-s-post-quantum-future
-[news393 p2mr]: /en/newsletters/2026/02/20/#bips-1670
-[news403 pqout]: /en/newsletters/2026/05/01/#discussion-of-a-post-quantum-output-type
+[news383 sphincs]: /zh/newsletters/2025/12/05/#lh-dsa-post-quantum-signature-optimizations
+[news386 jn hash]: /zh/newsletters/2026/01/02/#hash-based-signatures-for-bitcoins-post-quantum-future
+[news393 p2mr]: /zh/newsletters/2026/02/20/#bips-1670
+[news403 pqout]: /zh/newsletters/2026/05/01/#discussion-of-a-postquantum-output-type
 [news408 64byte]: /zh/newsletters/2026/06/05/#bip54-64-byte-transactions-and-potential-legitimate-uses
 [Core Lightning v26.06.2]: https://github.com/ElementsProject/lightning/releases/tag/v26.06.2
 [LND v0.20.2-beta.rc1]: https://github.com/lightningnetwork/lnd/releases/tag/v0.20.2-beta.rc1
@@ -109,8 +109,8 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [Bitcoin Core 31.1rc1]: https://bitcoincore.org/bin/bitcoin-core-31.1/test.rc1/
 [Bitcoin Core 30.3rc1]: https://bitcoincore.org/bin/bitcoin-core-30.3/test.rc1/
 [Bitcoin Core 29.4rc1]: https://bitcoincore.org/bin/bitcoin-core-29.4/test.rc1/
-[news181 bip52]: /en/newsletters/2022/01/05/#bips-1126
-[news392 bip110]: /en/newsletters/2026/02/13/#bips-2017
+[news181 bip52]: /zh/newsletters/2022/01/05/#bips-1126
+[news392 bip110]: /zh/newsletters/2026/02/13/#bips-2017
 [news409 testnet5]: /zh/newsletters/2026/06/12/#draft-bip-for-testnet5
-[news409 privatebroadcast]: /en/newsletters/2026/06/12/#bitcoin-core-35410
+[news409 privatebroadcast]: /zh/newsletters/2026/06/12/#bitcoin-core-35410
 [sources]: /en/internal/sources/
