@@ -55,6 +55,6 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [news310 mining]: /zh/newsletters/2024/07/05/#bitcoin-core-30200
 [news323 mining]: /zh/newsletters/2024/10/04/#bitcoin-core-30510
 [news342 simpleclose]: /zh/newsletters/2025/02/21/#bolts-1205
-[news410 bolt12]: /zh/newsletters/2026/06/19/#lnd-10789
+[news410 bolt12]: /en/newsletters/2026/06/19/#lnd-10789
 [news409 privatebroadcast]: /zh/newsletters/2026/06/12/#bitcoin-core-35410
-[news412 cltv]: /zh/newsletters/2026/07/03/#lnd-10927
+[news412 cltv]: /en/newsletters/2026/07/03/#lnd-10927
