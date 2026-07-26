@@ -51,7 +51,7 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 
 - [Bitcoin Core #35215][] 加快了内存中 UTXO 缓存（`CCoinsMap`）的查找速度：它把用于哈希 `COutPoint` 键的 `SipHash-2-4` 换成了一个更快的、专门定制的 [SipHash][] 变体 `SipHasher13UJ`。每一枚币都通过一个由 txid 和输出编号组合而成的键来查找，而每次查找都要把这个键送进哈希函数。`SipHash-2-4` 会把一枚币的 32 字节 txid 拆成四个 64 位分片分别处理，因此哈希一个输出点要跑 14 轮内部运算。`SipHasher13UJ` 则以一次 256 位的步骤读入整个 txid，轮数也更少，把这个数字降到了五轮。作者报告称，在独立基准测试中哈希吞吐量大约提升到原来的两倍，在一次 chainstate 重新索引中耗时减少了约 5%。
 
-- [Bitcoin Core #35766][] 让节点在首次连接来自 DNS seed 和编译时内置的固定 seed 的地址时，默认启用 [BIP324][] [v2 P2P 传输][topic v2 p2p transport]。BIP324 的实验性支持随 Bitcoin Core 26.0 发布，并从 27.0 起默认启用。由于这些 seed 机制提供的地址不带服务标志，Bitcoin Core 此前把这类对等节点一律当作只支持 v1，于是节点最早建立的那批自动连接从来不会尝试加密传输。新增的 `SeedsAssumedServiceFlags()` 函数现在会为这些地址假定 `NODE_P2P_V2`。如果这一假定对某个对等节点并不成立，节点直接用 v1 重连即可。而通过 `-seednode` 选项建立的连接以及地址获取过程，本来就已经默认尝试 v2。
+- [Bitcoin Core #35766][] 让节点在首次连接来自 DNS 种子节点和编译时内置的固定种子节点的地址时，默认启用 [BIP324][] [v2 P2P 传输][topic v2 p2p transport]。BIP324 的实验性支持随 Bitcoin Core 26.0 发布，并从 27.0 起默认启用。由于这两种种子节点机制提供的地址不带服务标志，Bitcoin Core 此前把这类对等节点一律当作只支持 v1，于是节点最早建立的那批自动连接从来不会尝试加密传输。新增的 `SeedsAssumedServiceFlags()` 函数现在会为这些地址假定 `NODE_P2P_V2`。如果这一假定对某个对等节点并不成立，节点直接用 v1 重连即可。而通过 `-seednode` 选项建立的连接以及地址获取过程，本来就已经默认尝试 v2。
 
 - [BIPs #2075][] 澄清了 [BIP174][] 中关于 [PSBT][topic psbt] 如何合并的表述。原规范断言，合并各自独立更新过的 PSBT 无条件与顺序无关；但这一点只有在各参与方添加的字段互不相同时才成立。当两份 PSBT 含有同一个键、取值却不同时，合并器既可以任选其中一个取值，也可以拒绝合并；因此规范现在补充说明：这种情况下的结果不满足交换律。
 
