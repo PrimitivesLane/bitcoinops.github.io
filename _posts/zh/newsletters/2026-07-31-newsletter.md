@@ -115,7 +115,7 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [Eclair 0.14.1]: https://github.com/ACINQ/eclair/releases/tag/v0.14.1
 [eclair 0.14.1 notes]: https://github.com/ACINQ/eclair/blob/v0.14.1/docs/release-notes/eclair-v0.14.1.md
 [OpenRPC 1.4.1]: https://spec.open-rpc.org/
-[news415 labels]: /en/newsletters/2026/07/24/#btcpay-server-7457
+[news415 labels]: /zh/newsletters/2026/07/24/#btcpay-server-7457
 [news324 inv]: /zh/newsletters/2024/10/11/#dos-from-large-inventory-sets
 [news373 rate]: /zh/newsletters/2025/09/26/#bitcoin-core-28592
 [news253 descriptorpsbt]: /zh/newsletters/2023/05/31/#bitcoin-core-25796
