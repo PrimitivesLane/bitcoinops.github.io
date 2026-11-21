@@ -142,5 +142,5 @@ _以下是来自 [Bitcoin Core][bitcoin core repo]、[Core Lightning][core light
 [news428 bolts11]: /zh/newsletters/2026/10/23/#bolts-1357
 [news425 lnd]: /zh/newsletters/2026/10/02/#lnd-11190
 [news381 low-s]: /zh/newsletters/2025/11/21/#bolts-1284
-[news429 lnd fees]: /en/newsletters/2026/10/30/#lnd-11373
+[news429 lnd fees]: /zh/newsletters/2026/10/30/#lnd-11373
 [news427 rust bitcoin]: /zh/newsletters/2026/10/16/#rust-bitcoin-6956
